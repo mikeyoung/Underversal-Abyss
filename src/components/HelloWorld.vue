@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }} hello again</h1>
+    <h1>{{ msg }} hello again more change</h1>
     <h2>Essential Links</h2>
     <ul>
       <li>
