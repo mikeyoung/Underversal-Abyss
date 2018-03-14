@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12">Game Title</div>
+      <div class="col-12">{{ title }}</div>
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-2">Stats</div>
@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Character',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      title: 'Character title'
     }
   }
 }
