@@ -8,13 +8,14 @@
 <script>
 import RollDeck from './classes/RollDeck'
 
+var rollDeck = new RollDeck()
+var rollDeckCards = rollDeck.getCards()
+
 export default {
   name: 'App',
   data () {
-    var rollDeck = new RollDeck()
-
     return {
-      rollDeck: rollDeck.getCards()
+      rollDeck: rollDeckCards
     }
   }
 }
