@@ -1,13 +1,22 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <router-view/>
+    <router-view :rollDeck='rollDeck' />
   </div>
 </template>
 
 <script>
+import RollDeck from './classes/RollDeck'
+
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    var rollDeck = new RollDeck()
+
+    return {
+      rollDeck: rollDeck.getCards()
+    }
+  }
 }
 </script>
 

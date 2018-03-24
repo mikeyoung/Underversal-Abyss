@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12">{{ title }}</div>
+      <div class="col-12">{{ title }} {{ rollDeck[5] }}</div>
+    </div>
       <ul>
         <li>
           <router-link to="/rules">Go to Rules</router-link>
@@ -9,12 +10,7 @@
         <li>
           <router-link to="/">Go to Main Menu</router-link>
         </li>
-        <li>
-          <router-link to="/game">Go to Game</router-link>
-        </li>
       </ul>
-      <Character />
-    </div>
     <div class="row">
       <div class="col-sm-12 col-md-2">Stats</div>
       <div class="col-sm-12 col-md-10">Game Area</div>
@@ -23,17 +19,12 @@
 </template>
 
 <script>
-import Character from './Character.vue'
-
 export default {
-  name: 'MainMenu',
+  name: 'Game',
   data () {
     return {
-      title: 'Welcome to Your Vue.js App'
+      title: 'Game'
     }
-  },
-  components: {
-    Character
   },
   props: [
     'rollDeck'
