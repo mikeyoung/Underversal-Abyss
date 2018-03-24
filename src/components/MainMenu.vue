@@ -21,6 +21,10 @@
 
 <script>
 import Character from './Character.vue'
+import Deck from '../classes/Deck'
+
+var deck = new Deck()
+console.log(deck.getCards()[0])
 
 export default {
   name: 'MainMenu',
