@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12">{{ title }} {{ rollDeck[5] }}</div>
+      <div class="col-12">{{ title }}</div>
+      <div class="col-12">rollCards total {{ rollDeck.length }}</div>
+      <div class="col-12">rollCardInPlay {{ rollCardInPlay }}</div>
+      <div class="col-12">rollCardInPlay {{ rollCardsInDraw.length }}</div>
+      <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
     </div>
       <ul>
         <li>
@@ -13,22 +17,41 @@
       </ul>
     <div class="row">
       <div class="col-sm-12 col-md-2">Stats</div>
-      <div class="col-sm-12 col-md-10">Game Area</div>
+      <div class="col-sm-12 col-md-10">Game Area<br>
+        <button type="button" v-on:click="drawRollCard">Draw Roll Card</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import RollDeck from '../classes/RollDeck'
+
+var rollDeck = new RollDeck().cards
+
 export default {
   name: 'Game',
   data () {
     return {
-      title: 'Game'
+      title: 'Game',
+      rollDeck,
+      rollCardInPlay: 0
     }
   },
-  props: [
-    'rollDeck'
-  ]
+  computed: {
+    rollCardsInDraw: function () {
+      return rollDeck.filter(card => card.status === 'draw')
+    },
+    rollCardsInDiscard: function () {
+      return rollDeck.filter(card => card.status === 'discard')
+    }
+  },
+  methods: {
+    drawRollCard: function () {
+      let randomCard = this.rollDeck[Math.floor(Math.random() * this.rollDeck.length)]
+      this.rollCardInPlay = randomCard.value
+    }
+  }
 }
 </script>
 
