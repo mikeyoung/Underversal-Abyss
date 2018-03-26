@@ -49,6 +49,7 @@ export default {
   methods: {
     drawRollCard: function () {
       let randomCard = this.rollDeck[Math.floor(Math.random() * this.rollDeck.length)]
+      // randomCard
       this.rollCardInPlay = randomCard.value
     }
   }
