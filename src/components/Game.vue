@@ -48,9 +48,11 @@ export default {
   },
   methods: {
     drawRollCard: function () {
-      let randomCard = this.rollDeck[Math.floor(Math.random() * this.rollDeck.length)]
-      // randomCard
-      this.rollCardInPlay = randomCard.value
+      if (this.rollCardsInDraw.length > 0) {
+        let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
+        this.rollCardInPlay = randomCard.value
+        randomCard.status = 'discard'
+      }
     }
   }
 }
