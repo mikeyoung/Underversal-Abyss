@@ -48,13 +48,15 @@ export default {
       if (rollDeck.filter(card => card.status === 'play').length > 0) {
         return rollDeck.find(card => card.status === 'play')
       }
-      return 0
+      return {
+        value: 0
+      }
     }
   },
   methods: {
     drawRollCard: function () {
       if (this.rollCardsInDraw.length > 0) {
-        if (this.rollCardInPlay !== 0) this.rollCardInPlay.status = 'discard'
+        if (this.rollCardInPlay.value !== 0) this.rollCardInPlay.status = 'discard'
         let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
         randomCard.status = 'play'
       }
