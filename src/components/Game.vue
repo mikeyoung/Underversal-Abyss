@@ -5,7 +5,7 @@
       <div class="col-12">rollCards total {{ rollDeck.length }}</div>
       <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
       <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
-      <div class="col-12">rollCardInPlay {{ rollCardInPlay.value }}</div>
+      <div class="col-12">rollCardsInPlay {{ rollCardsInPlay.length }}</div>
     </div>
       <ul>
         <li>
@@ -16,9 +16,13 @@
         </li>
       </ul>
     <div class="row">
-      <div class="col-sm-12 col-md-2">Stats</div>
+      <div class="col-sm-12 col-md-2">
+        <h3>Stats</h3>
+        <RollDeckDiscard v-bind:rollDeck="rollDeck" />
+      </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
-        <button type="button" v-on:click="drawRollCard">Draw Roll Card!</button>
+        <button type="button" v-on:click="drawRollCard(0)">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
+        <button type="button" v-on:click="drawRollCard(1)">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
       </div>
     </div>
   </div>
@@ -26,6 +30,7 @@
 
 <script>
 import RollDeck from '../classes/RollDeck'
+import RollDeckDiscard from './RollDeckDiscard'
 
 var rollDeck = new RollDeck().cards
 
@@ -44,23 +49,26 @@ export default {
     rollCardsInDiscard: function () {
       return rollDeck.filter(card => card.status === 'discard')
     },
-    rollCardInPlay: function () {
-      if (rollDeck.filter(card => card.status === 'play').length > 0) {
-        return rollDeck.find(card => card.status === 'play')
-      }
-      return {
-        value: 0
-      }
+    rollCardsInPlay: function () {
+      return rollDeck.filter(card => card.status === 'play')
     }
   },
   methods: {
-    drawRollCard: function () {
+    drawRollCard: function (cardNumber) {
       if (this.rollCardsInDraw.length > 0) {
-        if (this.rollCardInPlay.value !== 0) this.rollCardInPlay.status = 'discard'
+        if (this.rollCardsInPlay.length === 2) this.rollCardsInPlay[cardNumber].status = 'discard'
         let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
+        this.rollCardsInPlay[cardNumber] = randomCard
         randomCard.status = 'play'
       }
     }
+  },
+  components: {
+    RollDeckDiscard
+  },
+  created: function () {
+    this.drawRollCard(0)
+    this.drawRollCard(1)
   }
 }
 </script>
