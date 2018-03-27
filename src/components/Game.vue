@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-2">Stats</div>
       <div class="col-sm-12 col-md-10">Game Area<br>
-        <button type="button" v-on:click="drawRollCard">Draw Roll Card</button>
+        <button type="button" v-on:click="drawRollCard">Draw Roll Card!</button>
       </div>
     </div>
   </div>
