@@ -2,10 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col-12">{{ title }}</div>
-      <div class="col-12">rollCards total {{ rollDeck.length }}</div>
       <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
       <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
-      <div class="col-12">rollCardsInPlay {{ rollCardsInPlay.length }}</div>
     </div>
       <ul>
         <li>
@@ -21,8 +19,9 @@
         <RollDeckDiscard v-bind:rollDeck="rollDeck" />
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
-        <button type="button" v-on:click="drawRollCard(0)">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
-        <button type="button" v-on:click="drawRollCard(1)">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
+        <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
+        <button type="button" v-on:click="playRollCard(0)" :disabled="rollCardsInPlay[0].value === 0 ? true : false">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
+        <button type="button" v-on:click="playRollCard(1)" :disabled="rollCardsInPlay[1].value === 0 ? true : false">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
       </div>
     </div>
   </div>
@@ -43,7 +42,8 @@ export default {
       rollCardsInPlay: [
         {value: 0},
         {value: 0}
-      ]
+      ],
+      gameInPlay: false
     }
   },
   computed: {
@@ -56,20 +56,27 @@ export default {
   },
   methods: {
     drawRollCard: function (cardNumber) {
+      if (this.rollCardsInPlay[cardNumber].status === 'play') this.rollCardsInPlay[cardNumber].status = 'discard'
       if (this.rollCardsInDraw.length > 0) {
-        if (this.rollCardsInPlay.length === 2) this.rollCardsInPlay[cardNumber].status = 'discard'
         let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
         this.rollCardsInPlay[cardNumber] = randomCard
         randomCard.status = 'play'
+      } else {
+        this.rollCardsInPlay[cardNumber] = {value: 0}
       }
+    },
+    playRollCard: function (cardNumber) {
+      // do some stuff
+      this.drawRollCard(cardNumber)
+    },
+    initGame: function () {
+      this.drawRollCard(0)
+      this.drawRollCard(1)
+      this.gameInPlay = true
     }
   },
   components: {
     RollDeckDiscard
-  },
-  created: function () {
-    // this.drawRollCard(0)
-    // this.drawRollCard(1)
   }
 }
 </script>
