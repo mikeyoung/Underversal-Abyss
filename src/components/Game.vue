@@ -39,7 +39,11 @@ export default {
   data () {
     return {
       title: 'Game',
-      rollDeck
+      rollDeck,
+      rollCardsInPlay: [
+        {value: 0},
+        {value: 0}
+      ]
     }
   },
   computed: {
@@ -48,20 +52,6 @@ export default {
     },
     rollCardsInDiscard: function () {
       return rollDeck.filter(card => card.status === 'discard')
-    },
-    rollCardsInPlay: function () {
-      if (rollDeck.filter(card => card.status === 'play').length === 2) {
-        return rollDeck.filter(card => card.status === 'play')
-      }
-
-      return [
-        {
-          value: 0
-        },
-        {
-          value: 0
-        }
-      ]
     }
   },
   methods: {
