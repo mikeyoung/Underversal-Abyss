@@ -50,7 +50,18 @@ export default {
       return rollDeck.filter(card => card.status === 'discard')
     },
     rollCardsInPlay: function () {
-      return rollDeck.filter(card => card.status === 'play')
+      if (rollDeck.filter(card => card.status === 'play').length === 2) {
+        return rollDeck.filter(card => card.status === 'play')
+      }
+
+      return [
+        {
+          value: 0
+        },
+        {
+          value: 0
+        }
+      ]
     }
   },
   methods: {
@@ -67,8 +78,8 @@ export default {
     RollDeckDiscard
   },
   created: function () {
-    this.drawRollCard(0)
-    this.drawRollCard(1)
+    // this.drawRollCard(0)
+    // this.drawRollCard(1)
   }
 }
 </script>
