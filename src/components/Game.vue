@@ -3,9 +3,9 @@
     <div class="row">
       <div class="col-12">{{ title }}</div>
       <div class="col-12">rollCards total {{ rollDeck.length }}</div>
-      <div class="col-12">rollCardInPlay {{ rollCardInPlay }}</div>
-      <div class="col-12">rollCardInPlay {{ rollCardsInDraw.length }}</div>
+      <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
       <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
+      <div class="col-12">rollCardInPlay {{ rollCardInPlay.value }}</div>
     </div>
       <ul>
         <li>
@@ -34,8 +34,7 @@ export default {
   data () {
     return {
       title: 'Game',
-      rollDeck,
-      rollCardInPlay: 0
+      rollDeck
     }
   },
   computed: {
@@ -44,14 +43,20 @@ export default {
     },
     rollCardsInDiscard: function () {
       return rollDeck.filter(card => card.status === 'discard')
+    },
+    rollCardInPlay: function () {
+      if (rollDeck.filter(card => card.status === 'play').length > 0) {
+        return rollDeck.find(card => card.status === 'play')
+      }
+      return 0
     }
   },
   methods: {
     drawRollCard: function () {
       if (this.rollCardsInDraw.length > 0) {
+        if (this.rollCardInPlay !== 0) this.rollCardInPlay.status = 'discard'
         let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
-        this.rollCardInPlay = randomCard.value
-        randomCard.status = 'discard'
+        randomCard.status = 'play'
       }
     }
   }
