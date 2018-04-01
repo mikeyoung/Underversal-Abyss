@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12">{{ title }}</div>
+      <div class="col-12">Main Menu</div>
       <ul>
         <li>
           <router-link to="/rules">Go to Rules</router-link>
@@ -13,7 +13,6 @@
           <router-link to="/game">Go to Game</router-link>
         </li>
       </ul>
-      <Character />
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-2">Stats</div>
@@ -23,38 +22,11 @@
 </template>
 
 <script>
-import Character from './Character.vue'
-
 export default {
-  name: 'MainMenu',
-  data () {
-    return {
-      title: 'Welcome to Your Vue.js App'
-    }
-  },
-  components: {
-    Character
-  },
-  props: [
-    'rollDeck'
-  ]
+  name: 'MainMenu'
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>

@@ -2,11 +2,11 @@
     <ul class="rollCardDiscardList">
         <li
             v-for="(card) in this.rollDeck"
-            :key="card.value"
+            :key="card.id"
             v-bind:class="{
                 discarded: card.status === 'discard',
                 play: card.status === 'play'}"
-            v-bind:id="'rollDeckListItem' + card.value">{{ card.value }} {{ card.status }} </li>
+            v-bind:id="'rollDeckListItem' + card.id">{{ card.value }} {{ card.status }} </li>
     </ul>
 </template>
 

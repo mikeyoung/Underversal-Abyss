@@ -17,6 +17,7 @@
       <div class="col-sm-12 col-md-2">
         <h3>Stats</h3>
         <RollDeckDiscard v-bind:rollDeck="rollDeck" />
+        <CharacterSheet v-bind:character="character" />
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
@@ -30,8 +31,11 @@
 <script>
 import RollDeck from '../classes/RollDeck'
 import RollDeckDiscard from './RollDeckDiscard'
+import Character from '../classes/Character'
+import CharacterSheet from './CharacterSheet'
 
-var rollDeck = new RollDeck().cards
+let rollDeck = new RollDeck().cards
+let character = new Character()
 
 export default {
   name: 'Game',
@@ -39,11 +43,13 @@ export default {
     return {
       title: 'Game',
       rollDeck,
+      character,
       rollCardsInPlay: [
         {value: 0},
         {value: 0}
       ],
-      gameInPlay: false
+      gameInPlay: false,
+      turnNumber: 0
     }
   },
   computed: {
@@ -76,16 +82,14 @@ export default {
     }
   },
   components: {
-    RollDeckDiscard
+    RollDeckDiscard,
+    CharacterSheet
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 ul {
   list-style-type: none;
   padding: 0;
@@ -93,8 +97,5 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>
