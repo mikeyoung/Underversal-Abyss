@@ -8,7 +8,7 @@ export default class RollDeck {
         this.cards.push(new Card({
           status: 'draw',
           value: i + 1,
-          id: j.toString() + i.toString()
+          id: 'j' + j.toString() + 'i' + i.toString()
         }))
       }
     }

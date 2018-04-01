@@ -6,7 +6,7 @@
             v-bind:class="{
                 discarded: card.status === 'discard',
                 play: card.status === 'play'}"
-            v-bind:id="'rollDeckListItem' + card.id">{{ card.value }} {{ card.status }} </li>
+            v-bind:id="card.id">{{ card.value }} / {{ card.status }} </li>
     </ul>
 </template>
 
