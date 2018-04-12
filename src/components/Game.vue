@@ -18,11 +18,13 @@
         <h3>Stats</h3>
         <RollDeckDiscard v-bind:rollDeck="rollDeck" />
         <CharacterSheet v-bind:character="character" />
+        <TunnelDisplay v-bind:tunnel="tunnel" />
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
         <button type="button" v-on:click="playRollCard(0)" :disabled="rollCardsInPlay[0].value === 0 ? true : false">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
         <button type="button" v-on:click="playRollCard(1)" :disabled="rollCardsInPlay[1].value === 0 ? true : false">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
+        <button type="button" v-on:click="drawTunnelCard()" :disabled="tunnel.length === 18 || !this.gameInPlay ? true : false">Draw Tunnel Card</button>
       </div>
     </div>
   </div>
@@ -33,9 +35,12 @@ import RollDeck from '../classes/RollDeck'
 import RollDeckDiscard from './RollDeckDiscard'
 import Character from '../classes/Character'
 import CharacterSheet from './CharacterSheet'
+import TunnelDeck from '../classes/TunnelDeck'
+import TunnelDisplay from './TunnelDisplay'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
+let tunnelDeck = new TunnelDeck()
 
 export default {
   name: 'Game',
@@ -44,6 +49,8 @@ export default {
       title: 'Game',
       rollDeck,
       character,
+      tunnelDeck,
+      tunnel: [],
       rollCardsInPlay: [
         {value: 0},
         {value: 0}
@@ -58,6 +65,9 @@ export default {
     },
     rollCardsInDiscard: function () {
       return rollDeck.filter(card => card.status === 'discard')
+    },
+    tunnelCardsInDraw: function () {
+      return tunnelDeck.cards.filter(card => card.status === 'draw')
     }
   },
   methods: {
@@ -75,6 +85,13 @@ export default {
       // do some stuff
       this.drawRollCard(cardNumber)
     },
+    drawTunnelCard: function () {
+      if (this.tunnel.length < 18) {
+        let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
+        this.tunnel.push(randomCard)
+        randomCard.status = 'discard'
+      }
+    },
     initGame: function () {
       this.drawRollCard(0)
       this.drawRollCard(1)
@@ -83,7 +100,8 @@ export default {
   },
   components: {
     RollDeckDiscard,
-    CharacterSheet
+    CharacterSheet,
+    TunnelDisplay
   }
 }
 </script>
