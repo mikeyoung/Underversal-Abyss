@@ -22,8 +22,8 @@
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
-        <button type="button" v-on:click="playRollCard(0)" :disabled="rollCardsInPlay[0].value === 0 ? true : false">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
-        <button type="button" v-on:click="playRollCard(1)" :disabled="rollCardsInPlay[1].value === 0 ? true : false">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
+        <button type="button" v-on:click="playRollCard(0)" :disabled="!this.gameInPlay ? true : false">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
+        <button type="button" v-on:click="playRollCard(1)" :disabled="!this.gameInPlay ? true : false">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
         <button type="button" v-on:click="drawTunnelCard()" :disabled="tunnel.length === 18 || !this.gameInPlay ? true : false">Draw Tunnel Card</button>
       </div>
     </div>
@@ -89,6 +89,7 @@ export default {
       if (this.tunnel.length < 18) {
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
         this.tunnel.push(randomCard)
+        this.character.space += 1
         randomCard.status = 'discard'
       }
     },

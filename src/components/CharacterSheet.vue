@@ -1,5 +1,9 @@
 <template>
-  <div>Hit Points: {{ character.hitPoints }}</div>
+  <div>
+    Hit Points: {{ character.hitPoints }}<br />
+    Space: {{ character.space }}
+  </div>
+
 </template>
 
 <script>
