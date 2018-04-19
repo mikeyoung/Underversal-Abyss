@@ -26,8 +26,10 @@
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
-        <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[0].value }}</button>
-        <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[1].value }}</button>
+        <span v-if="this.activeTunnelCard.value === 'monster'">
+          <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[0].value }}</button>
+          <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[1].value }}</button>
+        </span>
         <button type="button" v-on:click="drawTunnelCard()" :disabled="tunnel.length === 18 || !this.gameInPlay ? true : false">Draw Tunnel Card</button>
       </div>
     </div>
@@ -66,6 +68,9 @@ export default {
       },
       activeRollCardPlayer: {
         value: 0
+      },
+      activeTunnelCard: {
+        value: 0
       }
     }
   },
@@ -78,9 +83,6 @@ export default {
     },
     tunnelCardsInDraw: function () {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
-    },
-    activeTunnelCard: function () {
-      return this.tunnel.find(card => card.status === 'play') || {value: 0}
     }
   },
   methods: {
@@ -112,6 +114,7 @@ export default {
         this.tunnel.push(randomCard)
         this.character.space += 1
         randomCard.status = 'play'
+        this.activeTunnelCard = randomCard
       }
     },
     initGame: function () {
