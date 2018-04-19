@@ -18,7 +18,9 @@
         <h3>Stats</h3>
         <RollDeckDiscard v-bind:rollDeck="rollDeck" />
         <CharacterSheet v-bind:character="character" />
-        <TunnelDisplay v-bind:tunnel="tunnel" />
+        <TunnelDisplay
+          v-bind:activeTunnelCard="activeTunnelCard"
+          v-bind:tunnel="tunnel" />
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
@@ -68,18 +70,25 @@ export default {
     },
     tunnelCardsInDraw: function () {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
+    },
+    activeTunnelCard: function () {
+      return this.tunnel.find(card => card.status === 'play') || {value: 0}
     }
   },
   methods: {
-    drawRollCard: function (cardNumber) {
-      if (this.rollCardsInPlay[cardNumber].status === 'play') this.rollCardsInPlay[cardNumber].status = 'discard'
+    getRollCard: function () {
       if (this.rollCardsInDraw.length > 0) {
         let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
-        this.rollCardsInPlay[cardNumber] = randomCard
         randomCard.status = 'play'
+        return randomCard
       } else {
-        this.rollCardsInPlay[cardNumber] = {value: 0}
+        return {value: 0}
       }
+    },
+    drawRollCard: function (cardNumber) {
+      if (this.rollCardsInPlay[cardNumber].status === 'play') this.rollCardsInPlay[cardNumber].status = 'discard'
+      let rollCard = this.getRollCard()
+      this.rollCardsInPlay[cardNumber] = rollCard
     },
     playRollCard: function (cardNumber) {
       // do some stuff
@@ -87,10 +96,11 @@ export default {
     },
     drawTunnelCard: function () {
       if (this.tunnel.length < 18) {
+        if (this.activeTunnelCard.value !== 0) this.activeTunnelCard.status = 'discard'
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
         this.tunnel.push(randomCard)
         this.character.space += 1
-        randomCard.status = 'discard'
+        randomCard.status = 'play'
       }
     },
     initGame: function () {

@@ -1,5 +1,8 @@
 <template>
     <ul class="tunnelCards">
+        <div class="activeTunnelCard">
+          <h3>{{ this.activeTunnelCard.value }}</h3>
+        </div>
         <li
             v-for="(card) in this.tunnel"
             :key="card.id"
@@ -19,7 +22,8 @@ export default {
     }
   },
   props: [
-    'tunnel'
+    'tunnel',
+    'activeTunnelCard'
   ]
 }
 </script>
