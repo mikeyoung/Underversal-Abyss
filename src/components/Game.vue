@@ -4,6 +4,8 @@
       <div class="col-12">{{ title }}</div>
       <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
       <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
+      <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
+      <div class="col-12">activeRollCardPlayer.value {{ activeRollCardPlayer.value }}</div>
     </div>
       <ul>
         <li>
@@ -24,8 +26,8 @@
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
-        <button type="button" v-on:click="playRollCard(0)" :disabled="!this.gameInPlay ? true : false">Draw Roll Card 1 {{ rollCardsInPlay[0].value }}</button>
-        <button type="button" v-on:click="playRollCard(1)" :disabled="!this.gameInPlay ? true : false">Draw Roll Card 2 {{ rollCardsInPlay[1].value }}</button>
+        <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[0].value }}</button>
+        <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[1].value }}</button>
         <button type="button" v-on:click="drawTunnelCard()" :disabled="tunnel.length === 18 || !this.gameInPlay ? true : false">Draw Tunnel Card</button>
       </div>
     </div>
@@ -58,7 +60,13 @@ export default {
         {value: 0}
       ],
       gameInPlay: false,
-      turnNumber: 0
+      turnNumber: 0,
+      activeRollCardMonster: {
+        value: 0
+      },
+      activeRollCardPlayer: {
+        value: 0
+      }
     }
   },
   computed: {
@@ -77,22 +85,25 @@ export default {
   },
   methods: {
     getRollCard: function () {
-      if (this.rollCardsInDraw.length > 0) {
-        let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
-        randomCard.status = 'play'
-        return randomCard
-      } else {
-        return {value: 0}
+      if (this.rollCardsInDraw.length === 0) {
+        for (let card of this.rollCardsInDiscard) {
+          card.status = 'draw'
+        }
       }
+      let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
+      randomCard.status = 'play'
+      return randomCard
     },
-    drawRollCard: function (cardNumber) {
-      if (this.rollCardsInPlay[cardNumber].status === 'play') this.rollCardsInPlay[cardNumber].status = 'discard'
-      let rollCard = this.getRollCard()
-      this.rollCardsInPlay[cardNumber] = rollCard
+    playRollCardPlayer: function (cardNumber) {
+      if (this.rollCardsInPlay[cardNumber].status === 'play') this.activeRollCardPlayer = this.rollCardsInPlay[cardNumber]
+      this.resolvePlay()
+
+      // discard and draw
+      this.activeRollCardPlayer.status = 'discard'
+      this.rollCardsInPlay[cardNumber] = this.getRollCard()
     },
-    playRollCard: function (cardNumber) {
-      // do some stuff
-      this.drawRollCard(cardNumber)
+    playRollCardMonster: function () {
+      this.activeRollCardMonster = this.getRollCard()
     },
     drawTunnelCard: function () {
       if (this.tunnel.length < 18) {
@@ -104,9 +115,16 @@ export default {
       }
     },
     initGame: function () {
-      this.drawRollCard(0)
-      this.drawRollCard(1)
+      this.playRollCardPlayer(0)
+      this.playRollCardPlayer(1)
       this.gameInPlay = true
+    },
+    resolvePlay: function () {
+      if (this.activeTunnelCard.value === 'monster') {
+        this.playRollCardMonster()
+        if (this.activeRollCardMonster.value >= this.activeRollCardPlayer.value) this.character.hitPoints -= 1
+        this.activeRollCardMonster.status = 'discard'
+      }
     }
   },
   components: {
