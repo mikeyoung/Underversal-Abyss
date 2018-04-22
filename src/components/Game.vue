@@ -6,6 +6,7 @@
       <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
       <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
       <div class="col-12">activeRollCardPlayer.value {{ activeRollCardPlayer.value }}</div>
+      <div class="col-12">activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
     </div>
       <ul>
         <li>
@@ -125,7 +126,11 @@ export default {
     resolvePlay: function () {
       if (this.activeTunnelCard.value === 'monster') {
         this.playRollCardMonster()
-        if (this.activeRollCardMonster.value >= this.activeRollCardPlayer.value) this.character.hitPoints -= 1
+        if (this.activeRollCardMonster.value >= this.activeRollCardPlayer.value) {
+          this.character.hitPoints -= 1
+        } else {
+          this.activeTunnelCard.hitPoints -= 1
+        }
         this.activeRollCardMonster.status = 'discard'
       }
     }

@@ -5,6 +5,7 @@ export default class TunnelDeck {
     this.cards = []
     for (let i = 0; i < 20; i++) {
       let value = 'monster'
+      let hitPoints = 3
 
       /*
       if (i > 4) value = 'treasure'
@@ -15,7 +16,8 @@ export default class TunnelDeck {
       this.cards.push(new Card({
         status: 'draw',
         id: i.toString(),
-        value
+        value,
+        hitPoints
       }))
     }
   }

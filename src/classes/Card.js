@@ -3,5 +3,6 @@ export default class Card {
     this.status = instObj.status
     this.value = instObj.value
     this.id = instObj.id
+    this.hitPoints = instObj.hitPoints
   }
 }
