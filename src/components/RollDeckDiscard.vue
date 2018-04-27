@@ -5,7 +5,9 @@
             :key="card.id"
             v-bind:class="{
                 discarded: card.status === 'discard',
-                play: card.status === 'play'}"
+                play: card.status === 'hand',
+                activeByPlayer: card.status === 'activeByPlayer',
+                activeByMonster: card.status === 'activeByMonster'}"
             v-bind:id="card.id">{{ card.value }} / {{ card.status }} </li>
     </ul>
 </template>
@@ -27,10 +29,18 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .discarded {
-        background-color: #ccc;
+        opacity: 0;
     }
 
     .play {
         background-color:aquamarine;
+    }
+
+    .activeByPlayer {
+        background-color:pink;
+    }
+
+    .activeByMonster {
+        background-color:royalblue
     }
 </style>

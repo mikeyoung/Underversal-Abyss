@@ -94,19 +94,22 @@ export default {
         }
       }
       let randomCard = this.rollCardsInDraw[Math.floor(Math.random() * this.rollCardsInDraw.length)]
-      randomCard.status = 'play'
+      randomCard.status = 'hand'
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
-      if (this.rollCardsInPlay[cardNumber].status === 'play') this.activeRollCardPlayer = this.rollCardsInPlay[cardNumber]
+      if (this.rollCardsInPlay[cardNumber].status === 'hand') {
+        this.activeRollCardPlayer.status = 'discard'
+        this.activeRollCardPlayer = this.rollCardsInPlay[cardNumber]
+      }
+      this.activeRollCardPlayer.status = 'activeByPlayer'
       this.resolvePlay()
-
-      // discard and draw
-      this.activeRollCardPlayer.status = 'discard'
       this.rollCardsInPlay[cardNumber] = this.getRollCard()
     },
     playRollCardMonster: function () {
+      this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
+      this.activeRollCardMonster.status = 'activeByMonster'
     },
     drawTunnelCard: function () {
       if (this.tunnel.length < 18) {
@@ -114,7 +117,7 @@ export default {
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
         this.tunnel.push(randomCard)
         this.character.space += 1
-        randomCard.status = 'play'
+        randomCard.status = 'hand'
         this.activeTunnelCard = randomCard
       }
     },
@@ -131,7 +134,6 @@ export default {
         } else {
           this.activeTunnelCard.hitPoints -= 1
         }
-        this.activeRollCardMonster.status = 'discard'
       }
     }
   },
