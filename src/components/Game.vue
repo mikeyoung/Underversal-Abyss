@@ -27,11 +27,13 @@
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
-        <span v-if="this.activeTunnelCard.value === 'monster'">
-          <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[0].value }}</button>
-          <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay ? true : false">Roll {{ rollCardsInPlay[1].value }}</button>
+        <span v-if="showPlayCardButtons">
+          <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Roll {{ rollCardsInHand[0].value }}</button>
+          <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Roll {{ rollCardsInHand[1].value }}</button>
+          <button type="button" v-on:click="playRollCardPlayerDraw" :disabled="!this.gameInPlay">Draw</button>
         </span>
-        <button type="button" v-on:click="drawTunnelCard()" :disabled="tunnel.length === 18 || !this.gameInPlay ? true : false">Draw Tunnel Card</button>
+        <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
+        <button type="button" v-on:click="resetGame()">Reset</button>
       </div>
     </div>
   </div>
@@ -58,7 +60,7 @@ export default {
       character,
       tunnelDeck,
       tunnel: [],
-      rollCardsInPlay: [
+      rollCardsInHand: [
         {value: 0},
         {value: 0}
       ],
@@ -84,6 +86,14 @@ export default {
     },
     tunnelCardsInDraw: function () {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
+    },
+    drawTunnelCardDisabled: function () {
+      if (this.tunnel.length === 18) return true
+      if (!this.gameInPlay) return true
+      if (this.character.engaged) return true
+    },
+    showPlayCardButtons: function () {
+      return this.activeTunnelCard.value === 'monster' && this.activeTunnelCard.hitPoints > 0
     }
   },
   methods: {
@@ -98,26 +108,40 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
-      if (this.rollCardsInPlay[cardNumber].status === 'hand') {
+      if (this.rollCardsInHand[cardNumber].status === 'hand') {
         this.activeRollCardPlayer.status = 'discard'
-        this.activeRollCardPlayer = this.rollCardsInPlay[cardNumber]
+        this.activeRollCardPlayer = this.rollCardsInHand[cardNumber]
       }
       this.activeRollCardPlayer.status = 'activeByPlayer'
+      this.rollCardsInHand[cardNumber] = this.getRollCard()
       this.resolvePlay()
-      this.rollCardsInPlay[cardNumber] = this.getRollCard()
+    },
+    playRollCardPlayerDraw: function () {
+      this.activeRollCardPlayer.status = 'discard'
+      this.activeRollCardPlayer = this.getRollCard()
+      this.activeRollCardPlayer.status = 'activeByPlayer'
+      this.resolvePlay()
     },
     playRollCardMonster: function () {
       this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
       this.activeRollCardMonster.status = 'activeByMonster'
+      if (this.activeRollCardMonster.value >= this.activeRollCardPlayer.value) {
+        this.character.hitPoints -= 1
+      } else {
+        this.activeTunnelCard.hitPoints -= 1
+        if (this.activeTunnelCard.hitPoints === 0) character.engaged = false
+        this.activeTunnelCard.status = 'discard'
+      }
     },
     drawTunnelCard: function () {
       if (this.tunnel.length < 18) {
+        this.character.engaged = true
         if (this.activeTunnelCard.value !== 0) this.activeTunnelCard.status = 'discard'
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
         this.tunnel.push(randomCard)
         this.character.space += 1
-        randomCard.status = 'hand'
+        randomCard.status = 'play'
         this.activeTunnelCard = randomCard
       }
     },
@@ -129,12 +153,29 @@ export default {
     resolvePlay: function () {
       if (this.activeTunnelCard.value === 'monster') {
         this.playRollCardMonster()
-        if (this.activeRollCardMonster.value >= this.activeRollCardPlayer.value) {
-          this.character.hitPoints -= 1
-        } else {
-          this.activeTunnelCard.hitPoints -= 1
-        }
       }
+    },
+    resetGame: function () {
+      this.tunnel = []
+      this.rollCardsInHand = [
+        {value: 0},
+        {value: 0}
+      ]
+      this.gameInPlay = false
+      this.turnNumber = 0
+      this.activeRollCardMonster = { value: 0 }
+      this.activeRollCardPlayer = { value: 0 }
+      this.activeTunnelCard = { value: 0 }
+
+      this.character.space = 0
+      this.character.hitPoints = 6
+      this.character.activeItem = {}
+      this.character.engaged = false
+
+      for (let card of this.rollDeck) card.status = 'draw'
+      for (let card of this.tunnelDeck.cards) card.status = 'draw'
+
+      this.initGame()
     }
   },
   components: {

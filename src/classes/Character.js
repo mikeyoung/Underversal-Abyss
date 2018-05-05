@@ -3,6 +3,6 @@ export default class Character {
     this.space = 0
     this.hitPoints = 6
     this.activeItem = {}
-    this.rollDeckCards = []
+    this.engaged = false
   }
 }
