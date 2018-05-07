@@ -74,7 +74,8 @@ export default {
       },
       activeTunnelCard: {
         value: 0
-      }
+      },
+      maxTunnelLength: 12
     }
   },
   computed: {
@@ -88,7 +89,7 @@ export default {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
     },
     drawTunnelCardDisabled: function () {
-      if (this.tunnel.length === 18) return true
+      if (this.tunnel.length === this.maxTunnelLength) return true
       if (!this.gameInPlay) return true
       if (this.character.engaged) return true
     },
@@ -135,7 +136,7 @@ export default {
       }
     },
     drawTunnelCard: function () {
-      if (this.tunnel.length < 18) {
+      if (this.tunnel.length < this.maxTunnelLength) {
         this.character.engaged = true
         if (this.activeTunnelCard.value !== 0) this.activeTunnelCard.status = 'discard'
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
