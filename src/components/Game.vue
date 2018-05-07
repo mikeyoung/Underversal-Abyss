@@ -5,7 +5,7 @@
       <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
       <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
       <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
-      <div class="col-12">activeRollCardPlayer.value {{ activeRollCardPlayer.value }}</div>
+      <div class="col-12">character.activeRollCard.value {{ character.activeRollCard.value }}</div>
       <div class="col-12">activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
     </div>
       <ul>
@@ -69,9 +69,6 @@ export default {
       activeRollCardMonster: {
         value: 0
       },
-      activeRollCardPlayer: {
-        value: 0
-      },
       activeTunnelCard: {
         value: 0
       },
@@ -110,24 +107,24 @@ export default {
     },
     playRollCardPlayer: function (cardNumber) {
       if (this.rollCardsInHand[cardNumber].status === 'hand') {
-        this.activeRollCardPlayer.status = 'discard'
-        this.activeRollCardPlayer = this.rollCardsInHand[cardNumber]
+        this.character.activeRollCard.status = 'discard'
+        this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       }
-      this.activeRollCardPlayer.status = 'activeByPlayer'
+      this.character.activeRollCard.status = 'activeByPlayer'
       this.rollCardsInHand[cardNumber] = this.getRollCard()
       this.resolvePlay()
     },
     playRollCardPlayerDraw: function () {
-      this.activeRollCardPlayer.status = 'discard'
-      this.activeRollCardPlayer = this.getRollCard()
-      this.activeRollCardPlayer.status = 'activeByPlayer'
+      this.character.activeRollCard.status = 'discard'
+      this.character.activeRollCard = this.getRollCard()
+      this.character.activeRollCard.status = 'activeByPlayer'
       this.resolvePlay()
     },
     playRollCardMonster: function () {
       this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
       this.activeRollCardMonster.status = 'activeByMonster'
-      if (this.activeRollCardMonster.value >= this.activeRollCardPlayer.value) {
+      if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
         this.character.hitPoints -= 1
       } else {
         this.activeTunnelCard.hitPoints -= 1
@@ -165,11 +162,11 @@ export default {
       this.gameInPlay = false
       this.turnNumber = 0
       this.activeRollCardMonster = { value: 0 }
-      this.activeRollCardPlayer = { value: 0 }
+      this.character.activeRollCard = { value: 0 }
       this.activeTunnelCard = { value: 0 }
 
       this.character.space = 0
-      this.character.hitPoints = 6
+      this.character.hitPoints = this.character.maxHitPoints
       this.character.activeItem = {}
       this.character.engaged = false
 
