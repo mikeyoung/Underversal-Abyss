@@ -70,9 +70,8 @@ export default {
         value: 0
       },
       activeTunnelCard: {
-        value: 0
-      },
-      maxTunnelLength: 12
+        value: ''
+      }
     }
   },
   computed: {
@@ -86,12 +85,12 @@ export default {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
     },
     drawTunnelCardDisabled: function () {
-      if (this.tunnel.length === this.maxTunnelLength) return true
+      if (this.tunnel.length === this.tunnelDeck.cards.length) return true
       if (!this.gameInPlay) return true
       if (this.character.engaged) return true
     },
     showPlayCardButtons: function () {
-      return this.activeTunnelCard.value === 'monster' && this.activeTunnelCard.hitPoints > 0
+      return this.activeTunnelCard.type === 'monster' && this.activeTunnelCard.hitPoints > 0
     }
   },
   methods: {
@@ -112,13 +111,13 @@ export default {
       }
       this.character.activeRollCard.status = 'activeByPlayer'
       this.rollCardsInHand[cardNumber] = this.getRollCard()
-      this.resolvePlay()
+      this.resolvePlayerRollCard()
     },
     playRollCardPlayerDraw: function () {
       this.character.activeRollCard.status = 'discard'
       this.character.activeRollCard = this.getRollCard()
       this.character.activeRollCard.status = 'activeByPlayer'
-      this.resolvePlay()
+      this.resolvePlayerRollCard()
     },
     playRollCardMonster: function () {
       this.activeRollCardMonster.status = 'discard'
@@ -133,14 +132,26 @@ export default {
       }
     },
     drawTunnelCard: function () {
-      if (this.tunnel.length < this.maxTunnelLength) {
+      if (this.tunnel.length < this.tunnelDeck.cards.length) {
         this.character.engaged = true
-        if (this.activeTunnelCard.value !== 0) this.activeTunnelCard.status = 'discard'
+        if (this.activeTunnelCard.value !== '') this.activeTunnelCard.status = 'discard'
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
         this.tunnel.push(randomCard)
         this.character.space += 1
         randomCard.status = 'play'
         this.activeTunnelCard = randomCard
+
+        if (this.activeTunnelCard.type === 'chest') {
+          this.character.engaged = false
+        }
+
+        if (this.activeTunnelCard.type === 'rest') {
+          this.character.engaged = false
+        }
+
+        if (this.activeTunnelCard.type === 'trap') {
+          this.character.engaged = false
+        }
       }
     },
     initGame: function () {
@@ -148,8 +159,8 @@ export default {
       this.playRollCardPlayer(1)
       this.gameInPlay = true
     },
-    resolvePlay: function () {
-      if (this.activeTunnelCard.value === 'monster') {
+    resolvePlayerRollCard: function () {
+      if (this.activeTunnelCard.type === 'monster') {
         this.playRollCardMonster()
       }
     },
@@ -163,7 +174,7 @@ export default {
       this.turnNumber = 0
       this.activeRollCardMonster = { value: 0 }
       this.character.activeRollCard = { value: 0 }
-      this.activeTunnelCard = { value: 0 }
+      this.activeTunnelCard = { value: '' }
 
       this.character.space = 0
       this.character.hitPoints = this.character.maxHitPoints
@@ -171,7 +182,10 @@ export default {
       this.character.engaged = false
 
       for (let card of this.rollDeck) card.status = 'draw'
-      for (let card of this.tunnelDeck.cards) card.status = 'draw'
+      for (let card of this.tunnelDeck.cards) {
+        card.status = 'draw'
+        card.hitPoints = card.maxHitPoints
+      }
 
       this.initGame()
     }

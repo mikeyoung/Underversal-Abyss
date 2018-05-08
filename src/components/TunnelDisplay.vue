@@ -1,7 +1,7 @@
 <template>
     <ul class="tunnelCards">
         <div class="activeTunnelCard">
-          <h3>{{ this.activeTunnelCard.value }}</h3>
+          <h3>{{ this.activeTunnelCard.type }}</h3>
         </div>
         <li
             v-for="(card) in this.tunnel"

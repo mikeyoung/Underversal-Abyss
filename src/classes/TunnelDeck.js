@@ -3,21 +3,36 @@ import Card from './Card'
 export default class TunnelDeck {
   constructor () {
     this.cards = []
-    for (let i = 0; i < 20; i++) {
-      let value = 'monster'
-      let hitPoints = 3
+    for (let i = 0; i < 11; i++) {
+      let status = 'draw'
+      let id = 'td' + i.toString()
+      let type = ''
+      let value = ''
+      let maxHitPoints = 0
 
-      /*
-      if (i > 4) value = 'treasure'
-      if (i > 9) value = 'trap'
-      if (i > 14) value = 'rest'
-      */
+      if (i >= 0 && i < 2) {
+        type = 'monster'
+        value = 'scrub'
+        maxHitPoints = 3
+      }
+
+      if (i >= 2 && i < 4) {
+        type = 'monster'
+        value = 'captain'
+        maxHitPoints = 5
+      }
+
+      if (i >= 4 && i < 7) type = 'chest'
+      if (i >= 7 && i < 9) type = 'trap'
+      if (i >= 9 && i < 11) type = 'rest'
 
       this.cards.push(new Card({
-        status: 'draw',
-        id: i.toString(),
+        status,
+        id,
+        type,
         value,
-        hitPoints
+        maxHitPoints,
+        hitPoints: maxHitPoints
       }))
     }
   }
