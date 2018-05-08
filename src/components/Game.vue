@@ -28,9 +28,14 @@
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
         <span v-if="showPlayCardButtons">
-          <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Roll {{ rollCardsInHand[0].value }}</button>
-          <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Roll {{ rollCardsInHand[1].value }}</button>
-          <button type="button" v-on:click="playRollCardPlayerDraw" :disabled="!this.gameInPlay">Draw</button>
+          <div>
+            <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[0].value }}</button>
+            <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[1].value }}</button>
+          </div>
+          <div>
+            <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="!this.gameInPlay">Discard {{ rollCardsInHand[0].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="!this.gameInPlay">Discard {{ rollCardsInHand[1].value }}</button>
+          </div>
         </span>
         <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
         <button type="button" v-on:click="resetGame()">Reset</button>
@@ -105,13 +110,16 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
-      if (this.rollCardsInHand[cardNumber].status === 'hand') {
-        this.character.activeRollCard.status = 'discard'
-        this.character.activeRollCard = this.rollCardsInHand[cardNumber]
-      }
+      this.character.activeRollCard.status = 'discard'
+      this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       this.character.activeRollCard.status = 'activeByPlayer'
       this.rollCardsInHand[cardNumber] = this.getRollCard()
       this.resolvePlayerRollCard()
+    },
+    discardRollCardPlayer: function (cardNumber) {
+      this.rollCardsInHand[cardNumber].status = 'discard'
+      this.rollCardsInHand[cardNumber] = this.getRollCard()
+      this.playRollCardPlayer(cardNumber)
     },
     playRollCardPlayerDraw: function () {
       this.character.activeRollCard.status = 'discard'
@@ -141,15 +149,27 @@ export default {
         randomCard.status = 'play'
         this.activeTunnelCard = randomCard
 
+        if (this.activeTunnelCard.type === 'monster') {
+          // play monster sound && display play buttons
+        }
+
         if (this.activeTunnelCard.type === 'chest') {
+          // play chest sound && display options
           this.character.engaged = false
         }
 
         if (this.activeTunnelCard.type === 'rest') {
+          // play rest sound && display options
           this.character.engaged = false
         }
 
         if (this.activeTunnelCard.type === 'trap') {
+          // play trap sound && display play buttons
+          this.character.engaged = false
+        }
+
+        if (this.activeTunnelCard.type === 'crubb') {
+          // play crubb sound && display options
           this.character.engaged = false
         }
       }
