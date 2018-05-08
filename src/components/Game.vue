@@ -7,6 +7,10 @@
       <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
       <div class="col-12">character.activeRollCard.value {{ character.activeRollCard.value }}</div>
       <div class="col-12">activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
+      <div class="col-12">activeTunnelCard.d6Roll {{ activeTunnelCard.d6Roll }}</div>
+      <div class="col-12">character.d6Roll {{ character.d6Roll }}</div>
+      <div class="col-12">activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
+      <div class="col-12">character.attack {{ character.attack }}</div>
     </div>
       <ul>
         <li>
@@ -51,6 +55,7 @@ import Character from '../classes/Character'
 import CharacterSheet from './CharacterSheet'
 import TunnelDeck from '../classes/TunnelDeck'
 import TunnelDisplay from './TunnelDisplay'
+import Dice from './../classes/Dice'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -131,7 +136,12 @@ export default {
       this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
       this.activeRollCardMonster.status = 'activeByMonster'
-      if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
+      this.activeTunnelCard.d6Roll = Dice.getD6()
+      this.activeTunnelCard.attack = this.activeRollCardMonster.value + this.activeTunnelCard.d6Roll
+      this.character.d6Roll = Dice.getD6()
+      this.character.attack = this.character.activeRollCard.value + this.character.d6Roll
+
+      if (this.activeTunnelCard.attack >= this.character.attack) {
         this.character.hitPoints -= 1
       } else {
         this.activeTunnelCard.hitPoints -= 1

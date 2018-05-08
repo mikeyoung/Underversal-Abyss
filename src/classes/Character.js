@@ -6,5 +6,7 @@ export default class Character {
     this.engaged = false
     this.activeRollCard = { value: 0 }
     this.gold = 5
+    this.d6Roll = 0
+    this.attack = 0
   }
 }
