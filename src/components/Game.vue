@@ -11,6 +11,7 @@
       <div class="col-12">character.d6Roll {{ character.d6Roll }}</div>
       <div class="col-12">activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
       <div class="col-12">character.attack {{ character.attack }}</div>
+      <div class="col-12">character.gold {{ character.gold }}</div>
     </div>
       <ul>
         <li>
@@ -35,10 +36,14 @@
           <div>
             <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[0].value }}</button>
             <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[1].value }}</button>
+            <button type="button" v-on:click="playRollCardPlayer(2)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[2].value }}</button>
+            <button type="button" v-on:click="playRollCardPlayer(3)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[3].value }}</button>
           </div>
           <div>
-            <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="!this.gameInPlay">Discard {{ rollCardsInHand[0].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="!this.gameInPlay">Discard {{ rollCardsInHand[1].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[0].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[1].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[2].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[3].value }}</button>
           </div>
         </span>
         <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
@@ -71,6 +76,8 @@ export default {
       tunnelDeck,
       tunnel: [],
       rollCardsInHand: [
+        {value: 0},
+        {value: 0},
         {value: 0},
         {value: 0}
       ],
@@ -121,24 +128,24 @@ export default {
       this.rollCardsInHand[cardNumber] = this.getRollCard()
       this.resolvePlayerRollCard()
     },
-    discardRollCardPlayer: function (cardNumber) {
-      this.rollCardsInHand[cardNumber].status = 'discard'
-      this.rollCardsInHand[cardNumber] = this.getRollCard()
-      this.playRollCardPlayer(cardNumber)
-    },
     playRollCardPlayerDraw: function () {
       this.character.activeRollCard.status = 'discard'
       this.character.activeRollCard = this.getRollCard()
       this.character.activeRollCard.status = 'activeByPlayer'
       this.resolvePlayerRollCard()
     },
+    discardRollCardPlayer: function (cardNumber) {
+      this.rollCardsInHand[cardNumber].status = 'discard'
+      this.rollCardsInHand[cardNumber] = this.getRollCard()
+      if (this.activeTunnelCard.type === 'monster') this.character.gold--
+    },
     playRollCardMonster: function () {
       this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
       this.activeRollCardMonster.status = 'activeByMonster'
-      this.activeTunnelCard.d6Roll = Dice.getD6()
+      this.activeTunnelCard.d6Roll = Dice.roll('1d6')
       this.activeTunnelCard.attack = this.activeRollCardMonster.value + this.activeTunnelCard.d6Roll
-      this.character.d6Roll = Dice.getD6()
+      this.character.d6Roll = Dice.roll('1d6')
       this.character.attack = this.character.activeRollCard.value + this.character.d6Roll
 
       if (this.activeTunnelCard.attack >= this.character.attack) {
@@ -187,6 +194,8 @@ export default {
     initGame: function () {
       this.playRollCardPlayer(0)
       this.playRollCardPlayer(1)
+      this.playRollCardPlayer(2)
+      this.playRollCardPlayer(3)
       this.gameInPlay = true
     },
     resolvePlayerRollCard: function () {
@@ -197,6 +206,8 @@ export default {
     resetGame: function () {
       this.tunnel = []
       this.rollCardsInHand = [
+        {value: 0},
+        {value: 0},
         {value: 0},
         {value: 0}
       ]
