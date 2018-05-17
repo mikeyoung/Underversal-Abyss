@@ -3,7 +3,7 @@ import Card from './Card'
 export default class TunnelDeck {
   constructor () {
     this.cards = []
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
       let status = 'draw'
       let id = 'td' + i.toString()
       let type = ''
@@ -32,12 +32,13 @@ export default class TunnelDeck {
         value = 'trap'
       }
 
-      if (i >= 8 && i < 9) {
+      if (i >= 8 && i < 10) {
         type = 'rest'
-        value = 'trap'
+        value = 'rest'
+        maxHitPoints = 4
       }
 
-      if (i >= 9 && i < 10) {
+      if (i >= 10 && i < 12) {
         type = 'crubb'
         value = 'crubb'
       }

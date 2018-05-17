@@ -7,8 +7,8 @@
       <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
       <div class="col-12">character.activeRollCard.value {{ character.activeRollCard.value }}</div>
       <div class="col-12">activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
-      <div class="col-12">activeTunnelCard.d6Roll {{ activeTunnelCard.d6Roll }}</div>
-      <div class="col-12">character.d6Roll {{ character.d6Roll }}</div>
+      <div class="col-12">activeTunnelCard.d4Roll {{ activeTunnelCard.d6Roll }}</div>
+      <div class="col-12">character.d4Roll {{ character.d6Roll }}</div>
       <div class="col-12">activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
       <div class="col-12">character.attack {{ character.attack }}</div>
       <div class="col-12">character.gold {{ character.gold }}</div>
@@ -32,20 +32,18 @@
       </div>
       <div class="col-sm-12 col-md-10">Game Area<br>
         <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
-        <span v-if="showPlayCardButtons">
-          <div>
+          <div v-if="showPlayCardButtons">
             <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[0].value }}</button>
             <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[1].value }}</button>
             <button type="button" v-on:click="playRollCardPlayer(2)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[2].value }}</button>
             <button type="button" v-on:click="playRollCardPlayer(3)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[3].value }}</button>
           </div>
-          <div>
-            <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[0].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[1].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[2].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="this.character.gold < 1">Disc {{ rollCardsInHand[3].value }}</button>
+          <div v-if="this.gameInPlay">
+            <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[0].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[1].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[2].value }}</button>
+            <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[3].value }}</button>
           </div>
-        </span>
         <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
         <button type="button" v-on:click="resetGame()">Reset</button>
       </div>
@@ -108,6 +106,10 @@ export default {
     },
     showPlayCardButtons: function () {
       return this.activeTunnelCard.type === 'monster' && this.activeTunnelCard.hitPoints > 0
+    },
+    discardRollCardDisabled: function () {
+      if (this.character.gold < 1 && this.activeTunnelCard.type !== 'rest') return true
+      if (this.activeTunnelCard.type === 'rest' && this.activeTunnelCard.value < 1 && this.character.gold < 1) return true
     }
   },
   methods: {
@@ -137,15 +139,20 @@ export default {
     discardRollCardPlayer: function (cardNumber) {
       this.rollCardsInHand[cardNumber].status = 'discard'
       this.rollCardsInHand[cardNumber] = this.getRollCard()
-      if (this.activeTunnelCard.type === 'monster') this.character.gold--
+      if (this.activeTunnelCard.type === 'rest') {
+        if (this.activeTunnelCard.hitPoints < 1) this.character.gold--
+        this.activeTunnelCard.hitPoints--
+      } else {
+        this.character.gold--
+      }
     },
     playRollCardMonster: function () {
       this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
       this.activeRollCardMonster.status = 'activeByMonster'
-      this.activeTunnelCard.d6Roll = Dice.roll('1d6')
+      this.activeTunnelCard.d6Roll = Dice.roll('1d4')
       this.activeTunnelCard.attack = this.activeRollCardMonster.value + this.activeTunnelCard.d6Roll
-      this.character.d6Roll = Dice.roll('1d6')
+      this.character.d6Roll = Dice.roll('1d4')
       this.character.attack = this.character.activeRollCard.value + this.character.d6Roll
 
       if (this.activeTunnelCard.attack >= this.character.attack) {
@@ -221,6 +228,7 @@ export default {
       this.character.hitPoints = this.character.maxHitPoints
       this.character.activeItem = {}
       this.character.engaged = false
+      this.character.gold = this.character.startingGold
 
       for (let card of this.rollDeck) card.status = 'draw'
       for (let card of this.tunnelDeck.cards) {
