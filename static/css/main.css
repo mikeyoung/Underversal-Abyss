@@ -1,0 +1,29 @@
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #eee;
+  font-family: 'Lato', sans-serif;
+}
+html {
+  height: 100%;
+}
+
+table.stats {
+  border-collapse: separate;
+  border-spacing: 20px;
+  text-align: center;
+}
+
+table td {
+  border: 1px solid #eee;
+  margin: 10px;
+  padding: .1em;
+}
+
+button {
+  background-color: #000;
+  color: #eee;
+  border: 1px solid #fff;
+}

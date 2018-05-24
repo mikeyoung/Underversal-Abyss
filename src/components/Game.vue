@@ -1,5 +1,13 @@
 <template>
   <div class="container">
+    <ul>
+      <li>
+        <router-link to="/rules">Go to Rules</router-link>
+      </li>
+      <li>
+        <router-link to="/">Go to Main Menu</router-link>
+      </li>
+    </ul>
     <div class="row">
       <div class="col-12">{{ title }}</div>
       <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
@@ -7,20 +15,22 @@
       <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
       <div class="col-12">character.activeRollCard.value {{ character.activeRollCard.value }}</div>
       <div class="col-12">activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
-      <div class="col-12">activeTunnelCard.d4Roll {{ activeTunnelCard.d6Roll }}</div>
-      <div class="col-12">character.d4Roll {{ character.d6Roll }}</div>
       <div class="col-12">activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
       <div class="col-12">character.attack {{ character.attack }}</div>
       <div class="col-12">character.gold {{ character.gold }}</div>
+
+      <table class="stats">
+        <tr>
+          <th>HP</th>
+          <th>GOLD</th>
+        </tr>
+        <tr>
+          <td>{{ character.hitPoints }}</td>
+          <td>{{ character.gold }}</td>
+        </tr>
+      </table>
     </div>
-      <ul>
-        <li>
-          <router-link to="/rules">Go to Rules</router-link>
-        </li>
-        <li>
-          <router-link to="/">Go to Main Menu</router-link>
-        </li>
-      </ul>
+
     <div class="row">
       <div class="col-sm-12 col-md-2">
         <h3>Stats</h3>
@@ -58,7 +68,7 @@ import Character from '../classes/Character'
 import CharacterSheet from './CharacterSheet'
 import TunnelDeck from '../classes/TunnelDeck'
 import TunnelDisplay from './TunnelDisplay'
-import Dice from './../classes/Dice'
+/* import Dice from './../classes/Dice' */
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -114,6 +124,10 @@ export default {
   },
   methods: {
     getRollCard: function () {
+      document.getElementsByClassName('rollCardDiscardList')[0].velocity({
+        'font-size': '12px'
+      })
+
       if (this.rollCardsInDraw.length === 0) {
         for (let card of this.rollCardsInDiscard) {
           card.status = 'draw'
@@ -150,10 +164,8 @@ export default {
       this.activeRollCardMonster.status = 'discard'
       this.activeRollCardMonster = this.getRollCard()
       this.activeRollCardMonster.status = 'activeByMonster'
-      this.activeTunnelCard.d6Roll = Dice.roll('1d4')
-      this.activeTunnelCard.attack = this.activeRollCardMonster.value + this.activeTunnelCard.d6Roll
-      this.character.d6Roll = Dice.roll('1d4')
-      this.character.attack = this.character.activeRollCard.value + this.character.d6Roll
+      this.activeTunnelCard.attack = this.activeRollCardMonster.value
+      this.character.attack = this.character.activeRollCard.value
 
       if (this.activeTunnelCard.attack >= this.character.attack) {
         this.character.hitPoints -= 1
@@ -246,15 +258,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-</style>

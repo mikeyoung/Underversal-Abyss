@@ -33,7 +33,7 @@ export default {
     }
 
     .play {
-        background-color:aquamarine;
+        display: none;
     }
 
     .activeByPlayer {
