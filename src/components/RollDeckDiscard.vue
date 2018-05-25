@@ -8,7 +8,7 @@
                 play: card.status === 'hand',
                 activeByPlayer: card.status === 'activeByPlayer',
                 activeByMonster: card.status === 'activeByMonster'}"
-            v-bind:id="card.id">{{ card.value }} / {{ card.status }} </li>
+            v-bind:id="'rollcard' + card.id">{{ card.value }} / {{ card.status }} </li>
     </ul>
 </template>
 
@@ -28,12 +28,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .discarded {
-        opacity: 0;
+    li {
+        position: relative;
+        left: 0;
     }
 
-    .play {
-        display: none;
+    .activeByPlayer,
+    .activeByMonster {
+        left: 40px;
+        transition: left .5s;
+    }
+
+    .discarded {
+        opacity: 0;
     }
 
     .activeByPlayer {

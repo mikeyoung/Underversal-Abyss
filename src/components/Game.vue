@@ -124,10 +124,6 @@ export default {
   },
   methods: {
     getRollCard: function () {
-      document.getElementsByClassName('rollCardDiscardList')[0].velocity({
-        'font-size': '12px'
-      })
-
       if (this.rollCardsInDraw.length === 0) {
         for (let card of this.rollCardsInDiscard) {
           card.status = 'draw'
