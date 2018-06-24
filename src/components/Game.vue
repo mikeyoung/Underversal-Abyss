@@ -28,7 +28,8 @@
         <CharacterSheet v-bind:character="character" />
         <div>
           <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
-          <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
+          <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
+          <br /><br /><br /><br /><br /><br />
           <button type="button" v-on:click="resetGame()">Reset</button>
         </div>
 
@@ -90,10 +91,11 @@ export default {
     tunnelCardsInDraw: function () {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
     },
-    drawTunnelCardDisabled: function () {
-      if (this.tunnel.length === this.tunnelDeck.cards.length) return true
-      if (!this.gameInPlay) return true
-      if (this.character.engaged) return true
+    drawTunnelCardEnabled: function () {
+      if (this.tunnel.length === this.tunnelDeck.cards.length) return false
+      if (!this.gameInPlay) return false
+      if (this.character.engaged) return false
+      return true
     }
   },
   methods: {
