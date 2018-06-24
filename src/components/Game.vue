@@ -21,10 +21,10 @@
         <MonsterCard v-if="activeTunnelCard.type === 'monster'"
           :rollCardsInHand="rollCardsInHand"
           :playRollCardPlayer="playRollCardPlayer"
-          :discardRollCardPlayer="discardRollCardPlayer" />
+          :discardRollCardPlayer="discardRollCardPlayer"
+          :activeTunnelCard="activeTunnelCard" />
         <RestCard v-if="activeTunnelCard.type === 'rest'" />
         <TrapCard v-if="activeTunnelCard.type === 'trap'" />
-        <div>activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
         <CharacterSheet v-bind:character="character" />
         <div>
           <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import RollDeck from '../classes/RollDeck'
 import RollDeckDiscard from './RollDeckDiscard'
 import Character from '../classes/Character'
@@ -49,7 +50,6 @@ import CrubbCard from './CrubbCard'
 import MonsterCard from './MonsterCard'
 import RestCard from './RestCard'
 import TrapCard from './TrapCard'
-import Vue from 'vue'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -111,7 +111,6 @@ export default {
       this.character.activeRollCard.status = 'discard'
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       this.character.activeRollCard.status = 'activeByPlayer'
-      // this.rollCardsInHand[cardNumber] = this.getRollCard()
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
       this.resolvePlayerRollCard()
     },
@@ -123,7 +122,6 @@ export default {
     },
     discardRollCardPlayer: function (cardNumber) {
       this.rollCardsInHand[cardNumber].status = 'discard'
-      // this.rollCardsInHand[cardNumber] = this.getRollCard()
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
       if (this.activeTunnelCard.type === 'rest') {
         if (this.activeTunnelCard.hitPoints < 1) this.character.gold--
