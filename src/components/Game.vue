@@ -16,10 +16,11 @@
           v-bind:tunnel="tunnel" />
       </div><!-- .col-6 -->
       <div class="col-6">
-        <!-- <div>rollCardInDraw {{ rollCardsInDraw.length }}</div> -->
-        <!-- <div>rollCardsInDiscard {{ rollCardsInDiscard.length }}</div> -->
-        <!-- <div>activeRollCardMonster.value {{ activeRollCardMonster.value }}</div> -->
-        <!-- <div>character.activeRollCard.value {{ character.activeRollCard.value }}</div> -->
+        <ChestCard v-if="activeTunnelCard.type === 'chest'" />
+        <CrubbCard v-if="activeTunnelCard.type === 'crubb'" />
+        <MonsterCard v-if="activeTunnelCard.type === 'monster'" />
+        <RestCard v-if="activeTunnelCard.type === 'rest'" />
+        <TrapCard v-if="activeTunnelCard.type === 'trap'" />
         <div>activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
         <CharacterSheet v-bind:character="character" />
         <div>
@@ -53,6 +54,11 @@ import Character from '../classes/Character'
 import CharacterSheet from './CharacterSheet'
 import TunnelDeck from '../classes/TunnelDeck'
 import TunnelDisplay from './TunnelDisplay'
+import ChestCard from './ChestCard'
+import CrubbCard from './CrubbCard'
+import MonsterCard from './MonsterCard'
+import RestCard from './RestCard'
+import TrapCard from './TrapCard'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -236,7 +242,12 @@ export default {
   components: {
     RollDeckDiscard,
     CharacterSheet,
-    TunnelDisplay
+    TunnelDisplay,
+    MonsterCard,
+    CrubbCard,
+    ChestCard,
+    TrapCard,
+    RestCard
   }
 }
 </script>
