@@ -16,19 +16,15 @@
           v-bind:tunnel="tunnel" />
       </div><!-- .col-6 -->
       <div class="col-6">
-        <div>{{ title }}</div>
-        <div>rollCardInDraw {{ rollCardsInDraw.length }}</div>
-        <div>rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
-        <div>activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
-        <div>character.activeRollCard.value {{ character.activeRollCard.value }}</div>
+        <!-- <div>rollCardInDraw {{ rollCardsInDraw.length }}</div> -->
+        <!-- <div>rollCardsInDiscard {{ rollCardsInDiscard.length }}</div> -->
+        <!-- <div>activeRollCardMonster.value {{ activeRollCardMonster.value }}</div> -->
+        <!-- <div>character.activeRollCard.value {{ character.activeRollCard.value }}</div> -->
         <div>activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
-        <div>activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
-        <div>character.attack {{ character.attack }}</div>
-        <div>character.gold {{ character.gold }}</div>
         <CharacterSheet v-bind:character="character" />
         <div>
           Game Area<br>
-          <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
+          <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
             <div v-if="showPlayCardButtons">
               <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[0].value }}</button>
               <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[1].value }}</button>
@@ -149,10 +145,8 @@ export default {
         this.activeRollCardMonster.status = 'discard'
         this.activeRollCardMonster = this.getRollCard()
         this.activeRollCardMonster.status = 'activeByMonster'
-        this.activeTunnelCard.attack = this.activeRollCardMonster.value
-        this.character.attack = this.character.activeRollCard.value
 
-        if (this.activeTunnelCard.attack >= this.character.attack) {
+        if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
           this.character.hitPoints -= 1
         } else {
           this.activeTunnelCard.hitPoints -= 1
