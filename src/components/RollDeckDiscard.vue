@@ -3,11 +3,7 @@
         <li
             v-for="(card) in this.rollDeck"
             :key="card.id"
-            v-bind:class="{
-                discarded: card.status === 'discard',
-                play: card.status === 'hand',
-                activeByPlayer: card.status === 'activeByPlayer',
-                activeByMonster: card.status === 'activeByMonster'}"
+            v-bind:class="card.status"
             v-bind:id="'rollcard' + card.id">{{ card.value }} / {{ card.status }} </li>
     </ul>
 </template>
@@ -39,7 +35,7 @@ export default {
         transition: left .5s;
     }
 
-    .discarded {
+    .discard {
         opacity: 0;
     }
 

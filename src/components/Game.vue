@@ -9,54 +9,56 @@
       </li>
     </ul>
     <div class="row">
-      <div class="col-12">{{ title }}</div>
-      <div class="col-12">rollCardInDraw {{ rollCardsInDraw.length }}</div>
-      <div class="col-12">rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
-      <div class="col-12">activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
-      <div class="col-12">character.activeRollCard.value {{ character.activeRollCard.value }}</div>
-      <div class="col-12">activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
-      <div class="col-12">activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
-      <div class="col-12">character.attack {{ character.attack }}</div>
-      <div class="col-12">character.gold {{ character.gold }}</div>
+      <div class="col-6">
+        <div>
+          <h3>Stats</h3>
+          <RollDeckDiscard v-bind:rollDeck="rollDeck" />
+          <CharacterSheet v-bind:character="character" />
+          <TunnelDisplay
+            v-bind:activeTunnelCard="activeTunnelCard"
+            v-bind:tunnel="tunnel" />
+        </div>
+        <div>
+          Game Area<br>
+          <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
+            <div v-if="showPlayCardButtons">
+              <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[0].value }}</button>
+              <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[1].value }}</button>
+              <button type="button" v-on:click="playRollCardPlayer(2)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[2].value }}</button>
+              <button type="button" v-on:click="playRollCardPlayer(3)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[3].value }}</button>
+            </div>
+            <div v-if="this.gameInPlay">
+              <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[0].value }}</button>
+              <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[1].value }}</button>
+              <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[2].value }}</button>
+              <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[3].value }}</button>
+            </div>
+          <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
+          <button type="button" v-on:click="resetGame()">Reset</button>
+        </div>
+      </div><!-- .col-6 -->
+      <div class="col-6">
+        <div>{{ title }}</div>
+        <div>rollCardInDraw {{ rollCardsInDraw.length }}</div>
+        <div>rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
+        <div>activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
+        <div>character.activeRollCard.value {{ character.activeRollCard.value }}</div>
+        <div>activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
+        <div>activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
+        <div>character.attack {{ character.attack }}</div>
+        <div>character.gold {{ character.gold }}</div>
 
-      <table class="stats">
-        <tr>
-          <th>HP</th>
-          <th>GOLD</th>
-        </tr>
-        <tr>
-          <td>{{ character.hitPoints }}</td>
-          <td>{{ character.gold }}</td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12 col-md-2">
-        <h3>Stats</h3>
-        <RollDeckDiscard v-bind:rollDeck="rollDeck" />
-        <CharacterSheet v-bind:character="character" />
-        <TunnelDisplay
-          v-bind:activeTunnelCard="activeTunnelCard"
-          v-bind:tunnel="tunnel" />
-      </div>
-      <div class="col-sm-12 col-md-10">Game Area<br>
-        <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
-          <div v-if="showPlayCardButtons">
-            <button type="button" v-on:click="playRollCardPlayer(0)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[0].value }}</button>
-            <button type="button" v-on:click="playRollCardPlayer(1)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[1].value }}</button>
-            <button type="button" v-on:click="playRollCardPlayer(2)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[2].value }}</button>
-            <button type="button" v-on:click="playRollCardPlayer(3)" :disabled="!this.gameInPlay">Play {{ rollCardsInHand[3].value }}</button>
-          </div>
-          <div v-if="this.gameInPlay">
-            <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[0].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[1].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[2].value }}</button>
-            <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="this.discardRollCardDisabled">Disc {{ rollCardsInHand[3].value }}</button>
-          </div>
-        <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
-        <button type="button" v-on:click="resetGame()">Reset</button>
-      </div>
+        <table class="stats">
+          <tr>
+            <th>HP</th>
+            <th>GOLD</th>
+          </tr>
+          <tr>
+            <td>{{ character.hitPoints }}</td>
+            <td>{{ character.gold }}</td>
+          </tr>
+        </table>
+      </div><!-- .col-6 -->
     </div>
   </div>
 </template>
@@ -68,7 +70,6 @@ import Character from '../classes/Character'
 import CharacterSheet from './CharacterSheet'
 import TunnelDeck from '../classes/TunnelDeck'
 import TunnelDisplay from './TunnelDisplay'
-/* import Dice from './../classes/Dice' */
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
