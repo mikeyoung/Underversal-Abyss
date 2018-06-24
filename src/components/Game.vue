@@ -158,20 +158,19 @@ export default {
       }
     },
     playRollCardMonster: function () {
-      let gameScope = this
-      setTimeout(function () {
-        gameScope.activeRollCardMonster.status = 'discard'
-        gameScope.activeRollCardMonster = gameScope.getRollCard()
-        gameScope.activeRollCardMonster.status = 'activeByMonster'
-        gameScope.activeTunnelCard.attack = gameScope.activeRollCardMonster.value
-        gameScope.character.attack = gameScope.character.activeRollCard.value
+      setTimeout(() => {
+        this.activeRollCardMonster.status = 'discard'
+        this.activeRollCardMonster = this.getRollCard()
+        this.activeRollCardMonster.status = 'activeByMonster'
+        this.activeTunnelCard.attack = this.activeRollCardMonster.value
+        this.character.attack = this.character.activeRollCard.value
 
-        if (gameScope.activeTunnelCard.attack >= gameScope.character.attack) {
-          gameScope.character.hitPoints -= 1
+        if (this.activeTunnelCard.attack >= this.character.attack) {
+          this.character.hitPoints -= 1
         } else {
-          gameScope.activeTunnelCard.hitPoints -= 1
-          if (gameScope.activeTunnelCard.hitPoints === 0) character.engaged = false
-          gameScope.activeTunnelCard.status = 'discard'
+          this.activeTunnelCard.hitPoints -= 1
+          if (this.activeTunnelCard.hitPoints === 0) character.engaged = false
+          this.activeTunnelCard.status = 'discard'
         }
       }, 1000)
     },
