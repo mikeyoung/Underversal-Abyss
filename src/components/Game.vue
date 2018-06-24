@@ -10,14 +10,22 @@
     </ul>
     <div class="row">
       <div class="col-6">
-        <div>
-          <h3>Stats</h3>
-          <RollDeckDiscard v-bind:rollDeck="rollDeck" />
-          <CharacterSheet v-bind:character="character" />
-          <TunnelDisplay
-            v-bind:activeTunnelCard="activeTunnelCard"
-            v-bind:tunnel="tunnel" />
-        </div>
+        <RollDeckDiscard v-bind:rollDeck="rollDeck" />
+        <TunnelDisplay
+          v-bind:activeTunnelCard="activeTunnelCard"
+          v-bind:tunnel="tunnel" />
+      </div><!-- .col-6 -->
+      <div class="col-6">
+        <div>{{ title }}</div>
+        <div>rollCardInDraw {{ rollCardsInDraw.length }}</div>
+        <div>rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
+        <div>activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
+        <div>character.activeRollCard.value {{ character.activeRollCard.value }}</div>
+        <div>activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
+        <div>activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
+        <div>character.attack {{ character.attack }}</div>
+        <div>character.gold {{ character.gold }}</div>
+        <CharacterSheet v-bind:character="character" />
         <div>
           Game Area<br>
           <button type="button" v-on:click="initGame()" :disabled="this.gameInPlay ? true : false">Start</button>
@@ -36,28 +44,7 @@
           <button type="button" v-on:click="drawTunnelCard()" :disabled="drawTunnelCardDisabled">Draw Tunnel Card</button>
           <button type="button" v-on:click="resetGame()">Reset</button>
         </div>
-      </div><!-- .col-6 -->
-      <div class="col-6">
-        <div>{{ title }}</div>
-        <div>rollCardInDraw {{ rollCardsInDraw.length }}</div>
-        <div>rollCardsInDiscard {{ rollCardsInDiscard.length }}</div>
-        <div>activeRollCardMonster.value {{ activeRollCardMonster.value }}</div>
-        <div>character.activeRollCard.value {{ character.activeRollCard.value }}</div>
-        <div>activeTunnelCard.hitPoints {{ activeTunnelCard.hitPoints }}</div>
-        <div>activeTunnelCard.attack {{ activeTunnelCard.attack }}</div>
-        <div>character.attack {{ character.attack }}</div>
-        <div>character.gold {{ character.gold }}</div>
 
-        <table class="stats">
-          <tr>
-            <th>HP</th>
-            <th>GOLD</th>
-          </tr>
-          <tr>
-            <td>{{ character.hitPoints }}</td>
-            <td>{{ character.gold }}</td>
-          </tr>
-        </table>
       </div><!-- .col-6 -->
     </div>
   </div>
@@ -169,8 +156,10 @@ export default {
           this.character.hitPoints -= 1
         } else {
           this.activeTunnelCard.hitPoints -= 1
-          if (this.activeTunnelCard.hitPoints === 0) character.engaged = false
-          this.activeTunnelCard.status = 'discard'
+          if (this.activeTunnelCard.hitPoints === 0) {
+            character.engaged = false
+            this.activeTunnelCard.status = 'discard'
+          }
         }
       }, 1000)
     },

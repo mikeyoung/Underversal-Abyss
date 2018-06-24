@@ -6,9 +6,7 @@
         <li
             v-for="(card) in this.tunnel"
             :key="card.id"
-            v-bind:class="{
-                discarded: card.status === 'discard',
-                play: card.status === 'play'}"
+            v-bind:class="card.status"
             v-bind:id="card.id">{{ card.value }} / {{ card.status }}</li>
     </ul>
 </template>

@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import Velocity from 'velocity-animate'
+// import Velocity from 'velocity-animate'
 export default {
   name: 'RollDeckDiscard',
   data () {
     return {
-      title: 'Welcome to Your Vue.js App'
+      title: 'Roll Deck Discard'
     }
   },
   props: [

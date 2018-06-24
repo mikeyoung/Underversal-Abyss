@@ -1,9 +1,16 @@
 <template>
-  <div>
-    Hit Points: {{ character.hitPoints }}<br />
-    Space: {{ character.space }}
-  </div>
-
+  <table class="stats">
+    <tr>
+      <th>Space</th>
+      <th>HP</th>
+      <th>GOLD</th>
+    </tr>
+    <tr>
+      <td>{{ character.space }}</td>
+      <td>{{ character.hitPoints }}</td>
+      <td>{{ character.gold }}</td>
+    </tr>
+  </table>
 </template>
 
 <script>
