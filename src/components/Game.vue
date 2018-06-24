@@ -10,7 +10,9 @@
     </ul>
     <div class="row">
       <div class="col-6">
-        <RollDeckDiscard v-bind:rollDeck="rollDeck" />
+        <RollDeckDiscard
+          :rollDeck="rollDeck"
+          :disableInteraction="disableInteraction" />
         <TunnelDisplay
           :activeTunnelCard="activeTunnelCard"
           :tunnel="tunnel" />
@@ -22,7 +24,8 @@
           :rollCardsInHand="rollCardsInHand"
           :playRollCardPlayer="playRollCardPlayer"
           :discardRollCardPlayer="discardRollCardPlayer"
-          :activeTunnelCard="activeTunnelCard" />
+          :activeTunnelCard="activeTunnelCard"
+          :disableInteraction="disableInteraction" />
         <RestCard v-if="activeTunnelCard.type === 'rest'" />
         <TrapCard v-if="activeTunnelCard.type === 'trap'" />
         <CharacterSheet v-bind:character="character" />
@@ -78,7 +81,8 @@ export default {
       },
       activeTunnelCard: {
         value: ''
-      }
+      },
+      disableInteraction: false
     }
   },
   computed: {

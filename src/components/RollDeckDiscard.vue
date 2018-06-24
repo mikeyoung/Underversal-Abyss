@@ -18,7 +18,8 @@ export default {
     }
   },
   props: [
-    'rollDeck'
+    'rollDeck',
+    'disableInteraction'
   ]
 }
 </script>
