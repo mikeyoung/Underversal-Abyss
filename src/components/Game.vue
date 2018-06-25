@@ -12,7 +12,9 @@
       <div class="col-6">
         <RollDeckDiscard
           :rollDeck="rollDeck"
-          :disableInteraction="disableInteraction" />
+          :disableInteraction="disableInteraction"
+          :activeRollCardMonster="activeRollCardMonster"
+          :character="character" />
         <TunnelDisplay
           :activeTunnelCard="activeTunnelCard"
           :tunnel="tunnel" />
