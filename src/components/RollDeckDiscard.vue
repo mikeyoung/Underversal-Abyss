@@ -53,14 +53,14 @@ export default {
           Velocity(monsterCard, {
             left: '50px'
           }, {
-            duration: 100,
+            duration: 256,
             complete: function () {
               setTimeout(function () {
                 const activeRollCards = document.querySelectorAll('.activeByMonster,.activeByPlayer')
                 Velocity(activeRollCards, {
                   top: '525px'
                 }, {
-                  duration: 100,
+                  duration: 256,
                   complete: function () {
                     this.clearCards()
                   }
@@ -79,7 +79,7 @@ export default {
           Velocity(monsterCard, {
             left: '50px'
           }, {
-            duration: 100
+            duration: 256
           })
         }
       }
