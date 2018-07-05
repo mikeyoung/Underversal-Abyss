@@ -30,9 +30,9 @@ export default {
   methods: {
     clearCards: function () {
       document.querySelectorAll('.rollCardDiscardList li').forEach(card => {
-        console.log(card)
         Velocity(card, {
-          left: '0'
+          left: '0px',
+          opacity: 1
         }, {
           duration: 1
         })
@@ -47,9 +47,9 @@ export default {
   watch: {
     activeRollCardMonster: {
       handler: function (val, oldVal) {
+        let clearCards = this.clearCards
         if (val.id) {
           const monsterCard = document.querySelector(`#rollcard${val.id}`)
-          console.log(monsterCard)
           Velocity(monsterCard, {
             left: '50px'
           }, {
@@ -58,11 +58,11 @@ export default {
               setTimeout(function () {
                 const activeRollCards = document.querySelectorAll('.activeByMonster,.activeByPlayer')
                 Velocity(activeRollCards, {
-                  top: '525px'
+                  opacity: 0
                 }, {
                   duration: 256,
                   complete: function () {
-                    this.clearCards()
+                    clearCards()
                   }
                 })
               },
