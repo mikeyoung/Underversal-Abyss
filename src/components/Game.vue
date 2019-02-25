@@ -116,8 +116,6 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
-      this.activeRollCardMonster.status = 'discard'
-      this.character.activeRollCard.status = 'discard'
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       this.character.activeRollCard.status = 'activeByPlayer'
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
@@ -142,9 +140,11 @@ export default {
     playRollCardMonster: function () {
       this.disableInteraction = true
       setTimeout(() => {
-        this.activeRollCardMonster.status = 'discard'
         this.activeRollCardMonster = this.getRollCard()
         this.activeRollCardMonster.status = 'activeByMonster'
+
+        console.log(`Player ${this.character.activeRollCard.value}`)
+        console.log(`Monster ${this.activeRollCardMonster.value}`)
 
         if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
           this.character.hitPoints -= 1
