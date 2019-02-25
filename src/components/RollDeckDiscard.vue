@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import Velocity from 'velocity-animate'
-
 export default {
   name: 'RollDeckDiscard',
   data () {
@@ -43,17 +41,9 @@ export default {
       handler: function (val, oldVal) {
         let clearCards = this.clearCards
         if (val.id) {
-          const monsterCard = document.querySelector(`#rollcard${val.id}`)
           const activeRollCards = document.querySelectorAll('.activeByMonster,.activeByPlayer')
           activeRollCards.status = 'discard'
           clearCards()
-        }
-      }
-    },
-    activeRollCardPlayer: {
-      handler: function (val, oldVal) {
-        if (val.id) {
-          const monsterCard = document.querySelector(`#rollcard${val.id}`)
         }
       }
     }

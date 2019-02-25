@@ -116,6 +116,7 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
+      this.activeRollCardMonster.status = 'discard'
       this.character.activeRollCard.status = 'discard'
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       this.character.activeRollCard.status = 'activeByPlayer'
@@ -139,7 +140,7 @@ export default {
       }
     },
     playRollCardMonster: function () {
-      this.disableInteraction = true;
+      this.disableInteraction = true
       setTimeout(() => {
         this.activeRollCardMonster.status = 'discard'
         this.activeRollCardMonster = this.getRollCard()
@@ -154,7 +155,7 @@ export default {
             this.activeTunnelCard.status = 'discard'
           }
         }
-        this.disableInteraction = false;
+        this.disableInteraction = false
       }, 1000)
     },
     drawTunnelCard: function () {
