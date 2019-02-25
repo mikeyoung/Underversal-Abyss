@@ -121,12 +121,6 @@ export default {
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
       this.resolvePlayerRollCard()
     },
-    playRollCardPlayerDraw: function () {
-      this.character.activeRollCard.status = 'discard'
-      this.character.activeRollCard = this.getRollCard()
-      this.character.activeRollCard.status = 'activeByPlayer'
-      this.resolvePlayerRollCard()
-    },
     discardRollCardPlayer: function (cardNumber) {
       this.rollCardsInHand[cardNumber].status = 'discard'
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
