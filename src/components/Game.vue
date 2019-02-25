@@ -155,7 +155,11 @@ export default {
             this.activeTunnelCard.status = 'discard'
           }
         }
-        this.disableInteraction = false
+        setTimeout(() => {
+          this.character.activeRollCard.status = 'discard'
+          this.activeRollCardMonster.status = 'discard'
+          this.disableInteraction = false
+        }, 1000)
       }, 1000)
     },
     drawTunnelCard: function () {

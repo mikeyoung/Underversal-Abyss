@@ -25,12 +25,6 @@ export default {
     'activeRollCardMonster',
     'character'
   ],
-  methods: {
-    clearCards: function () {
-      document.querySelectorAll('.activeByMonster,.activeByPlayer').forEach(card => {
-      })
-    }
-  },
   computed: {
     activeRollCardPlayer: function () {
       return this.character.activeRollCard
@@ -39,11 +33,9 @@ export default {
   watch: {
     activeRollCardMonster: {
       handler: function (val, oldVal) {
-        let clearCards = this.clearCards
         if (val.id) {
-          const activeRollCards = document.querySelectorAll('.activeByMonster,.activeByPlayer')
-          activeRollCards.status = 'discard'
-          clearCards()
+          // this.activeRollCardPlayer.status = 'discard'
+          // this.activeRollCardMonster.status = 'discard'
         }
       }
     }
