@@ -38,5 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
+  button[disabled] {
+    opacity: .25
+  }
 </style>

@@ -29,13 +29,7 @@ export default {
   ],
   methods: {
     clearCards: function () {
-      document.querySelectorAll('.rollCardDiscardList li').forEach(card => {
-        Velocity(card, {
-          left: '0px',
-          opacity: 1
-        }, {
-          duration: 1
-        })
+      document.querySelectorAll('.activeByMonster,.activeByPlayer').forEach(card => {
       })
     }
   },
@@ -50,25 +44,9 @@ export default {
         let clearCards = this.clearCards
         if (val.id) {
           const monsterCard = document.querySelector(`#rollcard${val.id}`)
-          Velocity(monsterCard, {
-            left: '50px'
-          }, {
-            duration: 256,
-            complete: function () {
-              setTimeout(function () {
-                const activeRollCards = document.querySelectorAll('.activeByMonster,.activeByPlayer')
-                Velocity(activeRollCards, {
-                  opacity: 0
-                }, {
-                  duration: 256,
-                  complete: function () {
-                    clearCards()
-                  }
-                })
-              },
-              1000)
-            }
-          })
+          const activeRollCards = document.querySelectorAll('.activeByMonster,.activeByPlayer')
+          activeRollCards.status = 'discard'
+          clearCards()
         }
       }
     },
@@ -76,11 +54,6 @@ export default {
       handler: function (val, oldVal) {
         if (val.id) {
           const monsterCard = document.querySelector(`#rollcard${val.id}`)
-          Velocity(monsterCard, {
-            left: '50px'
-          }, {
-            duration: 256
-          })
         }
       }
     }
@@ -100,7 +73,8 @@ export default {
         left: 0;
     }
 
-    .discard {
+    .discard,
+    .hand {
         opacity: 0;
     }
 
@@ -110,5 +84,9 @@ export default {
 
     .activeByMonster {
         background-color:royalblue
+    }
+
+    .draw {
+      opacity: 1;
     }
 </style>
