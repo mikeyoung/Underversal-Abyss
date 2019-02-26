@@ -84,7 +84,8 @@ export default {
       activeTunnelCard: {
         value: ''
       },
-      disableInteraction: false
+      disableInteraction: false,
+      currentCardNumber: -1
     }
   },
   computed: {
@@ -116,9 +117,9 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
+      this.currentCardNumber = cardNumber
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       this.character.activeRollCard.status = 'activeByPlayer'
-      Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
       this.resolvePlayerRollCard()
     },
     discardRollCardPlayer: function (cardNumber) {
@@ -152,6 +153,7 @@ export default {
         setTimeout(() => {
           this.character.activeRollCard.status = 'discard'
           this.activeRollCardMonster.status = 'discard'
+          Vue.set(this.rollCardsInHand, this.currentCardNumber, this.getRollCard())
           this.disableInteraction = false
         }, 1000)
       }, 1000)
@@ -192,10 +194,9 @@ export default {
       }
     },
     initGame: function () {
-      this.playRollCardPlayer(0)
-      this.playRollCardPlayer(1)
-      this.playRollCardPlayer(2)
-      this.playRollCardPlayer(3)
+      for (let i = 0; i < 4; i++) {
+        this.rollCardsInHand[i] = this.getRollCard()
+      }
       this.gameInPlay = true
     },
     resolvePlayerRollCard: function () {
