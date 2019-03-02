@@ -55,9 +55,12 @@ export default {
         left: 0;
     }
 
-    .discard,
-    .hand {
+    .discard {
         opacity: 0;
+    }
+
+    .hand {
+      color: #f00;
     }
 
     .activeByPlayer {
