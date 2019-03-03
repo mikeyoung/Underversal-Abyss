@@ -4,7 +4,7 @@
     <p>You come across a chess. Do you open it?</p>
     <p>If you decide to tempt fate and open the chest, roll 1d4.</p>
     <p>On a 1 you set off a trap on the chest and lose 1d4 hit points. The chest is empty.</p>
-    <p>On a 2 the chest is empty.</p>
+    <p>On a 2 the chest holds a gold piece.</p>
     <p>On a 3 the chest holds a potion of healing.</p>
     <p>On a 4 the chest holds a potion of healing and a gold piece.</p>
     <div v-if="character.engaged">
@@ -36,7 +36,8 @@ export default {
           this.logEvent(`A wet rusty needle sticks into you as you open the empty chest.  You fall ill. (-${roll2} HP)`)
           break
         case 2:
-          this.logEvent('The chest is empty!')
+          this.character.gold += 1
+          this.logEvent('You found a gold piece!')
           break
         case 3:
           this.character.hitPoints += 1

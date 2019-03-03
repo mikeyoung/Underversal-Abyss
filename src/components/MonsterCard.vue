@@ -10,10 +10,10 @@
         <button type="button" v-on:click="playRollCardPlayer(3)" :disabled="disableInteraction">Play {{ rollCardsInHand[3].value }}</button>
       </div>
       <div>
-        <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction">Disc {{ rollCardsInHand[0].value }}</button>
-        <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction">Disc {{ rollCardsInHand[1].value }}</button>
-        <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction">Disc {{ rollCardsInHand[2].value }}</button>
-        <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction">Disc {{ rollCardsInHand[3].value }}</button>
+        <button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Disc {{ rollCardsInHand[0].value }}</button>
+        <button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Disc {{ rollCardsInHand[1].value }}</button>
+        <button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction || this.character.gold < 1">Disc {{ rollCardsInHand[2].value }}</button>
+        <button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Disc {{ rollCardsInHand[3].value }}</button>
       </div>
     </div>
   </div>
@@ -32,7 +32,8 @@ export default {
     'playRollCardPlayer',
     'discardRollCardPlayer',
     'activeTunnelCard',
-    'disableInteraction'
+    'disableInteraction',
+    'character'
   ]
 }
 </script>

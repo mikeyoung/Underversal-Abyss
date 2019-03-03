@@ -29,10 +29,16 @@
           :playRollCardPlayer="playRollCardPlayer"
           :discardRollCardPlayer="discardRollCardPlayer"
           :activeTunnelCard="activeTunnelCard"
-          :disableInteraction="disableInteraction" />
+          :disableInteraction="disableInteraction"
+          :character="character" />
         <RestCard v-if="activeTunnelCard.type === 'rest'" />
-        <TrapCard v-if="activeTunnelCard.type === 'trap'" />
-        <CharacterSheet v-bind:character="character" />
+        <TrapCard v-if="activeTunnelCard.type === 'trap'"
+          :character="character"
+          :logEvent="logEvent"
+          :disableInteraction="disableInteraction" />
+        <CharacterSheet
+          :character="character"
+          :score="score" />
         <div>
           <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
           <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
@@ -58,7 +64,6 @@ import CrubbCard from './CrubbCard'
 import MonsterCard from './MonsterCard'
 import RestCard from './RestCard'
 import TrapCard from './TrapCard'
-import Dice from '../classes/Dice.js'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -107,6 +112,9 @@ export default {
       if (!this.gameInPlay) return false
       if (this.character.engaged) return false
       return true
+    },
+    score: function () {
+      return this.character.gold + this.character.hitPoints + this.character.space
     }
   },
   methods: {
@@ -143,13 +151,15 @@ export default {
         this.activeRollCardMonster.status = 'activeByMonster'
 
         if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
-          this.logEvent(`The ${this.activeTunnelCard.cardName} hits you! (-1 HP)`)
-          this.character.hitPoints -= 1
+          this.logEvent(`The ${this.activeTunnelCard.cardName} hits you! (-${this.activeTunnelCard.damage} HP)`)
+          this.character.hitPoints -= this.activeTunnelCard.damage
         } else {
           this.logEvent(`You strike the ${this.activeTunnelCard.cardName}! (1 HP damage)`)
           this.activeTunnelCard.hitPoints -= 1
           if (this.activeTunnelCard.hitPoints === 0) {
             this.logEvent(`You have slain the ${this.activeTunnelCard.cardName}!`)
+            this.logEvent(`The ${this.activeTunnelCard.cardName} drops ${this.activeTunnelCard.gold} gold pieces!`)
+            this.character.gold += this.activeTunnelCard.gold
             character.engaged = false
             this.activeTunnelCard.status = 'discard'
           }
@@ -188,15 +198,7 @@ export default {
         }
 
         if (this.activeTunnelCard.type === 'trap') {
-          let roll = Dice.roll('1d4')
-          this.logEvent(`You rolled ${roll}.`)
-          if (roll < 3) {
-            this.logEvent(`A gigantic sawtooth clamp snaps on to your leg. You eventually wrench free. (Health - ${roll})`)
-            this.character.hitPoints -= roll
-          } else {
-            this.logEvent(`You dodge the jaws of the clamp as they snap behind you.`)
-          }
-          this.character.engaged = false
+          // stub
         }
 
         if (this.activeTunnelCard.type === 'crubb') {

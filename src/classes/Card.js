@@ -8,5 +8,6 @@ export default class Card {
     this.maxHitPoints = instObj.maxHitPoints || 0
     this.cardName = instObj.cardName || ''
     this.damage = instObj.damage || 0
+    this.gold = instObj.gold || 0
   }
 }

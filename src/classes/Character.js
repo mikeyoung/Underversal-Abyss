@@ -5,7 +5,7 @@ export default class Character {
     this.hitPoints = this.maxHitPoints
     this.engaged = false
     this.activeRollCard = { value: 0 }
-    this.startingGold = 5
+    this.startingGold = 6
     this.gold = this.startingGold
   }
 }

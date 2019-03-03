@@ -4,11 +4,13 @@
       <th>Space</th>
       <th>HP</th>
       <th>GOLD</th>
+      <th>SCORE ( Space + HP + Gold )</th>
     </tr>
     <tr>
       <td>{{ character.space }}</td>
       <td>{{ character.hitPoints }}</td>
       <td>{{ character.gold }}</td>
+      <td>{{ score }}</td>
     </tr>
   </table>
 </template>
@@ -22,7 +24,8 @@ export default {
     }
   },
   props: [
-    'character'
+    'character',
+    'score'
   ]
 }
 </script>
