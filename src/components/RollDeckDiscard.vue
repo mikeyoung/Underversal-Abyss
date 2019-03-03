@@ -20,26 +20,8 @@ export default {
     }
   },
   props: [
-    'rollDeck',
-    'disableInteraction',
-    'activeRollCardMonster',
-    'character'
-  ],
-  computed: {
-    activeRollCardPlayer: function () {
-      return this.character.activeRollCard
-    }
-  },
-  watch: {
-    activeRollCardMonster: {
-      handler: function (val, oldVal) {
-        if (val.id) {
-          // this.activeRollCardPlayer.status = 'discard'
-          // this.activeRollCardMonster.status = 'discard'
-        }
-      }
-    }
-  }
+    'rollDeck'
+  ]
 }
 </script>
 
@@ -65,10 +47,14 @@ export default {
 
     .activeByPlayer {
         background-color:pink;
+        margin-left: 50px;
+        transition: margin-left .25s;
     }
 
     .activeByMonster {
-        background-color:royalblue
+        background-color:royalblue;
+        margin-left: 50px;
+        transition: margin-left .25s;
     }
 
     .draw {

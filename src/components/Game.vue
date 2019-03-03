@@ -138,9 +138,6 @@ export default {
         this.activeRollCardMonster = this.getRollCard()
         this.activeRollCardMonster.status = 'activeByMonster'
 
-        console.log(`Player ${this.character.activeRollCard.value}`)
-        console.log(`Monster ${this.activeRollCardMonster.value}`)
-
         if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
           this.character.hitPoints -= 1
         } else {
@@ -150,6 +147,7 @@ export default {
             this.activeTunnelCard.status = 'discard'
           }
         }
+
         setTimeout(() => {
           this.character.activeRollCard.status = 'discard'
           this.activeRollCardMonster.status = 'discard'
@@ -179,6 +177,7 @@ export default {
 
         if (this.activeTunnelCard.type === 'rest') {
           // play rest sound && display options
+          this.character.hitPoints += 1
           this.character.engaged = false
         }
 
