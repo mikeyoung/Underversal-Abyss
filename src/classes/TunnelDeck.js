@@ -9,17 +9,23 @@ export default class TunnelDeck {
       let type = ''
       let value = ''
       let maxHitPoints = 0
+      let cardName = ''
+      let damage = 0
 
       if (i >= 0 && i < 2) {
         type = 'monster'
         value = 'scrub'
         maxHitPoints = 3
+        cardName = 'Scrub Monster'
+        damage = 1
       }
 
       if (i >= 2 && i < 4) {
         type = 'monster'
         value = 'captain'
         maxHitPoints = 5
+        cardName = 'Tough Monster'
+        damage = 2
       }
 
       if (i >= 4 && i < 6) {
@@ -49,7 +55,9 @@ export default class TunnelDeck {
         type,
         value,
         maxHitPoints,
-        hitPoints: maxHitPoints
+        hitPoints: maxHitPoints,
+        cardName,
+        damage
       }))
     }
   }

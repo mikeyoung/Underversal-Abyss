@@ -20,7 +20,9 @@
           :tunnel="tunnel" />
       </div><!-- .col-6 -->
       <div class="col-6">
-        <ChestCard v-if="activeTunnelCard.type === 'chest'" />
+        <ChestCard v-if="activeTunnelCard.type === 'chest'"
+          :character="character"
+          :logEvent="logEvent" />
         <CrubbCard v-if="activeTunnelCard.type === 'crubb'" />
         <MonsterCard v-if="activeTunnelCard.type === 'monster'"
           :rollCardsInHand="rollCardsInHand"
@@ -36,8 +38,8 @@
           <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
           <br /><br /><br /><br /><br /><br />
           <button type="button" v-on:click="resetGame()">Reset</button>
+          <textarea id="gameLogTextarea" rows="5" v-model="gameLog" disabled="disabled"></textarea>
         </div>
-
       </div><!-- .col-6 -->
     </div>
   </div>
@@ -56,6 +58,7 @@ import CrubbCard from './CrubbCard'
 import MonsterCard from './MonsterCard'
 import RestCard from './RestCard'
 import TrapCard from './TrapCard'
+import Dice from '../classes/Dice.js'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -85,7 +88,8 @@ export default {
         value: ''
       },
       disableInteraction: false,
-      currentCardNumber: -1
+      currentCardNumber: -1,
+      gameLog: ''
     }
   },
   computed: {
@@ -139,10 +143,13 @@ export default {
         this.activeRollCardMonster.status = 'activeByMonster'
 
         if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
+          this.logEvent(`The ${this.activeTunnelCard.cardName} hits you! (-1 HP)`)
           this.character.hitPoints -= 1
         } else {
+          this.logEvent(`You strike the ${this.activeTunnelCard.cardName}! (1 HP damage)`)
           this.activeTunnelCard.hitPoints -= 1
           if (this.activeTunnelCard.hitPoints === 0) {
+            this.logEvent(`You have slain the ${this.activeTunnelCard.cardName}!`)
             character.engaged = false
             this.activeTunnelCard.status = 'discard'
           }
@@ -167,27 +174,32 @@ export default {
         this.activeTunnelCard = randomCard
 
         if (this.activeTunnelCard.type === 'monster') {
-          // play monster sound && display play buttons
+          this.logEvent(`A ${this.activeTunnelCard.cardName} blocks your path!`)
         }
 
         if (this.activeTunnelCard.type === 'chest') {
-          // play chest sound && display options
-          this.character.engaged = false
+          // stub
         }
 
         if (this.activeTunnelCard.type === 'rest') {
-          // play rest sound && display options
+          this.logEvent('You find a corner to hide and heal your wounds. (Health + 1)')
           this.character.hitPoints += 1
           this.character.engaged = false
         }
 
         if (this.activeTunnelCard.type === 'trap') {
-          // play trap sound && display play buttons
+          let roll = Dice.roll('1d4')
+          this.logEvent(`You rolled ${roll}.`)
+          if (roll < 3) {
+            this.logEvent(`A gigantic sawtooth clamp snaps on to your leg. You eventually wrench free. (Health - ${roll})`)
+            this.character.hitPoints -= roll
+          } else {
+            this.logEvent(`You dodge the jaws of the clamp as they snap behind you.`)
+          }
           this.character.engaged = false
         }
 
         if (this.activeTunnelCard.type === 'crubb') {
-          // play crubb sound && display options
           this.character.engaged = false
         }
       }
@@ -202,6 +214,9 @@ export default {
       if (this.activeTunnelCard.type === 'monster') {
         this.playRollCardMonster()
       }
+    },
+    logEvent: function (message) {
+      this.gameLog += message + '\n'
     },
     resetGame: function () {
       this.tunnel = []
@@ -232,6 +247,14 @@ export default {
       this.initGame()
     }
   },
+  watch: {
+    gameLog: function () {
+      setTimeout(() => {
+        var gameLogTextarea = document.getElementById('gameLogTextarea')
+        gameLogTextarea.scrollTop = gameLogTextarea.scrollHeight
+      }, 10)
+    }
+  },
   components: {
     RollDeckDiscard,
     CharacterSheet,
@@ -244,3 +267,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #gameLogTextarea {
+    border: 1px solid #fff;
+    color: #fff;
+    background-color: #000;
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+  }
+</style>

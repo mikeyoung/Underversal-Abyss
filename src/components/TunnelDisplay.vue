@@ -12,13 +12,12 @@
 </template>
 
 <script>
-// import Velocity from 'velocity-animate'
 
 export default {
   name: 'TunnelDisplay',
   data () {
     return {
-      title: 'Welcome to Your Vue.js App'
+      title: 'Tunnel Display'
     }
   },
   props: [
