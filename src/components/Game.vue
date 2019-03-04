@@ -20,22 +20,30 @@
           :tunnel="tunnel" />
       </div><!-- .col-6 -->
       <div class="col-6">
-        <ChestCard v-if="activeTunnelCard.type === 'chest'"
-          :character="character"
-          :logEvent="logEvent" />
-        <CrubbCard v-if="activeTunnelCard.type === 'crubb'" />
-        <MonsterCard v-if="activeTunnelCard.type === 'monster'"
-          :rollCardsInHand="rollCardsInHand"
-          :playRollCardPlayer="playRollCardPlayer"
-          :discardRollCardPlayer="discardRollCardPlayer"
-          :activeTunnelCard="activeTunnelCard"
-          :disableInteraction="disableInteraction"
-          :character="character" />
-        <RestCard v-if="activeTunnelCard.type === 'rest'" />
-        <TrapCard v-if="activeTunnelCard.type === 'trap'"
-          :character="character"
-          :logEvent="logEvent"
-          :disableInteraction="disableInteraction" />
+        <div v-if="this.character.hitPoints > 0">
+          <ChestCard v-if="activeTunnelCard.type === 'chest'"
+            :character="character"
+            :logEvent="logEvent" />
+          <CrubbCard v-if="activeTunnelCard.type === 'crubb'"
+            :character="character"
+            :logEvent="logEvent"
+            :disableInteraction="disableInteraction" />
+          <MonsterCard v-if="activeTunnelCard.type === 'monster'"
+            :rollCardsInHand="rollCardsInHand"
+            :playRollCardPlayer="playRollCardPlayer"
+            :discardRollCardPlayer="discardRollCardPlayer"
+            :activeTunnelCard="activeTunnelCard"
+            :disableInteraction="disableInteraction"
+            :character="character" />
+          <RestCard v-if="activeTunnelCard.type === 'rest'" />
+          <TrapCard v-if="activeTunnelCard.type === 'trap'"
+            :character="character"
+            :logEvent="logEvent"
+            :disableInteraction="disableInteraction" />
+        </div>
+        <div v-if="this.character.hitPoints < 1">
+          <GameOver />
+        </div>
         <CharacterSheet
           :character="character"
           :score="score" />
@@ -64,6 +72,7 @@ import CrubbCard from './CrubbCard'
 import MonsterCard from './MonsterCard'
 import RestCard from './RestCard'
 import TrapCard from './TrapCard'
+import GameOver from './GameOver'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -111,6 +120,7 @@ export default {
       if (this.tunnel.length === this.tunnelDeck.cards.length) return false
       if (!this.gameInPlay) return false
       if (this.character.engaged) return false
+      if (this.character.hitPoints < 1) return false
       return true
     },
     score: function () {
@@ -202,7 +212,7 @@ export default {
         }
 
         if (this.activeTunnelCard.type === 'crubb') {
-          this.character.engaged = false
+          // stub
         }
       }
     },
@@ -265,7 +275,8 @@ export default {
     CrubbCard,
     ChestCard,
     TrapCard,
-    RestCard
+    RestCard,
+    GameOver
   }
 }
 </script>

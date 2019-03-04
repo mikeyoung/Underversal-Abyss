@@ -52,6 +52,7 @@ export default {
       this.character.engaged = false
     },
     leaveChest: function () {
+      this.logEvent('You leave the tiny chest alone and walk on.')
       this.character.engaged = false
     }
   },
