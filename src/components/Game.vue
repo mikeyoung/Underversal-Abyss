@@ -245,7 +245,7 @@ export default {
       this.activeTunnelCard = { value: '' }
 
       this.character.space = 0
-      this.character.hitPoints = this.character.maxHitPoints
+      this.character.hitPoints = this.character.startingHitPoints
       this.character.activeItem = {}
       this.character.engaged = false
       this.character.gold = this.character.startingGold
@@ -253,7 +253,7 @@ export default {
       for (let card of this.rollDeck) card.status = 'draw'
       for (let card of this.tunnelDeck.cards) {
         card.status = 'draw'
-        card.hitPoints = card.maxHitPoints
+        card.hitPoints = card.startingHitPoints
       }
 
       this.initGame()

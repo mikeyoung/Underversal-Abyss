@@ -1,11 +1,11 @@
 export default class Character {
   constructor () {
     this.space = 0
-    this.maxHitPoints = 6
-    this.hitPoints = this.maxHitPoints
+    this.startingHitPoints = 3
+    this.hitPoints = this.startingHitPoints
     this.engaged = false
     this.activeRollCard = { value: 0 }
-    this.startingGold = 6
+    this.startingGold = 3
     this.gold = this.startingGold
   }
 }

@@ -3,12 +3,12 @@ import Card from './Card'
 export default class TunnelDeck {
   constructor () {
     this.cards = []
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 15; i++) {
       let status = 'draw'
       let id = 'td' + i.toString()
       let type = ''
       let value = ''
-      let maxHitPoints = 0
+      let startingHitPoints = 0
       let cardName = ''
       let damage = 0
       let gold = 0
@@ -16,19 +16,19 @@ export default class TunnelDeck {
       if (i >= 0 && i < 2) {
         type = 'monster'
         value = 'scrub'
-        maxHitPoints = 3
+        startingHitPoints = 3
         cardName = 'Scrub Monster'
         damage = 1
-        gold = 1
+        gold = 2
       }
 
       if (i >= 2 && i < 4) {
         type = 'monster'
         value = 'captain'
-        maxHitPoints = 5
+        startingHitPoints = 5
         cardName = 'Tough Monster'
         damage = 2
-        gold = 2
+        gold = 3
       }
 
       if (i >= 4 && i < 6) {
@@ -41,15 +41,23 @@ export default class TunnelDeck {
         value = 'trap'
       }
 
-      if (i >= 8 && i < 10) {
+      if (i >= 8 && i < 11) {
         type = 'rest'
         value = 'rest'
-        maxHitPoints = 4
       }
 
-      if (i >= 10 && i < 12) {
+      if (i >= 11 && i < 13) {
         type = 'crubb'
         value = 'crubb'
+      }
+
+      if (i >= 13 && i < 15) {
+        type = 'monster'
+        value = 'pest'
+        startingHitPoints = 1
+        cardName = 'Weak Scared Creature'
+        damage = 1
+        gold = 1
       }
 
       this.cards.push(new Card({
@@ -57,8 +65,8 @@ export default class TunnelDeck {
         id,
         type,
         value,
-        maxHitPoints,
-        hitPoints: maxHitPoints,
+        startingHitPoints,
+        hitPoints: startingHitPoints,
         cardName,
         damage,
         gold
