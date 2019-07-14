@@ -35,8 +35,12 @@
             :activeTunnelCard="activeTunnelCard"
             :disableInteraction="disableInteraction"
             :character="character" />
-          <RestCard v-if="activeTunnelCard.type === 'rest'" />
+          <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss" />
           <TrapCard v-if="activeTunnelCard.type === 'trap'"
+            :character="character"
+            :logEvent="logEvent"
+            :disableInteraction="disableInteraction" />
+          <BossCard v-if="atBoss"
             :character="character"
             :logEvent="logEvent"
             :disableInteraction="disableInteraction" />
@@ -72,6 +76,7 @@ import CrubbCard from './CrubbCard'
 import MonsterCard from './MonsterCard'
 import RestCard from './RestCard'
 import TrapCard from './TrapCard'
+import BossCard from './BossCard'
 import GameOver from './GameOver'
 
 let rollDeck = new RollDeck().cards
@@ -125,6 +130,9 @@ export default {
     },
     score: function () {
       return this.character.gold + this.character.hitPoints + this.character.space
+    },
+    atBoss: function () {
+      return this.tunnel.length === this.tunnelDeck.cards.length
     }
   },
   methods: {
@@ -276,6 +284,7 @@ export default {
     ChestCard,
     TrapCard,
     RestCard,
+    BossCard,
     GameOver
   }
 }
