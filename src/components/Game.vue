@@ -21,14 +21,14 @@
       </div><!-- .col-6 -->
       <div class="col-6">
         <div v-if="this.character.hitPoints > 0">
-          <ChestCard v-if="activeTunnelCard.type === 'chest'"
+          <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
             :character="character"
             :logEvent="logEvent" />
-          <CrubbCard v-if="activeTunnelCard.type === 'crubb'"
+          <CrubbCard v-if="activeTunnelCard.type === 'crubb' && !this.atBoss"
             :character="character"
             :logEvent="logEvent"
             :disableInteraction="disableInteraction" />
-          <MonsterCard v-if="activeTunnelCard.type === 'monster'"
+          <MonsterCard v-if="activeTunnelCard.type === 'monster' && !this.atBoss"
             :rollCardsInHand="rollCardsInHand"
             :playRollCardPlayer="playRollCardPlayer"
             :discardRollCardPlayer="discardRollCardPlayer"
@@ -36,16 +36,16 @@
             :disableInteraction="disableInteraction"
             :character="character" />
           <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss" />
-          <TrapCard v-if="activeTunnelCard.type === 'trap'"
+          <TrapCard v-if="activeTunnelCard.type === 'trap' && !this.atBoss"
             :character="character"
             :logEvent="logEvent"
             :disableInteraction="disableInteraction" />
-          <BossCard v-if="atBoss"
+          <BossCard v-if="this.atBoss"
             :character="character"
             :logEvent="logEvent"
             :disableInteraction="disableInteraction" />
         </div>
-        <div v-if="this.character.hitPoints < 1">
+        <div v-if="this.character.hitPoints < 1 &&  !this.atBoss">
           <GameOver />
         </div>
         <CharacterSheet
@@ -132,7 +132,7 @@ export default {
       return this.character.gold + this.character.hitPoints + this.character.space
     },
     atBoss: function () {
-      return this.tunnel.length === this.tunnelDeck.cards.length
+      return this.character.space === 13
     }
   },
   methods: {
@@ -192,36 +192,35 @@ export default {
       }, 1000)
     },
     drawTunnelCard: function () {
-      if (this.tunnel.length < this.tunnelDeck.cards.length) {
-        this.character.engaged = true
-        if (this.activeTunnelCard.value !== '') this.activeTunnelCard.status = 'discard'
+      this.character.engaged = true
+      if (this.activeTunnelCard.value !== '') this.activeTunnelCard.status = 'discard'
+      this.character.space += 1
+
+      if (this.character.space < 13) {
         let randomCard = this.tunnelCardsInDraw[Math.floor(Math.random() * this.tunnelCardsInDraw.length)]
         this.tunnel.push(randomCard)
-        this.character.space += 1
         randomCard.status = 'play'
         this.activeTunnelCard = randomCard
-
-        if (this.activeTunnelCard.type === 'monster') {
-          this.logEvent(`A ${this.activeTunnelCard.cardName} blocks your path!`)
+      } else {
+        this.logEvent('You have reached the end of the tunnel.  The gatekeeper requests a single gold piece.')
+        if (this.character.gold < 1) {
+          this.character.hitPoints = 0
+          this.logEvent('Unfortunately you have no gold so in a fit of rage the gatekeeper tears you limb from limb.\nYou are dead.\nGame over.')
+        } else {
+          this.character.gold--
+          this.logEvent('You hand the gatekeeper a much prized gold piece.  It unlocks a heavy wooden door behind which is the blinding light of the morning sun.  Congratulations, you have escaped.')
         }
+        this.character.engaged = true
+      }
 
-        if (this.activeTunnelCard.type === 'chest') {
-          // stub
-        }
+      if (this.activeTunnelCard.type === 'monster') {
+        this.logEvent(`A ${this.activeTunnelCard.cardName} blocks your path!`)
+      }
 
-        if (this.activeTunnelCard.type === 'rest') {
-          this.logEvent('You find a corner to hide and heal your wounds. (Health + 1)')
-          this.character.hitPoints += 1
-          this.character.engaged = false
-        }
-
-        if (this.activeTunnelCard.type === 'trap') {
-          // stub
-        }
-
-        if (this.activeTunnelCard.type === 'crubb') {
-          // stub
-        }
+      if (this.activeTunnelCard.type === 'rest') {
+        this.logEvent('You find a corner to hide and heal your wounds. (Health + 1)')
+        this.character.hitPoints += 1
+        this.character.engaged = false
       }
     },
     initGame: function () {
