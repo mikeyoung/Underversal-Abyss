@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Rest</h1>
+    <p>You find a corner to hide and heal your wounds. (Health + 1)</p>
   </div>
 </template>
 

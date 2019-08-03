@@ -6,7 +6,7 @@
             :class="card.status"
             :id="'rollcard' + card.id"
             :style="`top:${index * 25}px`">
-            {{ card.value }} / {{ card.status }}
+            {{ card.value }}
         </li>
     </ul>
 </template>
@@ -35,6 +35,10 @@ export default {
     li {
         position: absolute;
         left: 0;
+        list-style-type: none;
+        font-size: 20px;
+        font-weight: 700;
+        color: #666;
     }
 
     .discard {
@@ -43,21 +47,19 @@ export default {
 
     .hand {
       color: #f00;
+      transition: color .5s;
+      opacity: 1;
     }
 
     .activeByPlayer {
-        background-color:pink;
+        color: #f00;
         margin-left: 50px;
         transition: margin-left .25s;
     }
 
     .activeByMonster {
-        background-color:royalblue;
         margin-left: 50px;
-        transition: margin-left .25s;
-    }
-
-    .draw {
-      opacity: 1;
+        transition: all .25s;
+        color: #fff;
     }
 </style>

@@ -17,7 +17,7 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'scrub'
         startingHitPoints = 3
-        cardName = 'Scrub Monster'
+        cardName = 'monster'
         damage = 1
         gold = 2
       }
@@ -26,7 +26,7 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'captain'
         startingHitPoints = 5
-        cardName = 'Tough Monster'
+        cardName = 'tough monster'
         damage = 2
         gold = 3
       }
@@ -55,7 +55,7 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'pest'
         startingHitPoints = 1
-        cardName = 'Weak Scared Creature'
+        cardName = 'weak scared creature'
         damage = 1
         gold = 1
       }

@@ -122,6 +122,7 @@ export default {
       return tunnelDeck.cards.filter(card => card.status === 'draw')
     },
     drawTunnelCardEnabled: function () {
+      if (this.atBoss) return false
       if (this.tunnel.length === this.tunnelDeck.cards.length) return false
       if (!this.gameInPlay) return false
       if (this.character.engaged) return false
@@ -167,6 +168,8 @@ export default {
       setTimeout(() => {
         this.activeRollCardMonster = this.getRollCard()
         this.activeRollCardMonster.status = 'activeByMonster'
+        this.logEvent(`You play a ${this.character.activeRollCard.value}.`)
+        this.logEvent(`The ${this.activeTunnelCard.cardName} draws a ${this.activeRollCardMonster.value}.`)
 
         if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
           this.logEvent(`The ${this.activeTunnelCard.cardName} hits you! (-${this.activeTunnelCard.damage} HP)`)
@@ -218,7 +221,6 @@ export default {
       }
 
       if (this.activeTunnelCard.type === 'rest') {
-        this.logEvent('You find a corner to hide and heal your wounds. (Health + 1)')
         this.character.hitPoints += 1
         this.character.engaged = false
       }
@@ -238,6 +240,7 @@ export default {
       this.gameLog += message + '\n'
     },
     resetGame: function () {
+      this.gameLog = ''
       this.tunnel = []
       this.rollCardsInHand = [
         {value: 0},
