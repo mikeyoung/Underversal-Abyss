@@ -9,7 +9,7 @@
       </li>
     </ul>
     <div class="row">
-      <div class="col-6">
+      <div class="col-3">
         <RollDeckDiscard
           :rollDeck="rollDeck"
           :disableInteraction="disableInteraction"
@@ -19,7 +19,7 @@
           :activeTunnelCard="activeTunnelCard"
           :tunnel="tunnel" />
       </div><!-- .col-6 -->
-      <div class="col-6">
+      <div class="col-9">
         <div v-if="this.character.hitPoints > 0">
           <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
             :character="character"
@@ -58,7 +58,7 @@
           <button type="button" v-on:click="resetGame()">Reset</button>
           <textarea id="gameLogTextarea" rows="5" v-model="gameLog" disabled="disabled"></textarea>
         </div>
-      </div><!-- .col-6 -->
+      </div><!-- .col-9 -->
     </div>
   </div>
 </template>
