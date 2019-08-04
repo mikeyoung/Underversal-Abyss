@@ -100,5 +100,5 @@ export default {
 
   .monsterHitPoints.monsterHit {
     color: #f00;
-  } 
+  }
 </style>
