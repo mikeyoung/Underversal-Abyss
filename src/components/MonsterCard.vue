@@ -1,7 +1,13 @@
 <template>
   <div>
     <h2>Monster</h2>
-    <p>A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit points blocks your path.</p>
+    <img v-if="activeTunnelCard.value === 'level1_1'" src="../assets/img/monster_level1_1.jpg" class="cardImage" />
+    <img v-if="activeTunnelCard.value === 'level1_2'" src="../assets/img/monster_level1_2.jpg" class="cardImage" />
+    <img v-if="activeTunnelCard.value === 'level2_1'" src="../assets/img/monster_level2_1.jpg" class="cardImage" />
+    <img v-if="activeTunnelCard.value === 'level2_2'" src="../assets/img/monster_level2_2.jpg" class="cardImage" />
+    <img v-if="activeTunnelCard.value === 'level3_1'" src="../assets/img/monster_level3_1.jpg" class="cardImage" />
+    <img v-if="activeTunnelCard.value === 'level3_2'" src="../assets/img/monster_level3_2.jpg" class="cardImage" />
+    <p>A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.</p>
     <div v-if="activeTunnelCard.hitPoints > 0">
       <table>
         <tr class="cardButtonRow playCard">
@@ -11,10 +17,10 @@
           <td><button type="button" v-on:click="playRollCardPlayer(3)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[3].value }}</span></button></td>
         </tr>
         <tr class="cardButtonRow discard">
-          <td><button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
-          <td><button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
-          <td><button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
-          <td><button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
         </tr>
       </table>
     </div>
@@ -98,7 +104,8 @@ export default {
     transition: color .25s;
   }
 
-  .monsterHitPoints.monsterHit {
+  .monsterHitPoints {
     color: #f00;
+    font-weight: 700;
   }
 </style>

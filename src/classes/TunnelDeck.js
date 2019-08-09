@@ -13,20 +13,38 @@ export default class TunnelDeck {
       let damage = 0
       let gold = 0
 
-      if (i >= 0 && i < 2) {
+      if (i === 0) {
         type = 'monster'
-        value = 'scrub'
+        value = 'level2_1'
         startingHitPoints = 3
-        cardName = 'monster'
+        cardName = 'furious winged flesh tube'
         damage = 1
         gold = 2
       }
 
-      if (i >= 2 && i < 4) {
+      if (i === 1) {
         type = 'monster'
-        value = 'captain'
+        value = 'level2_2'
+        startingHitPoints = 3
+        cardName = 'paranoid egg guardian'
+        damage = 1
+        gold = 2
+      }
+
+      if (i === 2) {
+        type = 'monster'
+        value = 'level3_1'
         startingHitPoints = 5
-        cardName = 'tough monster'
+        cardName = 'hulking mass of bone and sinew'
+        damage = 2
+        gold = 3
+      }
+
+      if (i === 3) {
+        type = 'monster'
+        value = 'level3_2'
+        startingHitPoints = 5
+        cardName = 'giant tentacled brain'
         damage = 2
         gold = 3
       }
@@ -36,9 +54,14 @@ export default class TunnelDeck {
         value = 'chest'
       }
 
-      if (i >= 6 && i < 8) {
-        type = 'trap'
-        value = 'trap'
+      if (i === 6) {
+        type = 'trap_floor'
+        value = 'trap_floor'
+      }
+
+      if (i === 7) {
+        type = 'trap_ceiling'
+        value = 'trap_ceiling'
       }
 
       if (i >= 8 && i < 11) {
@@ -51,11 +74,20 @@ export default class TunnelDeck {
         value = 'crubb'
       }
 
-      if (i >= 13 && i < 15) {
+      if (i === 13) {
         type = 'monster'
-        value = 'pest'
+        value = 'level1_1'
         startingHitPoints = 1
-        cardName = 'weak scared creature'
+        cardName = 'sickly half dead humanoid'
+        damage = 1
+        gold = 1
+      }
+
+      if (i === 14) {
+        type = 'monster'
+        value = 'level1_2'
+        startingHitPoints = 1
+        cardName = 'sad botched experiment'
         damage = 1
         gold = 1
       }

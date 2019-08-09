@@ -10,6 +10,7 @@
     </ul>
     <div class="row">
       <div class="col-3">
+        <img src="../assets/img/underversal_logo_game.jpg" class="mainLogo" />
         <RollDeckDiscard
           :rollDeck="rollDeck"
           :disableInteraction="disableInteraction"
@@ -20,6 +21,9 @@
           :tunnel="tunnel" />
       </div><!-- .col-6 -->
       <div class="col-9">
+        <CharacterSheet
+          :character="character"
+          :score="score" />
         <div v-if="this.character.hitPoints > 0">
           <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
             :character="character"
@@ -36,7 +40,11 @@
             :disableInteraction="disableInteraction"
             :character="character" />
           <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss" />
-          <TrapCard v-if="activeTunnelCard.type === 'trap' && !this.atBoss"
+          <TrapFloorCard v-if="activeTunnelCard.type === 'trap_floor' && !this.atBoss"
+            :character="character"
+            :logEvent="logEvent"
+            :disableInteraction="disableInteraction" />
+          <TrapCeilingCard v-if="activeTunnelCard.type === 'trap_ceiling' && !this.atBoss"
             :character="character"
             :logEvent="logEvent"
             :disableInteraction="disableInteraction" />
@@ -48,9 +56,6 @@
         <div v-if="this.character.hitPoints < 1 &&  !this.atBoss">
           <GameOver />
         </div>
-        <CharacterSheet
-          :character="character"
-          :score="score" />
         <div>
           <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
           <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
@@ -60,7 +65,7 @@
         </div>
       </div><!-- .col-9 -->
     </div>
-  </div>
+  </div><!-- .container -->
 </template>
 
 <script>
@@ -75,7 +80,8 @@ import ChestCard from './ChestCard'
 import CrubbCard from './CrubbCard'
 import MonsterCard from './MonsterCard'
 import RestCard from './RestCard'
-import TrapCard from './TrapCard'
+import TrapCeilingCard from './TrapCeilingCard'
+import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
 import GameOver from './GameOver'
 
@@ -179,7 +185,7 @@ export default {
           this.activeTunnelCard.hitPoints -= 1
           if (this.activeTunnelCard.hitPoints === 0) {
             this.logEvent(`You have slain the ${this.activeTunnelCard.cardName}!`)
-            this.logEvent(`The ${this.activeTunnelCard.cardName} drops ${this.activeTunnelCard.gold} gold pieces!`)
+            this.logEvent(`The ${this.activeTunnelCard.cardName} secretes ${this.activeTunnelCard.gold} gold pieces!`)
             this.character.gold += this.activeTunnelCard.gold
             character.engaged = false
             this.activeTunnelCard.status = 'discard'
@@ -284,7 +290,8 @@ export default {
     MonsterCard,
     CrubbCard,
     ChestCard,
-    TrapCard,
+    TrapCeilingCard,
+    TrapFloorCard,
     RestCard,
     BossCard,
     GameOver
@@ -300,5 +307,10 @@ export default {
     display: block;
     width: 100%;
     margin-top: 1em;
+  }
+
+  .mainLogo {
+    width: 100%;
+    display: block;
   }
 </style>

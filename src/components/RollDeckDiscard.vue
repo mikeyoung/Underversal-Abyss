@@ -5,7 +5,7 @@
             :key="card.id"
             :class="card.status"
             :id="'rollcard' + card.id"
-            :style="`top:${index * 25}px`">
+            :style="`top:${index * 20}px`">
             {{ card.value }}
         </li>
     </ul>
@@ -36,9 +36,10 @@ export default {
         position: absolute;
         left: 0;
         list-style-type: none;
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 700;
         color: #666;
+        height: 1.5em;
     }
 
     .discard {

@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12">Main Menu</div>
+      <div class="col-12">
+        <img src="../assets/img/underversal_logo_home.jpg" class="homeLogo" />
+      </div>
       <ul>
         <li>
           <router-link to="/rules">Go to Rules</router-link>
@@ -14,10 +16,6 @@
         </li>
       </ul>
     </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-2">Stats</div>
-      <div class="col-sm-12 col-md-10">Game Area</div>
-    </div>
   </div>
 </template>
 
@@ -29,4 +27,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .homeLogo {
+    width: 100%;
+    display: block;
+  }
 </style>
