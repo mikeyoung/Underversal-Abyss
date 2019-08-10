@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Trap</h1>
     <img src="../assets/img/trap_floor.jpg" class="cardImage" />
     <p>The path ahead is clearly trapped.</p>
     <p>You can lodge a gold piece into the mechanism to jam it, or you can try to disarm the trap.</p>

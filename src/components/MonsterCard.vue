@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <h2>Monster</h2>
+  <div class="row">
+    <div class="col-6">
     <img v-if="activeTunnelCard.value === 'level1_1'" src="../assets/img/monster_level1_1.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level1_2'" src="../assets/img/monster_level1_2.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level2_1'" src="../assets/img/monster_level2_1.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level2_2'" src="../assets/img/monster_level2_2.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level3_1'" src="../assets/img/monster_level3_1.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level3_2'" src="../assets/img/monster_level3_2.jpg" class="cardImage" />
-    <p>A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.</p>
-    <div v-if="activeTunnelCard.hitPoints > 0">
+    <p v-if="activeTunnelCard.hitPoints > 0">A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.</p>
+    <p v-if="activeTunnelCard.hitPoints < 1">A dead {{ activeTunnelCard.cardName }} lies at your feet.</p>
+    </div><!-- .col-6 -->
+    <div v-if="activeTunnelCard.hitPoints > 0" class="col-6 rollCardPlayArea">
       <table>
         <tr class="cardButtonRow playCard">
           <td><button type="button" v-on:click="playRollCardPlayer(0)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[0].value }}</span></button></td>
@@ -17,14 +19,18 @@
           <td><button type="button" v-on:click="playRollCardPlayer(3)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[3].value }}</span></button></td>
         </tr>
         <tr class="cardButtonRow discard">
-          <td><button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
-          <td><button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
-          <td><button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
-          <td><button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Discard<br>(-1 gp)</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+          <td><button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
         </tr>
       </table>
-    </div>
-  </div>
+      <br>
+      <p>To attack a monster, play a roll card from your hand.  The monster will then draw a card from the remaining cards in the roll deck. If the value of your roll card is higher than that of the monster, you successfully attack.  If the monster's roll card value is higher, then the monster successfully attacks.</p>
+      <p>You may choose to discard a roll card and draw a new one from the deck for the cost of 1 gold piece.</p>
+      <p>The roll deck replenishes after the last card has been picked up.</p>
+    </div><!-- .col-6 -->
+  </div><!-- .row -->
 </template>
 
 <script>
@@ -41,7 +47,8 @@ export default {
     'discardRollCardPlayer',
     'activeTunnelCard',
     'disableInteraction',
-    'character'
+    'character',
+    'gameLog'
   ]
 }
 </script>
@@ -82,7 +89,7 @@ export default {
 
   td {
     text-align: center;
-    padding: 10px 10px;
+    padding: 10px 0;
     border: 0;
   }
 
@@ -107,5 +114,9 @@ export default {
   .monsterHitPoints {
     color: #f00;
     font-weight: 700;
+  }
+
+  .rollCardPlayArea p {
+    font-size: 14px;
   }
 </style>

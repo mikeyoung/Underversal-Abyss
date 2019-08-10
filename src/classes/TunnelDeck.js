@@ -87,7 +87,7 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'level1_2'
         startingHitPoints = 1
-        cardName = 'sad botched experiment'
+        cardName = 'botched experiment'
         damage = 1
         gold = 1
       }

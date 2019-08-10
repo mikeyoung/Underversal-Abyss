@@ -10,18 +10,6 @@ html {
   height: 100%;
 }
 
-table.stats {
-  border-collapse: separate;
-  border-spacing: 20px;
-  text-align: center;
-}
-
-table td {
-  border: 1px solid #eee;
-  margin: 10px;
-  padding: .1em;
-}
-
 button {
   background-color: #000;
   color: #eee;
@@ -29,5 +17,20 @@ button {
 }
 
 .cardImage {
-  height: 400px;
+  max-height: 400px;
+  width: 100%;
+}
+
+ul {
+  display: block;
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+}
+
+a {
+  color: #fff !important;
+  text-decoration: underline;
 }

@@ -1,14 +1,17 @@
 <template>
+  <div>
+    <p>Roll Deck</p>
     <ul class="rollCardDiscardList">
-        <li
-            v-for="(card, index) in this.rollDeck"
-            :key="card.id"
-            :class="card.status"
-            :id="'rollcard' + card.id"
-            :style="`top:${index * 20}px`">
-            {{ card.value }}
-        </li>
+      <li
+          v-for="(card, index) in this.rollDeck"
+          :key="card.id"
+          :class="card.status"
+          :id="'rollcard' + card.id"
+          :style="`top:${index * 20}px`">
+          {{ card.value }}
+      </li>
     </ul>
+  </div>
 </template>
 
 <script>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Rope Trap</h1>
     <img src="../assets/img/trap_ceiling.jpg" class="cardImage" />
     <p>You step into a hidden rope and are instantly swept high into the air. Giant spiked mallets descend to crush your bones.</p>
     <p>You can throw a gold piece into the mechanism to jam it, or you can try to cut yourself down before the mallets hit.</p>

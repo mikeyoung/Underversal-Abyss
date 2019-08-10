@@ -1,16 +1,22 @@
 <template>
-  <div class="container">
-    <ul>
-      <li>
-        <router-link to="/rules">Go to Rules</router-link>
-      </li>
-      <li>
-        <router-link to="/">Go to Main Menu</router-link>
-      </li>
-    </ul>
+  <div class="container topPad">
     <div class="row">
       <div class="col-3">
-        <img src="../assets/img/underversal_logo_game.jpg" class="mainLogo" />
+        <router-link to="/"><img src="../assets/img/underversal_logo_game.jpg" class="mainLogo" /></router-link>
+      </div><!-- .col-3 -->
+      <div class="col-7">
+        <CharacterSheet
+          :character="character"
+          :score="score" />
+      </div><!-- .col-7 -->
+      <div class="text-right col-2">
+        <router-link to="/">Home</router-link> /
+        <router-link to="/rules">Rules</router-link> /
+        <a href="javascript:void(0)" v-on:click="resetGame()">Reset</a>
+      </div><!-- .col-2 -->
+    </div>
+    <div class="row">
+      <div class="col-1">
         <RollDeckDiscard
           :rollDeck="rollDeck"
           :disableInteraction="disableInteraction"
@@ -19,11 +25,8 @@
         <TunnelDisplay
           :activeTunnelCard="activeTunnelCard"
           :tunnel="tunnel" />
-      </div><!-- .col-6 -->
-      <div class="col-9">
-        <CharacterSheet
-          :character="character"
-          :score="score" />
+      </div><!-- .col-1 -->
+      <div class="col-11">
         <div v-if="this.character.hitPoints > 0">
           <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
             :character="character"
@@ -59,12 +62,10 @@
         <div>
           <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
           <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
-          <br /><br /><br /><br /><br /><br />
-          <button type="button" v-on:click="resetGame()">Reset</button>
           <textarea id="gameLogTextarea" rows="5" v-model="gameLog" disabled="disabled"></textarea>
         </div>
-      </div><!-- .col-9 -->
-    </div>
+      </div><!-- .col-11 -->
+    </div><!-- .row -->
   </div><!-- .container -->
 </template>
 
@@ -312,5 +313,10 @@ export default {
   .mainLogo {
     width: 100%;
     display: block;
+    margin: 10px 0;
+  }
+
+  .topPad {
+    padding-top: 15px;
   }
 </style>

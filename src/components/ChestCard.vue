@@ -1,16 +1,20 @@
 <template>
-  <div>
-    <h1>Chest</h1>
-    <p>You come across a chess. Do you open it?</p>
-    <p>If you decide to tempt fate and open the chest, roll 1d4.</p>
-    <p>On a 1 you set off a trap on the chest and lose 1d4 hit points. The chest is empty.</p>
-    <p>On a 2 the chest holds a gold piece.</p>
-    <p>On a 3 the chest holds a potion of healing.</p>
-    <p>On a 4 the chest holds a potion of healing and a gold piece.</p>
-    <div v-if="character.engaged">
-      <button type="button" v-on:click="openChest()" :disabled="disableInteraction">Open Chest</button>
-      <button type="button" v-on:click="leaveChest()" :disabled="disableInteraction">Leave Chest</button>
-    </div>
+  <div class="row">
+    <div class="col-6">
+      <img src="../assets/img/chest_closed.jpg" class="cardImage" />
+    </div><!-- .col 6 -->
+    <div class="col-6">
+      <p>You come across a chest. Do you open it?</p>
+      <p>If you decide to tempt fate and open the chest, roll 1d4.</p>
+      <p>On a 1 you set off a trap on the chest and lose 1d4 hit points. The chest is empty.</p>
+      <p>On a 2 the chest holds a gold piece.</p>
+      <p>On a 3 the chest holds a potion of healing.</p>
+      <p>On a 4 the chest holds a potion of healing and a gold piece.</p>
+      <div v-if="character.engaged">
+        <button type="button" v-on:click="openChest()" :disabled="disableInteraction">Open Chest</button>
+        <button type="button" v-on:click="leaveChest()" :disabled="disableInteraction">Leave Chest</button>
+      </div>
+    </div><!-- .col 6 -->
   </div>
 </template>
 
