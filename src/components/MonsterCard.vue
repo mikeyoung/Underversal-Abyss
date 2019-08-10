@@ -7,10 +7,10 @@
     <img v-if="activeTunnelCard.value === 'level2_2'" src="../assets/img/monster_level2_2.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level3_1'" src="../assets/img/monster_level3_1.jpg" class="cardImage" />
     <img v-if="activeTunnelCard.value === 'level3_2'" src="../assets/img/monster_level3_2.jpg" class="cardImage" />
-    <p v-if="activeTunnelCard.hitPoints > 0">A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.</p>
-    <p v-if="activeTunnelCard.hitPoints < 1">A dead {{ activeTunnelCard.cardName }} lies at your feet.</p>
     </div><!-- .col-6 -->
     <div v-if="activeTunnelCard.hitPoints > 0" class="col-6 rollCardPlayArea">
+      <p v-if="activeTunnelCard.hitPoints > 0">A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.</p>
+      <p v-if="activeTunnelCard.hitPoints < 1">A dead {{ activeTunnelCard.cardName }} lies at your feet.</p>
       <table>
         <tr class="cardButtonRow playCard">
           <td><button type="button" v-on:click="playRollCardPlayer(0)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[0].value }}</span></button></td>

@@ -9,7 +9,7 @@
           :character="character"
           :score="score" />
       </div><!-- .col-7 -->
-      <div class="text-right col-2">
+      <div class="text-right col-2 topLinks">
         <router-link to="/">Home</router-link> /
         <router-link to="/rules">Rules</router-link> /
         <a href="javascript:void(0)" v-on:click="resetGame()">Reset</a>
@@ -42,7 +42,9 @@
             :activeTunnelCard="activeTunnelCard"
             :disableInteraction="disableInteraction"
             :character="character" />
-          <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss" />
+          <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss"
+            :drawTunnelCardEnabled="drawTunnelCardEnabled"
+            :drawTunnelCard="drawTunnelCard" />
           <TrapFloorCard v-if="activeTunnelCard.type === 'trap_floor' && !this.atBoss"
             :character="character"
             :logEvent="logEvent"
@@ -62,7 +64,7 @@
         <div>
           <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
           <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
-          <textarea id="gameLogTextarea" rows="5" v-model="gameLog" disabled="disabled"></textarea>
+          <textarea id="gameLogTextarea" rows="6" v-model="gameLog" disabled="disabled"></textarea>
         </div>
       </div><!-- .col-11 -->
     </div><!-- .row -->
@@ -163,12 +165,7 @@ export default {
     discardRollCardPlayer: function (cardNumber) {
       this.rollCardsInHand[cardNumber].status = 'discard'
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
-      if (this.activeTunnelCard.type === 'rest') {
-        if (this.activeTunnelCard.hitPoints < 1) this.character.gold--
-        this.activeTunnelCard.hitPoints--
-      } else {
-        this.character.gold--
-      }
+      this.character.gold--
     },
     playRollCardMonster: function () {
       this.disableInteraction = true
@@ -185,8 +182,10 @@ export default {
           this.logEvent(`You strike the ${this.activeTunnelCard.cardName}! (1 HP damage)`)
           this.activeTunnelCard.hitPoints -= 1
           if (this.activeTunnelCard.hitPoints === 0) {
+            var pieces = 'pieces'
+            if (this.activeTunnelCard.gold === 1) pieces = 'piece'
             this.logEvent(`You have slain the ${this.activeTunnelCard.cardName}!`)
-            this.logEvent(`The ${this.activeTunnelCard.cardName} secretes ${this.activeTunnelCard.gold} gold pieces!`)
+            this.logEvent(`The ${this.activeTunnelCard.cardName} secretes ${this.activeTunnelCard.gold} gold ${pieces}!`)
             this.character.gold += this.activeTunnelCard.gold
             character.engaged = false
             this.activeTunnelCard.status = 'discard'
@@ -212,7 +211,6 @@ export default {
         randomCard.status = 'play'
         this.activeTunnelCard = randomCard
       } else {
-        this.logEvent('You have reached the end of the tunnel.  The gatekeeper requests a single gold piece.')
         if (this.character.gold < 1) {
           this.character.hitPoints = 0
           this.logEvent('Unfortunately you have no gold so in a fit of rage the gatekeeper tears you limb from limb.\nYou are dead.\nGame over.')
@@ -318,5 +316,9 @@ export default {
 
   .topPad {
     padding-top: 15px;
+  }
+
+  .topLinks {
+    padding-top: 12px;
   }
 </style>

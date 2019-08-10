@@ -1,15 +1,26 @@
 <template>
-  <div>
-    <img src="../assets/img/trap_ceiling.jpg" class="cardImage" />
-    <p>You step into a hidden rope and are instantly swept high into the air. Giant spiked mallets descend to crush your bones.</p>
-    <p>You can throw a gold piece into the mechanism to jam it, or you can try to cut yourself down before the mallets hit.</p>
-    <p>If you choose to disarm, roll 1d4.  If you roll a 1 or 2 you fail and get struck for that many points of damage.  On a 3 or 4 you disable the trap and climb down unharmed.</p>
-    <p>If you have no gold you must attempt to disarm the trap.</p>
-    <div v-if="character.engaged">
-      <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
-      <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Disarm Trap</button>
+  <div class="row">
+    <div class="col-6">
+      <img src="../assets/img/trap_ceiling.jpg" class="cardImage" />
     </div>
-  </div>
+    <div class="col-6">
+      <h3>Ceiling Trap</h3>
+      <p>You step into a hidden rope and are instantly swept into the air. Giant toothed mallets descend to crush your bones.</p>
+      <p>You can throw a gold piece into the mechanism to jam it, or you can try to escape before the mallets hit.</p>
+      <p>If you try to escape, roll 1d4.</p>
+      <ol>
+        <li>You get hammered from all sides. (-2 Hit Points)</li>
+        <li>You cut the rope in time but fall onto your head. (-1 Hit Points)</li>
+        <li>Successful escape</li>
+        <li>Successful escape</li>
+      </ol>
+      <p>If you have no gold you must attempt to escape.</p>
+      <div v-if="character.engaged">
+        <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
+        <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Attempt Escape</button>
+      </div>
+    </div><!-- .col-6 -->
+  </div><!-- .row -->
 </template>
 
 <script>
@@ -31,11 +42,18 @@ export default {
     disarmTrap: function () {
       let roll = Dice.roll('1d4')
       this.logEvent(`You rolled ${roll}.`)
-      if (roll < 3) {
-        this.logEvent(`A gigantic sawtooth clamp snaps on to your leg. You eventually wrench free. (Health - ${roll})`)
+      if (roll === 1) {
+        this.logEvent(`Gigantic spiked molars mash you from all sides. (-${roll} Hit Points)`)
         this.character.hitPoints -= roll
-      } else {
-        this.logEvent('You dodge the jaws of the clamp as they snap behind you.')
+      }
+
+      if (roll === 2) {
+        this.logEvent(`You cut the rope in time but fall clumsily, landing on your head. (-${roll} Hit Points)`)
+        this.character.hitPoints -= roll
+      }
+
+      if (roll > 2) {
+        this.logEvent('You cut the rope in time and land safely.')
       }
       this.character.engaged = false
     }

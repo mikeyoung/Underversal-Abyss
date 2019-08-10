@@ -4,12 +4,15 @@
       <img src="../assets/img/chest_closed.jpg" class="cardImage" />
     </div><!-- .col 6 -->
     <div class="col-6">
+      <h3>Chest</h3>
       <p>You come across a chest. Do you open it?</p>
       <p>If you decide to tempt fate and open the chest, roll 1d4.</p>
-      <p>On a 1 you set off a trap on the chest and lose 1d4 hit points. The chest is empty.</p>
-      <p>On a 2 the chest holds a gold piece.</p>
-      <p>On a 3 the chest holds a potion of healing.</p>
-      <p>On a 4 the chest holds a potion of healing and a gold piece.</p>
+      <ol>
+        <li>You set off a trap on the chest and lose 1d4 hit points.<br>The chest is empty.</li>
+        <li>The chest holds a gold piece.</li>
+        <li>The chest holds a potion of healing.</li>
+        <li>The chest holds a potion of healing and a gold piece.</li>
+      </ol>
       <div v-if="character.engaged">
         <button type="button" v-on:click="openChest()" :disabled="disableInteraction">Open Chest</button>
         <button type="button" v-on:click="leaveChest()" :disabled="disableInteraction">Leave Chest</button>

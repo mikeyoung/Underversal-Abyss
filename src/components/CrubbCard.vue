@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <h1>Crubb</h1>
-    <p>Wake the crubb or sneak past the crubb?</p>
-    <p>If you wake the crubb roll 1d4.<br></p>
-    <p>1: Crubb is furious to be awakened. Crubb demands 1d4 gold and then punches you for 1d4 damage.</p>
-    <p>2: Crubb is unhappy to be awakened. Crubb demands 1d4 gold.</p>
-    <p>3: Crubb is feeling generous and gives 1d4 gold.</p>
-    <p>4: Crubb is feeling generous and amorous.  Crubb gives you 1d4 gold and a healing kiss (+1d4 HP).</p>
-    <div v-if="character.engaged">
-      <button type="button" v-on:click="wakeCrubb()" :disabled="disableInteraction">Wake Crubb</button>
-      <button type="button" v-on:click="sneakPast()" :disabled="disableInteraction">Sneak Past</button>
+  <div class="row">
+    <div class="col-6">
+      <img src="../assets/img/crubb.jpg" class="cardImage" />
+    </div>
+    <div class="col-6">
+      <p>You have encountered a sleeping crubb.  Wake it or sneak past?</p>
+      <p>If you wake the crubb roll 1d4.</p>
+      1: Crubb is furious to be awakened. Crubb demands 1d4 gold and then punches you for 1d4 damage.<br>
+      2: Crubb is unhappy to be awakened. Crubb demands 1d4 gold.<br>
+      3: Crubb is feeling generous and gives 1d4 gold.<br>
+      4: Crubb is feeling generous and amorous.  Crubb gives you 1d4 gold and a healing kiss (+1d4 HP).<br>
+      <br>
+      <div v-if="character.engaged">
+        <button type="button" v-on:click="wakeCrubb()" :disabled="disableInteraction">Wake Crubb</button>
+        <button type="button" v-on:click="sneakPast()" :disabled="disableInteraction">Sneak Past</button>
+      </div>
     </div>
   </div>
 </template>

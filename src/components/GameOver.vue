@@ -7,15 +7,12 @@
 
 <script>
 export default {
-  name: 'RestCard',
+  name: 'GameOver',
   data () {
     return {
-      title: 'Rest'
+      title: 'GameOver'
     }
-  },
-  props: [
-    'character'
-  ]
+  }
 }
 </script>
 

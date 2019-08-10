@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <img src="../assets/img/trap_floor.jpg" class="cardImage" />
-    <p>The path ahead is clearly trapped.</p>
-    <p>You can lodge a gold piece into the mechanism to jam it, or you can try to disarm the trap.</p>
-    <p>If you choose to disarm, roll 1d4.  If you roll a 1 or 2 you take that many points of damage.  On a 3 or 4 you disable the trap and pass unharmed.</p>
-    <p>If you have no gold you must attempt to disarm the trap.</p>
-    <div v-if="character.engaged">
-      <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
-      <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Disarm Trap</button>
+  <div class="row">
+    <div class="col-6">
+      <img src="../assets/img/trap_floor.jpg" class="cardImage" />
+    </div>
+    <div class="col-6">
+      <h3>Floor Trap</h3>
+      <p>The path ahead is clearly trapped.</p>
+      <p>You can lodge a gold piece into the mechanism to jam it, or you can try to disarm the trap.</p>
+      <p>If you choose to disarm, roll 1d4.  If you roll a 1 or 2 you take that many points of damage.  On a 3 or 4 you disable the trap and pass unharmed.</p>
+      <p>If you have no gold you must attempt to disarm the trap.</p>
+      <div v-if="character.engaged">
+        <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
+        <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Disarm Trap</button>
+      </div>
     </div>
   </div>
 </template>
@@ -31,11 +36,18 @@ export default {
     disarmTrap: function () {
       let roll = Dice.roll('1d4')
       this.logEvent(`You rolled ${roll}.`)
-      if (roll < 3) {
-        this.logEvent(`A gigantic sawtooth clamp snaps on to your leg. You eventually wrench free. (Health - ${roll})`)
+      if (roll === 1) {
+        this.logEvent(`Gigantic spiked molars mash you from all sides. (-${roll} Hit Points)`)
         this.character.hitPoints -= roll
-      } else {
-        this.logEvent('You dodge the jaws of the clamp as they snap behind you.')
+      }
+
+      if (roll === 2) {
+        this.logEvent(`You cut the rope in time but fall clumsily, landing on your head. (-${roll} Hit Points)`)
+        this.character.hitPoints -= roll
+      }
+
+      if (roll > 2) {
+        this.logEvent('You cut the rope in time and land safely.')
       }
       this.character.engaged = false
     }

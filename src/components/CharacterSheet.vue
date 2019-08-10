@@ -14,6 +14,12 @@
         <td>{{ score }}</td>
       </tr>
     </table>
+    <div class="tunnelProgressWrapper">
+      <div class="tunnelProgressLabel">Tunnel Progress:</div>
+      <ul class="tunnelProgressBar">
+        <li v-for="n in 13" :key="n">{{ n }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -22,7 +28,8 @@ export default {
   name: 'CharacterSheet',
   data () {
     return {
-      title: 'Character title'
+      title: 'Character title',
+      tunnelProgressArray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     }
   },
   props: [
@@ -43,11 +50,39 @@ table.stats {
   border-collapse: separate;
   border-spacing: 4px;
   text-align: center;
+  margin-top: 12px;
 }
 
 table td {
   border: 1px solid #eee;
   margin: 10px;
   padding: .1em;
+}
+
+.tunnelProgressBar {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tunnelProgressBar li {
+  display: block;
+  float: left;
+  height: 100%;
+  width: 30px;
+  text-align: center;
+  border: 1px solid #fff;
+}
+
+.tunnelProgressWrapper {
+  margin-top: 12px;
+}
+
+.tunnelProgressLabel {
+  display: inline-block;
+  margin-top: -4px;
+  font-weight: 700;
+  font-size: 14px;
 }
 </style>
