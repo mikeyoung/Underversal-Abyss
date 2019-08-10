@@ -17,7 +17,7 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'level2_1'
         startingHitPoints = 3
-        cardName = 'furious winged flesh tube'
+        cardName = 'furious winged cartilage tube'
         damage = 1
         gold = 2
       }
