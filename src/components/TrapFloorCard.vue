@@ -5,9 +5,15 @@
     </div>
     <div class="col-6">
       <h3>Floor Trap</h3>
-      <p>The path ahead is clearly trapped.</p>
-      <p>You can lodge a gold piece into the mechanism to jam it, or you can try to disarm the trap.</p>
-      <p>If you choose to disarm, roll 1d4.  If you roll a 1 or 2 you take that many points of damage.  On a 3 or 4 you disable the trap and pass unharmed.</p>
+      <p>A trigger on the floor clicks beneath your feet. A portal to your left starts sliding open, spewing forth a sea of rotten poisonous entrails.</p>
+      <p>You can lodge a gold piece into the mechanism to jam it, or you can try to force the portal closed.</p>
+      <p>If you choose to close the portal and escape, roll 1d4.</p>
+      <ol>
+        <li>You manage to close the portal but slip on a kidney and sprain your ankle. (-1 Hit Points)</li>
+        <li>Abysmal failure.  You are flooded by guts. (-2 Hit Points)</li>
+        <li>Successful escape.</li>
+        <li>Successful escape.</li>
+      </ol>
       <p>If you have no gold you must attempt to disarm the trap.</p>
       <div v-if="character.engaged">
         <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
@@ -37,17 +43,17 @@ export default {
       let roll = Dice.roll('1d4')
       this.logEvent(`You rolled ${roll}.`)
       if (roll === 1) {
-        this.logEvent(`Gigantic spiked molars mash you from all sides. (-${roll} Hit Points)`)
+        this.logEvent(`You manage to close the portal, but slip on a kidney and sprain your ankle. (-${roll} Hit Points)`)
         this.character.hitPoints -= roll
       }
 
       if (roll === 2) {
-        this.logEvent(`You cut the rope in time but fall clumsily, landing on your head. (-${roll} Hit Points)`)
+        this.logEvent(`A wave of poisonous discarded guts overcomes you.  You erupt in painful bleeding sores. (-${roll} Hit Points)`)
         this.character.hitPoints -= roll
       }
 
       if (roll > 2) {
-        this.logEvent('You cut the rope in time and land safely.')
+        this.logEvent('You manage to push the portal closed, avoiding any contact with the mess.')
       }
       this.character.engaged = false
     }

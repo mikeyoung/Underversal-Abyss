@@ -9,8 +9,8 @@
       <p>You can throw a gold piece into the mechanism to jam it, or you can try to escape before the mallets hit.</p>
       <p>If you try to escape, roll 1d4.</p>
       <ol>
-        <li>You get hammered from all sides. (-2 Hit Points)</li>
         <li>You cut the rope in time but fall onto your head. (-1 Hit Points)</li>
+        <li>You get hammered from all sides. (-2 Hit Points)</li>
         <li>Successful escape</li>
         <li>Successful escape</li>
       </ol>
@@ -43,12 +43,12 @@ export default {
       let roll = Dice.roll('1d4')
       this.logEvent(`You rolled ${roll}.`)
       if (roll === 1) {
-        this.logEvent(`Gigantic spiked molars mash you from all sides. (-${roll} Hit Points)`)
+        this.logEvent(`You cut the rope in time but fall clumsily, landing on your head. (-${roll} Hit Points)`)
         this.character.hitPoints -= roll
       }
 
       if (roll === 2) {
-        this.logEvent(`You cut the rope in time but fall clumsily, landing on your head. (-${roll} Hit Points)`)
+        this.logEvent(`Gigantic spiked molars mash you from all sides. (-${roll} Hit Points)`)
         this.character.hitPoints -= roll
       }
 
