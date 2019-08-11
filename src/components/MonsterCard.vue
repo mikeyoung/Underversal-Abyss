@@ -8,9 +8,9 @@
     <div class="col-6">
       <h3 class="cardTitle">Monster</h3>
       <div v-if="activeTunnelCard.hitPoints > 0">
-        <p v-if="activeTunnelCard.hitPoints > 0 && character.hitPoints > 0">A {{ activeTunnelCard.cardName }} with <b>{{ activeTunnelCard.hitPoints }}</b> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.  It seems to have ingested <span v-if="activeTunnelCard.gold > 1"><b>{{ activeTunnelCard.gold }}</b> gold pieces</span><span v-if="activeTunnelCard.gold === 1"><b>{{ activeTunnelCard.gold }}</b> gold piece</span> and can do <b>{{ activeTunnelCard.damage }}</b> hit <span v-if="activeTunnelCard.damage > 1">points</span><span v-if="activeTunnelCard.damage === 1">point</span> worth of damage with each hit.</p>
-        <div class="monsterPlayArea">
-          <table class="d-none d-md-block" v-if="this.character.hitPoints > 0">
+        <p v-if="activeTunnelCard.hitPoints > 0 && character.hitPoints > 0" class="monsterDescription">A {{ activeTunnelCard.cardName }} with <b>{{ activeTunnelCard.hitPoints }}</b> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.  It seems to have ingested <span v-if="activeTunnelCard.gold > 1"><b>{{ activeTunnelCard.gold }}</b> gold pieces</span><span v-if="activeTunnelCard.gold === 1"><b>{{ activeTunnelCard.gold }}</b> gold piece</span> and can do <b>{{ activeTunnelCard.damage }}</b> hit <span v-if="activeTunnelCard.damage > 1">points</span><span v-if="activeTunnelCard.damage === 1">point</span> worth of damage with each hit.</p>
+        <div class="monsterPlayArea text-center">
+          <table class="d-none d-md-inline d-none d-lg-inline" v-if="this.character.hitPoints > 0">
             <tr class="cardButtonRow playCard">
               <td><button type="button" v-on:click="playRollCardPlayer(0)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[0].value }}</span></button></td>
               <td><button type="button" v-on:click="playRollCardPlayer(1)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[1].value }}</span></button></td>
@@ -29,7 +29,10 @@
             <button type="button" v-on:click="resetGame()">Start New Game</button>
           </div>
         </div>
-        <textarea class="gameLogTextarea d-none d-md-block" rows="6" v-model="gameLog" disabled="disabled"></textarea>
+        <div class="d-none d-md-block">
+          <div class="battleLogHeader">Battle Log</div>
+          <textarea class="gameLogTextarea" rows="7" v-model="gameLog" disabled="disabled"></textarea>
+        </div>
       </div>
 
       <div v-if="activeTunnelCard.hitPoints < 1" class="cardResolved">
@@ -42,7 +45,7 @@
 
   <!-- Begin: Small Screen Only -->
   <div class="d-block d-md-none">
-    <div class="monsterPlayArea">
+    <div class="monsterPlayArea text-center">
       <table v-if="this.character.hitPoints > 0">
         <tr class="cardButtonRow playCard">
           <td><button type="button" v-on:click="playRollCardPlayer(0)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[0].value }}</span></button></td>
@@ -58,7 +61,8 @@
         </tr>
       </table>
     </div>
-    <textarea class="gameLogTextarea" rows="6" v-model="gameLog" disabled="disabled"></textarea>
+    <div class="battleLogHeader">Battle Log</div>
+    <textarea class="gameLogTextarea" rows="7" v-model="gameLog" disabled="disabled"></textarea>
   </div>
   <!-- End: Small Screen Only -->
   </div>
@@ -90,17 +94,18 @@ export default {
 <style scoped>
   .cardButtonRow button {
     margin: 0 12px;
-    width: 70px;
+    width: 60px;
   }
 
   .cardButtonRow.playCard button {
     border-radius: 50%;
-    height: 70px;
+    height: 60px;
     line-height: 1.5em;
+    font-size: 14px;
   }
 
   .cardButtonRow.discard button {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   .cardButtonRow {
@@ -152,4 +157,30 @@ export default {
   .monsterPlayArea {
     height: 140px;
   }
+
+  .monsterPlayArea table {
+    margin: 0 auto;
+  }
+
+  .monsterDescription b {
+    color: #f00;
+  }
+
+  .battleLogHeader {
+    font-size: 11px;
+    text-align: left;
+    border-bottom: 1px solid #666;
+  }
+
+  .gameLogTextarea {
+    border: 1px solid #666;
+    color: #fff;
+    background-color: #000;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    resize: none;
+    border: 0 none;
+  }
+
 </style>

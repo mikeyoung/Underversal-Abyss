@@ -12,7 +12,7 @@
       </div><!-- .col-9 -->
     </div>
     <div class="row topPad">
-      <div class="col-1">
+      <div class="col-2 col-lg-1">
         <RollDeckDiscard
           :rollDeck="rollDeck"
           :disableInteraction="disableInteraction"
@@ -22,7 +22,7 @@
           :activeTunnelCard="activeTunnelCard"
           :tunnel="tunnel" />
       </div><!-- .col-1 -->
-      <div class="col-11">
+      <div class="col-10 col-lg-11">
         <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -33,7 +33,8 @@
           :drawTunnelCard="drawTunnelCard"
           :character="character"
           :logEvent="logEvent"
-          :disableInteraction="disableInteraction" />
+          :disableInteraction="disableInteraction"
+          :resetGame="resetGame" />
         <MonsterCard v-if="activeTunnelCard.type === 'monster' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -200,7 +201,7 @@ export default {
           this.character.hitPoints -= this.activeTunnelCard.damage
           this.disableInteraction = true
         } else {
-          this.logEvent(`You strike the ${this.activeTunnelCard.cardName}!\n(-1 Hit Point)`)
+          this.logEvent(`You strike the ${this.activeTunnelCard.cardName} for 1 hit point of damage!`)
           this.activeTunnelCard.hitPoints -= 1
           if (this.activeTunnelCard.hitPoints === 0) {
             var pieces = 'pieces'
@@ -333,6 +334,6 @@ export default {
 
   .info {
     margin-top: 1em;
-    font-size: 15px;
+    font-size: 14px;
   }
 </style>

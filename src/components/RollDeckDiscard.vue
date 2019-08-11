@@ -39,7 +39,7 @@ export default {
         position: absolute;
         left: 0;
         list-style-type: none;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 700;
         color: #666;
         height: 1.5em;
@@ -68,8 +68,10 @@ export default {
     }
 
     .rollDeckHeader {
-      font-size: 14px;
+      font-size: 11px;
       border-bottom: 1px solid #fff;
       line-height: 1em;
+      display: inline;
+      white-space: nowrap;
     }
 </style>

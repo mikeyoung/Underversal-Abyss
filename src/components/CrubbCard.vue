@@ -48,7 +48,8 @@ export default {
     'logEvent',
     'disableInteraction',
     'drawTunnelCardEnabled',
-    'drawTunnelCard'
+    'drawTunnelCard',
+    'resetGame'
   ],
   methods: {
     wakeCrubb: function () {

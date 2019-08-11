@@ -31,14 +31,13 @@
     <div class="characterSheetCell d-none d-md-block">
       <img src="../../static/img/thief.jpg" class="characterIllustration" />
     </div>
-    <div class="characterSheetCell d-none d-md-block">
-      <div class="inGameNavLinks">
-        <a href="javascript:void(0)" v-on:click="resetGame()">New Game</a><br>
-        <router-link to="/about">About</router-link>
-      </div>
-      <br>
+    <div class="characterSheetCell characterStats d-none d-md-block">
       <div class="characterStat">hp: {{ this.character.hitPoints }}</div>
       <div class="characterStat">gp: {{ this.character.gold }}</div>
+    </div>
+    <div class="inGameNavLinks d-none d-md-block">
+      <a href="javascript:void(0)" v-on:click="resetGame()">New Game</a><br>
+      <router-link to="/about">About</router-link>
     </div>
   </div>
 </template>
@@ -134,6 +133,10 @@ td.score {
   margin: 0 10px 0 20px;
 }
 
+.characterStats {
+  padding-top: 60px;
+}
+
 .characterStat {
   line-height: 42px;
   font-family: 'UnifrakturCook', cursive;
@@ -152,5 +155,8 @@ td.score {
 .inGameNavLinks {
   font-size: 12px;
   text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
