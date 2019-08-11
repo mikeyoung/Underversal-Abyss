@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p>Roll Deck</p>
+  <div class="rollDeckWrapper">
+    <p class="rollDeckHeader">Roll Deck</p>
     <ul class="rollCardDiscardList">
       <li
           v-for="(card, index) in this.rollDeck"
@@ -57,13 +57,19 @@ export default {
 
     .activeByPlayer {
         color: #f00;
-        margin-left: 50px;
+        margin-left: 20px;
         transition: margin-left .25s;
     }
 
     .activeByMonster {
-        margin-left: 50px;
+        margin-left: 20px;
         transition: all .25s;
         color: #fff;
+    }
+
+    .rollDeckHeader {
+      font-size: 14px;
+      border-bottom: 1px solid #fff;
+      line-height: 1em;
     }
 </style>

@@ -1,23 +1,29 @@
 <template>
   <div class="row">
     <div class="col-6">
-      <img src="../assets/img/trap_ceiling.jpg" class="cardImage" />
+      <img src="../../static/img/trap_ceiling.jpg" class="cardImage" />
     </div>
     <div class="col-6">
-      <h3>Ceiling Trap</h3>
-      <p>You step into a hidden rope and are instantly swept into the air. Giant toothed mallets descend to crush your bones.</p>
-      <p>You can throw a gold piece into the mechanism to jam it, or you can try to escape before the mallets hit.</p>
-      <p>If you try to escape, roll 1d4.</p>
-      <ol>
-        <li>You cut the rope in time but fall onto your head. (-1 Hit Points)</li>
-        <li>You get hammered from all sides. (-2 Hit Points)</li>
-        <li>Successful escape</li>
-        <li>Successful escape</li>
-      </ol>
-      <p>If you have no gold you must attempt to escape.</p>
-      <div v-if="character.engaged">
+      <h3 class="cardTitle">Ceiling Trap</h3>
+
+      <div v-if="!this.cardResolved">
+        <p>You step into a hidden rope and are instantly swept into the air. Giant toothed mallets descend to crush your bones.</p>
+        <p>You can throw a gold piece into the mechanism to jam it, or you can try to escape before the mallets hit.</p>
+        <p>If you try to escape, roll 1d4.</p>
+        <ol>
+          <li>You get hammered, very badly and from all sides. (-2 Hit Points)</li>
+          <li>You cut the rope in time but fall onto your head. (-1 Hit Points)</li>
+          <li>Successful escape</li>
+          <li>Successful escape</li>
+        </ol>
+        <p>If you have no gold you must attempt to escape.</p>
         <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
         <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Attempt Escape</button>
+      </div>
+
+      <div v-if="this.cardResolved" class="cardResolved">
+        <div v-html="this.resolvedMessage"></div>
+        <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
       </div>
     </div><!-- .col-6 -->
   </div><!-- .row -->
@@ -30,38 +36,45 @@ export default {
   name: 'TrapFloorCard',
   data () {
     return {
-      title: 'Trap'
+      title: 'Trap',
+      resolvedMessage: '',
+      cardResolved: false
     }
   },
   methods: {
     useGoldPiece: function () {
-      this.logEvent('You wedge a piece of gold into a vital part of the mechanism, rendering it harmless. (-1 Gold)')
+      this.resolvedMessage = 'You wedge a piece of gold into a vital part of the mechanism, rendering it harmless.<br>(-1 Gold)'
       this.character.gold -= 1
+      this.cardResolved = true
       this.character.engaged = false
     },
     disarmTrap: function () {
       let roll = Dice.roll('1d4')
-      this.logEvent(`You rolled ${roll}.`)
+      this.resolvedMessage = `You rolled a ${roll}.<br>`
       if (roll === 1) {
-        this.logEvent(`You cut the rope in time but fall clumsily, landing on your head. (-${roll} Hit Points)`)
-        this.character.hitPoints -= roll
+        this.resolvedMessage += 'Gigantic spiked molars mash you from all sides.<br>(-2 Hit Points)'
+        this.character.hitPoints -= 2
       }
 
       if (roll === 2) {
-        this.logEvent(`Gigantic spiked molars mash you from all sides. (-${roll} Hit Points)`)
-        this.character.hitPoints -= roll
+        this.resolvedMessage += 'You cut the rope in time but fall clumsily, landing on your head.<br>(-1 Hit Point)'
+        this.character.hitPoints -= 1
       }
 
       if (roll > 2) {
-        this.logEvent('You cut the rope in time and land safely.')
+        this.resolvedMessage += 'You cut the rope in time and land safely.'
       }
+
+      this.cardResolved = true
       this.character.engaged = false
     }
   },
   props: [
     'character',
     'logEvent',
-    'disableInteraction'
+    'disableInteraction',
+    'drawTunnelCardEnabled',
+    'drawTunnelCard'
   ]
 }
 </script>

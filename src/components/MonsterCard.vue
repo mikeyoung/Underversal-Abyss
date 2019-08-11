@@ -1,17 +1,49 @@
 <template>
-  <div class="row">
+  <div>
+    <div class="row">
+      <div class="col-6">
+        <div class="monsterHitPoints" v-if="activeTunnelCard.hitPoints > 0">{{ activeTunnelCard.hitPoints }} hp</div>
+        <img :src="'../../static/img/monster_' + activeTunnelCard.value + '.jpg'" class="cardImage" />
+      </div><!-- .col-6 -->
     <div class="col-6">
-    <img v-if="activeTunnelCard.value === 'level1_1'" src="../assets/img/monster_level1_1.jpg" class="cardImage" />
-    <img v-if="activeTunnelCard.value === 'level1_2'" src="../assets/img/monster_level1_2.jpg" class="cardImage" />
-    <img v-if="activeTunnelCard.value === 'level2_1'" src="../assets/img/monster_level2_1.jpg" class="cardImage" />
-    <img v-if="activeTunnelCard.value === 'level2_2'" src="../assets/img/monster_level2_2.jpg" class="cardImage" />
-    <img v-if="activeTunnelCard.value === 'level3_1'" src="../assets/img/monster_level3_1.jpg" class="cardImage" />
-    <img v-if="activeTunnelCard.value === 'level3_2'" src="../assets/img/monster_level3_2.jpg" class="cardImage" />
+      <h3 class="cardTitle">Monster</h3>
+      <div v-if="activeTunnelCard.hitPoints > 0">
+        <p v-if="activeTunnelCard.hitPoints > 0 && character.hitPoints > 0">A {{ activeTunnelCard.cardName }} with <b>{{ activeTunnelCard.hitPoints }}</b> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.  It seems to have ingested <span v-if="activeTunnelCard.gold > 1"><b>{{ activeTunnelCard.gold }}</b> gold pieces</span><span v-if="activeTunnelCard.gold === 1"><b>{{ activeTunnelCard.gold }}</b> gold piece</span> and can do <b>{{ activeTunnelCard.damage }}</b> hit <span v-if="activeTunnelCard.damage > 1">points</span><span v-if="activeTunnelCard.damage === 1">point</span> worth of damage with each hit.</p>
+        <div class="monsterPlayArea">
+          <table class="d-none d-md-block" v-if="this.character.hitPoints > 0">
+            <tr class="cardButtonRow playCard">
+              <td><button type="button" v-on:click="playRollCardPlayer(0)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[0].value }}</span></button></td>
+              <td><button type="button" v-on:click="playRollCardPlayer(1)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[1].value }}</span></button></td>
+              <td><button type="button" v-on:click="playRollCardPlayer(2)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[2].value }}</span></button></td>
+              <td><button type="button" v-on:click="playRollCardPlayer(3)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[3].value }}</span></button></td>
+            </tr>
+            <tr class="cardButtonRow discard">
+              <td><button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+              <td><button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+              <td><button type="button" v-on:click="discardRollCardPlayer(2)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+              <td><button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
+            </tr>
+          </table>
+          <div v-if="this.character.hitPoints < 1">
+            <p>The {{this.activeTunnelCard.cardName}} has killed you!</p>
+            <button type="button" v-on:click="resetGame()">Start New Game</button>
+          </div>
+        </div>
+        <textarea class="gameLogTextarea d-none d-md-block" rows="6" v-model="gameLog" disabled="disabled"></textarea>
+      </div>
+
+      <div v-if="activeTunnelCard.hitPoints < 1" class="cardResolved">
+        <p>A dead {{ activeTunnelCard.cardName }} lies at your feet.</p>
+        <p>It secretes {{this.activeTunnelCard.gold}} gold.</p>
+        <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
+      </div>
     </div><!-- .col-6 -->
-    <div v-if="activeTunnelCard.hitPoints > 0" class="col-6 rollCardPlayArea">
-      <p v-if="activeTunnelCard.hitPoints > 0">A {{ activeTunnelCard.cardName }} with <span class="monsterHitPoints">{{ activeTunnelCard.hitPoints }}</span> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.</p>
-      <p v-if="activeTunnelCard.hitPoints < 1">A dead {{ activeTunnelCard.cardName }} lies at your feet.</p>
-      <table>
+  </div><!-- .row -->
+
+  <!-- Begin: Small Screen Only -->
+  <div class="d-block d-md-none">
+    <div class="monsterPlayArea">
+      <table v-if="this.character.hitPoints > 0">
         <tr class="cardButtonRow playCard">
           <td><button type="button" v-on:click="playRollCardPlayer(0)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[0].value }}</span></button></td>
           <td><button type="button" v-on:click="playRollCardPlayer(1)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[1].value }}</span></button></td>
@@ -25,12 +57,11 @@
           <td><button type="button" v-on:click="discardRollCardPlayer(3)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
         </tr>
       </table>
-      <br>
-      <p>To attack a monster, play a roll card from your hand.  The monster will then draw a card from the remaining cards in the roll deck. If the value of your roll card is higher than that of the monster, you successfully attack.  If the monster's roll card value is higher, then the monster successfully attacks.</p>
-      <p>You may choose to discard a roll card and draw a new one from the deck for the cost of 1 gold piece.</p>
-      <p>The roll deck replenishes after the last card has been picked up.</p>
-    </div><!-- .col-6 -->
-  </div><!-- .row -->
+    </div>
+    <textarea class="gameLogTextarea" rows="6" v-model="gameLog" disabled="disabled"></textarea>
+  </div>
+  <!-- End: Small Screen Only -->
+  </div>
 </template>
 
 <script>
@@ -48,28 +79,17 @@ export default {
     'activeTunnelCard',
     'disableInteraction',
     'character',
-    'gameLog'
+    'gameLog',
+    'drawTunnelCardEnabled',
+    'drawTunnelCard',
+    'resetGame'
   ]
 }
 </script>
 
 <style scoped>
-    button {
-    cursor: pointer;
-    text-transform: uppercase;
-  }
-
-  button:hover {
-    color: #000;
-    background-color: #fff;
-  }
-
-  button[disabled] {
-    opacity: .25
-  }
-
   .cardButtonRow button {
-    margin: 0 20px;
+    margin: 0 12px;
     width: 70px;
   }
 
@@ -85,6 +105,10 @@ export default {
 
   .cardButtonRow {
     margin: 20px 0;
+  }
+
+  table {
+    margin: 0 auto;
   }
 
   td {
@@ -108,15 +132,24 @@ export default {
   }
 
   .monsterHitPoints {
-    transition: color .25s;
+    line-height: 42px;
+    font-family: 'UnifrakturCook', cursive;
+    font-size: 36px;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+   -webkit-text-stroke: 1px #fff;
+   color: #000;
+   text-shadow:
+       1px 1px 0 #fff,
+     -1px -1px 0 #fff,
+      1px -1px 0 #fff,
+      -1px 1px 0 #fff,
+       1px 1px 0 #fff;
   }
 
-  .monsterHitPoints {
-    color: #f00;
-    font-weight: 700;
-  }
-
-  .rollCardPlayArea p {
-    font-size: 14px;
+  .monsterPlayArea {
+    height: 140px;
   }
 </style>

@@ -2,20 +2,16 @@
   <div class="container topPad">
     <div class="row">
       <div class="col-3">
-        <router-link to="/"><img src="../assets/img/underversal_logo_game.jpg" class="mainLogo" /></router-link>
+        <router-link to="/"><img src="../../static/img/underversal_logo_game.jpg" class="mainLogo" /></router-link>
       </div><!-- .col-3 -->
-      <div class="col-7">
+      <div class="col-9">
         <CharacterSheet
           :character="character"
-          :score="score" />
-      </div><!-- .col-7 -->
-      <div class="text-right col-2 topLinks">
-        <router-link to="/">Home</router-link> /
-        <router-link to="/rules">Rules</router-link> /
-        <a href="javascript:void(0)" v-on:click="resetGame()">Reset</a>
-      </div><!-- .col-2 -->
+          :score="score"
+          :resetGame="resetGame" />
+      </div><!-- .col-9 -->
     </div>
-    <div class="row">
+    <div class="row topPad">
       <div class="col-1">
         <RollDeckDiscard
           :rollDeck="rollDeck"
@@ -27,45 +23,57 @@
           :tunnel="tunnel" />
       </div><!-- .col-1 -->
       <div class="col-11">
-        <div v-if="this.character.hitPoints > 0">
-          <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
-            :character="character"
-            :logEvent="logEvent" />
-          <CrubbCard v-if="activeTunnelCard.type === 'crubb' && !this.atBoss"
-            :character="character"
-            :logEvent="logEvent"
-            :disableInteraction="disableInteraction" />
-          <MonsterCard v-if="activeTunnelCard.type === 'monster' && !this.atBoss"
-            :rollCardsInHand="rollCardsInHand"
-            :playRollCardPlayer="playRollCardPlayer"
-            :discardRollCardPlayer="discardRollCardPlayer"
-            :activeTunnelCard="activeTunnelCard"
-            :disableInteraction="disableInteraction"
-            :character="character" />
-          <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss"
-            :drawTunnelCardEnabled="drawTunnelCardEnabled"
-            :drawTunnelCard="drawTunnelCard" />
-          <TrapFloorCard v-if="activeTunnelCard.type === 'trap_floor' && !this.atBoss"
-            :character="character"
-            :logEvent="logEvent"
-            :disableInteraction="disableInteraction" />
-          <TrapCeilingCard v-if="activeTunnelCard.type === 'trap_ceiling' && !this.atBoss"
-            :character="character"
-            :logEvent="logEvent"
-            :disableInteraction="disableInteraction" />
-          <BossCard v-if="this.atBoss"
-            :character="character"
-            :logEvent="logEvent"
-            :disableInteraction="disableInteraction" />
-        </div>
-        <div v-if="this.character.hitPoints < 1 &&  !this.atBoss">
+        <ChestCard v-if="activeTunnelCard.type === 'chest' && !this.atBoss"
+          :drawTunnelCardEnabled="drawTunnelCardEnabled"
+          :drawTunnelCard="drawTunnelCard"
+          :character="character"
+          :logEvent="logEvent" />
+        <CrubbCard v-if="activeTunnelCard.type === 'crubb' && !this.atBoss"
+          :drawTunnelCardEnabled="drawTunnelCardEnabled"
+          :drawTunnelCard="drawTunnelCard"
+          :character="character"
+          :logEvent="logEvent"
+          :disableInteraction="disableInteraction" />
+        <MonsterCard v-if="activeTunnelCard.type === 'monster' && !this.atBoss"
+          :drawTunnelCardEnabled="drawTunnelCardEnabled"
+          :drawTunnelCard="drawTunnelCard"
+          :rollCardsInHand="rollCardsInHand"
+          :playRollCardPlayer="playRollCardPlayer"
+          :discardRollCardPlayer="discardRollCardPlayer"
+          :activeTunnelCard="activeTunnelCard"
+          :disableInteraction="disableInteraction"
+          :character="character"
+          :gameLog="gameLog"
+          :resetGame="resetGame" />
+        <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss"
+          :drawTunnelCardEnabled="drawTunnelCardEnabled"
+          :drawTunnelCard="drawTunnelCard" />
+        <TrapFloorCard v-if="activeTunnelCard.type === 'trap_floor' && !this.atBoss"
+          :drawTunnelCardEnabled="drawTunnelCardEnabled"
+          :drawTunnelCard="drawTunnelCard"
+          :character="character"
+          :logEvent="logEvent"
+          :disableInteraction="disableInteraction" />
+        <TrapCeilingCard v-if="activeTunnelCard.type === 'trap_ceiling' && !this.atBoss"
+          :drawTunnelCardEnabled="drawTunnelCardEnabled"
+          :drawTunnelCard="drawTunnelCard"
+          :character="character"
+          :logEvent="logEvent"
+          :disableInteraction="disableInteraction" />
+        <BossCard v-if="this.atBoss"
+          :character="character"
+          :logEvent="logEvent"
+          :disableInteraction="disableInteraction" />
+        <StartCard v-if="this.character.space === 0"
+          :startGame="startGame" />
+        <!-- <div v-if="this.character.hitPoints < 1 &&  !this.atBoss">
           <GameOver />
-        </div>
-        <div>
-          <button type="button" v-on:click="initGame()" v-if="!this.gameInPlay">Start</button>
-          <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
-          <textarea id="gameLogTextarea" rows="6" v-model="gameLog" disabled="disabled"></textarea>
-        </div>
+        </div> -->
+        <div v-if="activeTunnelCard.type === 'monster' && activeTunnelCard.hitPoints > 0" class="info">
+          <p>To attack a monster, play a roll card from your hand.  The monster will then draw a card from the remaining cards in the roll deck. If the value of your roll card is higher than that of the monster, you successfully attack.  If the monster's roll card value is higher, then the monster successfully attacks.</p>
+          <p>You may choose to discard a roll card and draw a new one from the deck for the cost of 1 gold piece.</p>
+          <p>The roll deck replenishes after the last card has been picked up.</p>
+        </div><!-- .info -->
       </div><!-- .col-11 -->
     </div><!-- .row -->
   </div><!-- .container -->
@@ -87,6 +95,7 @@ import TrapCeilingCard from './TrapCeilingCard'
 import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
 import GameOver from './GameOver'
+import StartCard from './StartCard'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -117,7 +126,8 @@ export default {
       },
       disableInteraction: false,
       currentCardNumber: -1,
-      gameLog: ''
+      gameLog: '',
+      eBeginningNumbers: [8, 11, 18]
     }
   },
   computed: {
@@ -157,10 +167,11 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
+      this.gameLog = ''
       this.currentCardNumber = cardNumber
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
       this.character.activeRollCard.status = 'activeByPlayer'
-      this.resolvePlayerRollCard()
+      this.playRollCardMonster()
     },
     discardRollCardPlayer: function (cardNumber) {
       this.rollCardsInHand[cardNumber].status = 'discard'
@@ -171,15 +182,25 @@ export default {
       this.disableInteraction = true
       setTimeout(() => {
         this.activeRollCardMonster = this.getRollCard()
+
+        var rollcardArticle = 'a'
+        if (this.eBeginningNumbers.includes(this.character.activeRollCard.value)) rollcardArticle = 'an'
+
+        var monsterRollcardArticle = 'a'
+        if (this.eBeginningNumbers.includes(this.activeRollCardMonster.value)) monsterRollcardArticle = 'an'
+
         this.activeRollCardMonster.status = 'activeByMonster'
-        this.logEvent(`You play a ${this.character.activeRollCard.value}.`)
-        this.logEvent(`The ${this.activeTunnelCard.cardName} draws a ${this.activeRollCardMonster.value}.`)
+        this.logEvent(`You play ${rollcardArticle} ${this.character.activeRollCard.value}.`)
+        this.logEvent(`The ${this.activeTunnelCard.cardName} draws ${monsterRollcardArticle} ${this.activeRollCardMonster.value}.`)
 
         if (this.activeRollCardMonster.value >= this.character.activeRollCard.value) {
-          this.logEvent(`The ${this.activeTunnelCard.cardName} hits you! (-${this.activeTunnelCard.damage} HP)`)
+          var points = 'Points'
+          if (this.activeTunnelCard.damage === 1) points = 'Point'
+          this.logEvent(`The ${this.activeTunnelCard.cardName} hits you!\n(-${this.activeTunnelCard.damage} Hit ${points})`)
           this.character.hitPoints -= this.activeTunnelCard.damage
+          this.disableInteraction = true
         } else {
-          this.logEvent(`You strike the ${this.activeTunnelCard.cardName}! (1 HP damage)`)
+          this.logEvent(`You strike the ${this.activeTunnelCard.cardName}!\n(-1 Hit Point)`)
           this.activeTunnelCard.hitPoints -= 1
           if (this.activeTunnelCard.hitPoints === 0) {
             var pieces = 'pieces'
@@ -196,11 +217,12 @@ export default {
           this.character.activeRollCard.status = 'discard'
           this.activeRollCardMonster.status = 'discard'
           Vue.set(this.rollCardsInHand, this.currentCardNumber, this.getRollCard())
-          this.disableInteraction = false
+          if (this.character.hitPoints > 0) this.disableInteraction = false
         }, 1000)
       }, 1000)
     },
     drawTunnelCard: function () {
+      this.gameLog = ''
       this.character.engaged = true
       if (this.activeTunnelCard.value !== '') this.activeTunnelCard.status = 'discard'
       this.character.space += 1
@@ -221,24 +243,9 @@ export default {
         this.character.engaged = true
       }
 
-      if (this.activeTunnelCard.type === 'monster') {
-        this.logEvent(`A ${this.activeTunnelCard.cardName} blocks your path!`)
-      }
-
       if (this.activeTunnelCard.type === 'rest') {
         this.character.hitPoints += 1
         this.character.engaged = false
-      }
-    },
-    initGame: function () {
-      for (let i = 0; i < 4; i++) {
-        this.rollCardsInHand[i] = this.getRollCard()
-      }
-      this.gameInPlay = true
-    },
-    resolvePlayerRollCard: function () {
-      if (this.activeTunnelCard.type === 'monster') {
-        this.playRollCardMonster()
       }
     },
     logEvent: function (message) {
@@ -254,6 +261,7 @@ export default {
         {value: 0}
       ]
       this.gameInPlay = false
+      this.disableInteraction = false
       this.turnNumber = 0
       this.activeRollCardMonster = { value: 0 }
       this.character.activeRollCard = { value: 0 }
@@ -270,15 +278,24 @@ export default {
         card.status = 'draw'
         card.hitPoints = card.startingHitPoints
       }
-
-      this.initGame()
+    },
+    initHand: function () {
+      for (let i = 0; i < 4; i++) {
+        this.rollCardsInHand[i] = this.getRollCard()
+      }
+      this.gameInPlay = true
+    },
+    startGame: function () {
+      this.initHand()
+      this.drawTunnelCard()
     }
   },
   watch: {
     gameLog: function () {
       setTimeout(() => {
-        var gameLogTextarea = document.getElementById('gameLogTextarea')
-        gameLogTextarea.scrollTop = gameLogTextarea.scrollHeight
+        document.querySelectorAll('.gameLogTextarea').forEach(function (el) {
+          el.scrollTop = el.scrollHeight
+        })
       }, 10)
     }
   },
@@ -293,21 +310,13 @@ export default {
     TrapFloorCard,
     RestCard,
     BossCard,
-    GameOver
+    GameOver,
+    StartCard
   }
 }
 </script>
 
 <style scoped>
-  #gameLogTextarea {
-    border: 1px solid #fff;
-    color: #fff;
-    background-color: #000;
-    display: block;
-    width: 100%;
-    margin-top: 1em;
-  }
-
   .mainLogo {
     width: 100%;
     display: block;
@@ -320,5 +329,10 @@ export default {
 
   .topLinks {
     padding-top: 12px;
+  }
+
+  .info {
+    margin-top: 1em;
+    font-size: 15px;
   }
 </style>

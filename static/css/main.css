@@ -6,14 +6,31 @@ body {
   color: #eee;
   font-family: 'Lacquer', sans-serif;
 }
+
 html {
   height: 100%;
 }
 
-button {
+button,
+button[disabled]:hover {
   background-color: #000;
   color: #eee;
   border: 1px solid #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+button:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+button[disabled] {
+  opacity: .25
+}
+
+button:focus {
+  outline: 0;
 }
 
 .cardImage {
@@ -22,11 +39,32 @@ button {
 }
 
 ul {
-  display: block;
   list-style-type: none;
+}
+
+ol {
+  padding-left: 1em;
 }
 
 a {
   color: #fff !important;
-  text-decoration: underline;
+}
+
+.gameLogTextarea {
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: #000;
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+  padding: 5px;
+}
+
+.cardTitle {
+  font-family: 'UnifrakturCook', cursive;
+  font-size: 36px;
+}
+
+.cardResolved button {
+  margin-top: 2em;
 }

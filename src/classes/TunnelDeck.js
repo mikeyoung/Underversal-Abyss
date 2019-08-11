@@ -17,15 +17,15 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'level2_1'
         startingHitPoints = 3
-        cardName = 'furious winged cartilage tube'
-        damage = 1
+        cardName = 'winged cartilage tube'
+        damage = 2
         gold = 2
       }
 
       if (i === 1) {
         type = 'monster'
         value = 'level2_2'
-        startingHitPoints = 3
+        startingHitPoints = 4
         cardName = 'paranoid egg guardian'
         damage = 1
         gold = 2
@@ -34,7 +34,7 @@ export default class TunnelDeck {
       if (i === 2) {
         type = 'monster'
         value = 'level3_1'
-        startingHitPoints = 5
+        startingHitPoints = 4
         cardName = 'hulking mass of bone and sinew'
         damage = 2
         gold = 3
@@ -45,7 +45,7 @@ export default class TunnelDeck {
         value = 'level3_2'
         startingHitPoints = 5
         cardName = 'giant tentacled brain'
-        damage = 2
+        damage = 1
         gold = 3
       }
 
@@ -78,15 +78,15 @@ export default class TunnelDeck {
         type = 'monster'
         value = 'level1_1'
         startingHitPoints = 1
-        cardName = 'sickly half dead humanoid'
-        damage = 1
+        cardName = 'shambling corpse'
+        damage = 2
         gold = 1
       }
 
       if (i === 14) {
         type = 'monster'
         value = 'level1_2'
-        startingHitPoints = 1
+        startingHitPoints = 2
         cardName = 'botched experiment'
         damage = 1
         gold = 1

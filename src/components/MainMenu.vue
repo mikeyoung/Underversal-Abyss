@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-10 offset-1">
         <br>
-        <router-link to="/game"><img src="../assets/img/underversal_logo_home.jpg" class="homeLogo" /></router-link>
+        <router-link to="/game"><img src="../../static/img/underversal_logo_home.jpg" class="homeLogo" /></router-link>
         <br>
         <div class="text-center">
             <router-link to="/game">Game</router-link> /
-            <router-link to="/rules">Rules</router-link>
+            <router-link to="/about">About</router-link>
         </div>
       </div><!-- .col-12 -->
     </div><!-- .row -->
