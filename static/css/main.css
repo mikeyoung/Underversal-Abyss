@@ -35,7 +35,6 @@ button:focus {
 }
 
 .cardImage {
-  max-height: 400px;
   width: 100%;
 }
 
@@ -54,8 +53,15 @@ a {
 .cardTitle {
   font-family: 'UnifrakturCook', cursive;
   font-size: 36px;
+  text-transform: capitalize;
 }
 
 .cardResolved button {
   margin-top: 2em;
+}
+
+@media (min-width: 1200px) {
+  .container {
+      max-width: 1600px;
+  }
 }

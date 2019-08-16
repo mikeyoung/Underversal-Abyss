@@ -27,7 +27,8 @@
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
           :character="character"
-          :logEvent="logEvent" />
+          :logEvent="logEvent"
+          :resetGame="resetGame" />
         <CrubbCard v-if="activeTunnelCard.type === 'crubb' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -54,22 +55,21 @@
           :drawTunnelCard="drawTunnelCard"
           :character="character"
           :logEvent="logEvent"
-          :disableInteraction="disableInteraction" />
+          :disableInteraction="disableInteraction"
+          :resetGame="resetGame" />
         <TrapCeilingCard v-if="activeTunnelCard.type === 'trap_ceiling' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
           :character="character"
           :logEvent="logEvent"
-          :disableInteraction="disableInteraction" />
+          :disableInteraction="disableInteraction"
+          :resetGame="resetGame" />
         <BossCard v-if="this.atBoss"
           :character="character"
           :logEvent="logEvent"
           :disableInteraction="disableInteraction" />
         <StartCard v-if="this.character.space === 0"
           :startGame="startGame" />
-        <!-- <div v-if="this.character.hitPoints < 1 &&  !this.atBoss">
-          <GameOver />
-        </div> -->
         <div v-if="activeTunnelCard.type === 'monster' && activeTunnelCard.hitPoints > 0" class="info">
           <p>To attack a monster, play a roll card from your hand.  The monster will then draw a card from the remaining cards in the roll deck. If the value of your roll card is higher than that of the monster, you successfully attack.  If the monster's roll card value is higher, then the monster successfully attacks.</p>
           <p>You may choose to discard a roll card and draw a new one from the deck for the cost of 1 gold piece.</p>
@@ -95,7 +95,6 @@ import RestCard from './RestCard'
 import TrapCeilingCard from './TrapCeilingCard'
 import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
-import GameOver from './GameOver'
 import StartCard from './StartCard'
 
 let rollDeck = new RollDeck().cards
@@ -311,7 +310,6 @@ export default {
     TrapFloorCard,
     RestCard,
     BossCard,
-    GameOver,
     StartCard
   }
 }

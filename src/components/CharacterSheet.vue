@@ -28,8 +28,10 @@
         </ul>
       </div><!-- .tunnelProgressWrapper -->
     </div>
-    <div class="characterSheetCell d-none d-md-block">
-      <img src="../../static/img/thief.jpg" class="characterIllustration" />
+    <div class="characterSheetCell d-none d-md-block characterIllustrationCell">
+      <div v-if="this.character.hitPoints < 5" class="damageLayer" :style="{ height: (((5 - this.character.hitPoints) * 150) / 5) + 'px' }"></div>
+      <img src="../../static/img/thief_mask.png" class="characterIllustration characterMask" />
+      <img src="../../static/img/thief.jpg" class="characterIllustration characterArt" />
     </div>
     <div class="characterSheetCell characterStats d-none d-md-block">
       <div class="characterStat">hp: {{ this.character.hitPoints }}</div>
@@ -130,7 +132,23 @@ td.score {
 
 .characterIllustration {
   height: 150px;
+  width: 68px;
   margin: 0 10px 0 20px;
+}
+
+.characterMask {
+  z-index: 2112;
+  position: absolute;
+}
+
+.damageLayer {
+  background-color: rgba(255,0,0,.65);
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  width: 68px;
+  z-index: 666;
+  max-height: 150px !important;
 }
 
 .characterStats {
