@@ -19,6 +19,7 @@ button[disabled]:hover {
   cursor: pointer;
   text-transform: uppercase;
   margin-bottom: 1em;
+  margin-right: 1em;
 }
 
 button:hover {

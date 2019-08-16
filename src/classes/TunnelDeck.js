@@ -28,7 +28,7 @@ export default class TunnelDeck {
         startingHitPoints = 4
         cardName = 'paranoid egg guardian'
         damage = 1
-        gold = 2
+        gold = 3
       }
 
       if (i === 2) {
@@ -46,7 +46,7 @@ export default class TunnelDeck {
         startingHitPoints = 5
         cardName = 'giant tentacled brain'
         damage = 1
-        gold = 3
+        gold = 4
       }
 
       if (i >= 4 && i < 6) {
@@ -89,7 +89,7 @@ export default class TunnelDeck {
         startingHitPoints = 2
         cardName = 'botched experiment'
         damage = 1
-        gold = 1
+        gold = 2
       }
 
       this.cards.push(new Card({

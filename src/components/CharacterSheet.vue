@@ -106,6 +106,12 @@ td.score {
   width: 25px;
   text-align: center;
   border: 1px solid #fff;
+  transition: all 1s;
+}
+
+.tunnelProgressBar li.active {
+  background-color: #fff;
+  color: #000;
 }
 
 .tunnelProgressWrapper {
@@ -117,11 +123,6 @@ td.score {
   margin-top: -4px;
   font-weight: 700;
   font-size: 14px;
-}
-
-.tunnelProgressBar li.active {
-  background-color: #fff;
-  color: #000;
 }
 
 .characterSheetCell {

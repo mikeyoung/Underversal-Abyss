@@ -18,7 +18,7 @@
         </ol>
         <p>If you have no gold you must attempt to disarm the trap.</p>
         <button type="button" v-on:click="useGoldPiece()" :disabled="disableInteraction" v-if="this.character.gold > 0">Use Gold Piece</button>
-        <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Disarm Trap</button>
+        <button type="button" v-on:click="disarmTrap()" :disabled="disableInteraction">Attempt to Close Portal</button>
       </div>
 
       <div v-if="this.cardResolved" class="cardResolved">

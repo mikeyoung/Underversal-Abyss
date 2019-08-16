@@ -101,7 +101,7 @@ export default {
       this.cardResolved = true
     },
     sneakPast: function () {
-      this.logEvent('You sneak past the snoring crubb.')
+      this.resolvedMessage += `<p>The crubb continues to snore loudly as you sneak past unnoticed.</p>`
       this.cardResolved = true
       this.character.engaged = false
     }

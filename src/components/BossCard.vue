@@ -13,7 +13,8 @@
       </div>
       <div v-if="this.character.hitPoints > 0">
         <p>With some disappointment The Gatekeeper accepts your coin.  It gestures down the path, where the tunnel slopes upwards to an iron trapdoor.</p>
-        <p>You climb the tunnel and push the door open.  You are blinded by your first view of sunlight in over 20 years.  You collapse to the ground blinded, starving and exhausted.  Congratulations, you are free!</p>
+        <p>You climb the tunnel and push the door open.  You are blinded by your first view of sunlight in over 20 years.  You collapse to the ground blinded, starving and exhausted.</p>
+        <p>Congratulations, you are free!</p>
       </div>
       <button type="button" v-on:click="resetGame()">Start New Game</button>
     </div><!-- .col 6 -->
