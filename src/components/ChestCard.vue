@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <img src="../../static/img/chest_closed.jpg" class="cardImage" />
     </div><!-- .col 6 -->
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Chest</h3>
 
       <div v-if="!this.cardResolved">
@@ -51,27 +51,27 @@ export default {
         case 1:
           let roll2 = Dice.roll('1d4')
           this.character.hitPoints -= parseInt(roll2)
-          this.resolvedMessage += `A wet rusty needle sticks into you as you open the empty chest.  You fall ill. (-${roll2} Hit Points)`
+          this.resolvedMessage += `<p>A wet rusty needle sticks into you as you open the empty chest.  You fall ill. (-${roll2} Hit Points)</p>`
           break
         case 2:
           this.character.gold += 1
-          this.resolvedMessage += 'You found a gold piece!'
+          this.resolvedMessage += '<p>You found a gold piece!</p>'
           break
         case 3:
           this.character.hitPoints += 1
-          this.resolvedMessage += 'You found a potion of healing! (+1 Hit Point)'
+          this.resolvedMessage += '<p>You found a potion of healing! (+1 Hit Point)</p>'
           break
         case 4:
           this.character.hitPoints += 1
           this.character.gold += 1
-          this.resolvedMessage += 'You found a potion of healing (+1 Hit Point) and a gold piece!'
+          this.resolvedMessage += '<p>You found a potion of healing (+1 Hit Point) and a gold piece!</p>'
           break
       }
       this.cardResolved = true
       this.character.engaged = false
     },
     leaveChest: function () {
-      this.resolvedMessage = 'You leave the tiny chest alone and walk on.'
+      this.resolvedMessage = '<p>You leave the tiny chest alone and walk on.</p>'
       this.cardResolved = true
       this.character.engaged = false
     }

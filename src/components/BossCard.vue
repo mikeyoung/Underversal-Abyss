@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <img src="../../static/img/gatekeeper.jpg" class="cardImage" />
     </div><!-- .col 6 -->
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Gatekeeper</h3>
 
       <p>You have reached the end of the tunnel.  The Gatekeeper stands before you and requests a single gold piece.</p>

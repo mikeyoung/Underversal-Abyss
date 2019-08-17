@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <img src="../../static/img/trap_ceiling.jpg" class="cardImage" />
     </div>
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Ceiling Trap</h3>
 
       <div v-if="!this.cardResolved">
@@ -56,17 +56,17 @@ export default {
       let roll = Dice.roll('1d4')
       this.resolvedMessage = `You rolled a ${roll}.<br>`
       if (roll === 1) {
-        this.resolvedMessage += 'Gigantic spiked molars mash you from all sides.<br>(-2 Hit Points)'
+        this.resolvedMessage += '<p>Gigantic spiked molars mash you from all sides.<br>(-2 Hit Points)</p>'
         this.character.hitPoints -= 2
       }
 
       if (roll === 2) {
-        this.resolvedMessage += 'You cut the rope in time but fall clumsily, landing on your head.<br>(-1 Hit Point)'
+        this.resolvedMessage += '<p>You cut the rope in time but fall clumsily, landing on your head.<br>(-1 Hit Point)</p>'
         this.character.hitPoints -= 1
       }
 
       if (roll > 2) {
-        this.resolvedMessage += 'You cut the rope in time and land safely.'
+        this.resolvedMessage += '<p>You cut the rope in time and land safely.</p>'
       }
 
       this.cardResolved = true

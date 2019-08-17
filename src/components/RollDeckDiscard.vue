@@ -32,7 +32,7 @@ export default {
     ul {
         position: relative;
         display: block;
-        height: 500px;
+        height: 385px;
     }
 
     li {
@@ -65,6 +65,14 @@ export default {
         margin-left: 20px;
         transition: all .25s;
         color: #fff;
+    }
+
+    .rollDeckWrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border: 1px solid #fff;
+      padding: 0 5px 5px 5px;
     }
 
     .rollDeckHeader {

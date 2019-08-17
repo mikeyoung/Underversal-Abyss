@@ -1,6 +1,14 @@
 <template>
   <div>
     <div class="characterSheetCell">
+      <div class="text-right">
+        <div class="tunnelProgressWrapper">
+          <div class="tunnelProgressLabel">Tunnel Progress:</div>
+          <ul class="tunnelProgressBar">
+            <li v-for="n in 13" :key="n" :class="{ active : n === character.space }">{{ n }}</li>
+          </ul>
+        </div><!-- .tunnelProgressWrapper -->
+      </div>
       <table class="stats">
         <tr>
           <th>Progress</th>
@@ -21,12 +29,6 @@
           <td class="score">{{ score }}</td>
         </tr>
       </table>
-      <div class="tunnelProgressWrapper">
-        <div class="tunnelProgressLabel">Tunnel Progress:</div>
-        <ul class="tunnelProgressBar">
-          <li v-for="n in 13" :key="n" :class="{ active : n === character.space }">{{ n }}</li>
-        </ul>
-      </div><!-- .tunnelProgressWrapper -->
     </div>
     <div class="characterSheetCell d-none d-md-block characterIllustrationCell">
       <div v-if="this.character.hitPoints < 5" class="damageLayer" :style="{ height: (((5 - this.character.hitPoints) * 150) / 5) + 'px' }"></div>
@@ -90,23 +92,24 @@ td.operatorColumn {
 td.score {
   background-color: #fff;
   color: #000;
+  border-radius: 50%;
 }
 
 .tunnelProgressBar {
   display: block;
   list-style-type: none;
-  padding: 0;
   margin: 0;
+  padding: 0 0 37px 0;
 }
 
 .tunnelProgressBar li {
   display: block;
   float: left;
-  height: 100%;
+  height: 25px;
   width: 25px;
   text-align: center;
   border: 1px solid #fff;
-  transition: all 1s;
+  transition: all .25s;
 }
 
 .tunnelProgressBar li.active {
@@ -116,13 +119,14 @@ td.score {
 
 .tunnelProgressWrapper {
   margin-top: 12px;
+  display: inline-block;
 }
 
 .tunnelProgressLabel {
-  display: inline-block;
-  margin-top: -4px;
   font-weight: 700;
   font-size: 14px;
+  text-align: left;
+  margin-bottom: .25em;
 }
 
 .characterSheetCell {

@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <img src="../../static/img/crubb.jpg" class="cardImage" />
     </div>
-    <div class="col-6">
+    <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Crubb</h3>
 
       <div v-if="!cardResolved">
