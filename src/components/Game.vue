@@ -107,10 +107,15 @@ import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
 import StartCard from './StartCard'
 import Velocity from 'velocity-animate'
+import {Howl, Howler} from 'howler'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
 let tunnelDeck = new TunnelDeck()
+
+const owlSound = new Howl({
+  src: ['../../static/audio/owl.mp3']
+})
 
 export default {
   name: 'Game',
@@ -179,6 +184,7 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
+      owlSound.play()
       this.gameLog = ''
       this.currentCardNumber = cardNumber
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
@@ -363,7 +369,9 @@ export default {
     RestCard,
     BossCard,
     StartCard,
-    Velocity
+    Velocity,
+    Howl,
+    Howler
   }
 }
 </script>
