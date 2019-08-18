@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-sm-12 col-lg-6">
       <img src="../../static/img/crubb.jpg" class="cardImage" />
+      <img v-if="cardResolved && this.d4Roll === 4" src="../../static/img/crubb_kiss.png" class="cardImage crubbKiss" />
     </div>
     <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Crubb</h3>
@@ -40,7 +41,8 @@ export default {
     return {
       title: 'Crubb',
       resolvedMessage: '',
-      cardResolved: false
+      cardResolved: false,
+      d4Roll: 0
     }
   },
   props: [
@@ -56,6 +58,7 @@ export default {
   methods: {
     wakeCrubb: function () {
       let roll = Dice.roll('1d4')
+      this.d4Roll = roll
       this.resolvedMessage = `You rolled a ${roll}.<br>`
       let goldRoll = Dice.roll('1d4')
       let hpRoll = Dice.roll('1d4')
@@ -122,5 +125,11 @@ export default {
 </script>
 
 <style scoped>
-
+  .crubbKiss {
+    display: block;
+    position: absolute;
+    z-index: 666;
+    top: 0;
+    left: 0;
+  }
 </style>

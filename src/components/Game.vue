@@ -113,8 +113,8 @@ let rollDeck = new RollDeck().cards
 let character = new Character()
 let tunnelDeck = new TunnelDeck()
 
-const owlSound = new Howl({
-  src: ['../../static/audio/owl.mp3']
+const clankSound = new Howl({
+  src: ['../../static/audio/clank.ogg']
 })
 
 export default {
@@ -184,7 +184,7 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
-      owlSound.play()
+      clankSound.play()
       this.gameLog = ''
       this.currentCardNumber = cardNumber
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
