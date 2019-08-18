@@ -28,14 +28,18 @@
           :drawTunnelCard="drawTunnelCard"
           :character="character"
           :logEvent="logEvent"
-          :resetGame="resetGame" />
+          :resetGame="resetGame"
+          :animatePlayerHitPoints="animatePlayerHitPoints"
+          :animateGold="animateGold" />
         <CrubbCard v-if="activeTunnelCard.type === 'crubb' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
           :character="character"
           :logEvent="logEvent"
           :disableInteraction="disableInteraction"
-          :resetGame="resetGame" />
+          :resetGame="resetGame"
+          :animatePlayerHitPoints="animatePlayerHitPoints"
+          :animateGold="animateGold" />
         <MonsterCard v-if="activeTunnelCard.type === 'monster' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -46,7 +50,8 @@
           :disableInteraction="disableInteraction"
           :character="character"
           :gameLog="gameLog"
-          :resetGame="resetGame" />
+          :resetGame="resetGame"
+          :rollDeck="rollDeck" />
         <RestCard v-if="activeTunnelCard.type === 'rest' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard" />
@@ -56,14 +61,18 @@
           :character="character"
           :logEvent="logEvent"
           :disableInteraction="disableInteraction"
-          :resetGame="resetGame" />
+          :resetGame="resetGame"
+          :animatePlayerHitPoints="animatePlayerHitPoints"
+          :animateGold="animateGold" />
         <TrapCeilingCard v-if="activeTunnelCard.type === 'trap_ceiling' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
           :character="character"
           :logEvent="logEvent"
           :disableInteraction="disableInteraction"
-          :resetGame="resetGame" />
+          :resetGame="resetGame"
+          :animatePlayerHitPoints="animatePlayerHitPoints"
+          :animateGold="animateGold" />
         <BossCard v-if="this.atBoss"
           :character="character"
           :logEvent="logEvent"
@@ -96,6 +105,7 @@ import TrapCeilingCard from './TrapCeilingCard'
 import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
 import StartCard from './StartCard'
+import Velocity from 'velocity-animate'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
@@ -177,6 +187,7 @@ export default {
       this.rollCardsInHand[cardNumber].status = 'discard'
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
       this.character.gold--
+      this.animateGold(false)
     },
     playRollCardMonster: function () {
       this.disableInteraction = true
@@ -198,16 +209,19 @@ export default {
           if (this.activeTunnelCard.damage === 1) points = 'Point'
           this.logEvent(`The ${this.activeTunnelCard.cardName} hits you!\n(-${this.activeTunnelCard.damage} Hit ${points})`)
           this.character.hitPoints -= this.activeTunnelCard.damage
+          this.animatePlayerHitPoints(false)
           this.disableInteraction = true
         } else {
           this.logEvent(`You strike the ${this.activeTunnelCard.cardName} for 1 hit point of damage!`)
           this.activeTunnelCard.hitPoints -= 1
+          this.animateMonsterHitPoints()
           if (this.activeTunnelCard.hitPoints === 0) {
             var pieces = 'pieces'
             if (this.activeTunnelCard.gold === 1) pieces = 'piece'
             this.logEvent(`You have slain the ${this.activeTunnelCard.cardName}!`)
             this.logEvent(`The ${this.activeTunnelCard.cardName} secretes ${this.activeTunnelCard.gold} gold ${pieces}!`)
             this.character.gold += this.activeTunnelCard.gold
+            this.animateGold(true)
             character.engaged = false
             this.activeTunnelCard.status = 'discard'
           }
@@ -238,6 +252,7 @@ export default {
           this.logEvent('Unfortunately you have no gold so in a fit of rage the gatekeeper tears you limb from limb.\nYou are dead.\nGame over.')
         } else {
           this.character.gold--
+          this.animateGold(false)
           this.logEvent('You hand the gatekeeper a much prized gold piece.  It unlocks a heavy wooden door behind which is the blinding light of the morning sun.  Congratulations, you have escaped.')
         }
         this.character.engaged = true
@@ -245,6 +260,7 @@ export default {
 
       if (this.activeTunnelCard.type === 'rest') {
         this.character.hitPoints += 1
+        this.animatePlayerHitPoints(true)
         this.character.engaged = false
       }
     },
@@ -288,6 +304,40 @@ export default {
     startGame: function () {
       this.initHand()
       this.drawTunnelCard()
+    },
+    animatePlayerHitPoints: function (increased) {
+      var hitPointsCell = document.getElementById('characterHitPointCell')
+      var hitPointsStatCell = document.getElementById('characterStatHitPoints')
+      var tweenColor = '#fff'
+      if (!increased) tweenColor = '#f00'
+
+      Velocity(hitPointsCell, { backgroundColor: tweenColor, color: '#000' }, 0, function () {
+        Velocity(hitPointsCell, { backgroundColor: '#000', color: '#fff' }, 768)
+      })
+
+      Velocity(hitPointsStatCell, { color: tweenColor }, 0, function () {
+        Velocity(hitPointsStatCell, { color: '#000' }, 768)
+      })
+    },
+    animateMonsterHitPoints: function () {
+      var monsterHitPointsDisplay = document.getElementById('monsterHitPointsDisplay')
+      Velocity(monsterHitPointsDisplay, { color: '#f00' }, 0, function () {
+        Velocity(monsterHitPointsDisplay, { color: '#000' }, 768)
+      })
+    },
+    animateGold: function (increased) {
+      var goldCell = document.getElementById('goldCell')
+      var goldStatCell = document.getElementById('characterStatGold')
+      var tweenColor = '#fff'
+      if (!increased) tweenColor = '#f00'
+
+      Velocity(goldCell, { backgroundColor: tweenColor, color: '#000' }, 0, function () {
+        Velocity(goldCell, { backgroundColor: '#000', color: '#fff' }, 768)
+      })
+
+      Velocity(goldStatCell, { color: tweenColor }, 0, function () {
+        Velocity(goldStatCell, { color: '#000' }, 768)
+      })
     }
   },
   watch: {
@@ -310,7 +360,8 @@ export default {
     TrapFloorCard,
     RestCard,
     BossCard,
-    StartCard
+    StartCard,
+    Velocity
   }
 }
 </script>

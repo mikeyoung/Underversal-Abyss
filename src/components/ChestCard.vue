@@ -51,19 +51,24 @@ export default {
         case 1:
           let roll2 = Dice.roll('1d4')
           this.character.hitPoints -= parseInt(roll2)
+          this.animatePlayerHitPoints(false)
           this.resolvedMessage += `<p>A wet rusty needle sticks into you as you open the empty chest.  You fall ill. (-${roll2} Hit Points)</p>`
           break
         case 2:
           this.character.gold += 1
+          this.animateGold(true)
           this.resolvedMessage += '<p>You found a gold piece!</p>'
           break
         case 3:
           this.character.hitPoints += 1
+          this.animatePlayerHitPoints(true)
           this.resolvedMessage += '<p>You found a potion of healing! (+1 Hit Point)</p>'
           break
         case 4:
           this.character.hitPoints += 1
+          this.animatePlayerHitPoints(true)
           this.character.gold += 1
+          this.animateGold(true)
           this.resolvedMessage += '<p>You found a potion of healing (+1 Hit Point) and a gold piece!</p>'
           break
       }
@@ -86,7 +91,9 @@ export default {
     'logEvent',
     'drawTunnelCardEnabled',
     'drawTunnelCard',
-    'resetGame'
+    'resetGame',
+    'animatePlayerHitPoints',
+    'animateGold'
   ]
 }
 </script>

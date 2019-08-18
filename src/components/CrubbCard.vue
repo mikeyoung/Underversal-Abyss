@@ -49,7 +49,9 @@ export default {
     'disableInteraction',
     'drawTunnelCardEnabled',
     'drawTunnelCard',
-    'resetGame'
+    'resetGame',
+    'animatePlayerHitPoints',
+    'animateGold'
   ],
   methods: {
     wakeCrubb: function () {
@@ -63,36 +65,46 @@ export default {
       switch (roll) {
         case 1:
           if (goldRoll > this.character.gold) {
+            if (this.character.gold > 0) this.animateGold(false)
             this.character.gold = 0
             this.character.hitPoints -= hpRoll
+            this.animatePlayerHitPoints(false)
             this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands all your gold and then punches you for ${hpRoll} damage.</p>`
           } else {
             this.character.gold -= goldRoll
+            this.animateGold(false)
             this.character.hitPoints -= hpRoll
+            this.animatePlayerHitPoints(false)
             this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands ${goldRoll} gold and then punches you for ${hpRoll} damage.</p>`
           }
           break
         case 2:
           if (goldRoll > this.character.gold) {
             if (this.character.gold > 0) {
+              if (this.character.gold > 0) this.animateGold(false)
               this.character.gold = 0
               this.resolvedMessage += '<p>Crubb is unhappy to be awakened. Crubb demands all your gold.</p>'
             } else {
               this.resolvedMessage += `<p>Crubb is unhappy to be awakened. Since you have no gold he beats ${hpRoll} hit ${points} out of you.</p>`
               this.character.hitPoints -= hpRoll
+              this.animatePlayerHitPoints(false)
             }
           } else {
             this.character.gold -= goldRoll
+            this.animateGold(false)
             this.resolvedMessage += `<p>Crubb is unhappy to be awakened. Crubb demands ${goldRoll} gold.</p>`
           }
           break
         case 3:
           this.character.gold += goldRoll
+          this.animateGold(true)
           this.resolvedMessage += `<p>Crubb is feeling generous and gives ${goldRoll} gold.</p>`
           break
         case 4:
           this.character.gold += goldRoll
+          this.animateGold(false)
           this.character.hitPoints += hpRoll
+          this.animatePlayerHitPoints(true)
           this.resolvedMessage += `<p>Crubb is feeling generous and amorous.  Crubb gives you ${goldRoll} gold and a healing kiss which bestows ${hpRoll} hit ${points}.</p>`
           break
       }

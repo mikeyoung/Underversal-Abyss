@@ -6,6 +6,12 @@
       <td><button type="button" v-on:click="playRollCardPlayer(2)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[2].value }}</span></button></td>
       <td><button type="button" v-on:click="playRollCardPlayer(3)" :disabled="disableInteraction">Play<br><span class="rollCardValue">{{ rollCardsInHand[3].value }}</span></button></td>
     </tr>
+    <tr class="oddsRow">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
     <tr class="cardButtonRow discard">
       <td><button type="button" v-on:click="discardRollCardPlayer(0)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
       <td><button type="button" v-on:click="discardRollCardPlayer(1)" :disabled="disableInteraction || this.character.gold < 1">Discard</button></td>
@@ -23,8 +29,14 @@ export default {
     'discardRollCardPlayer',
     'disableInteraction',
     'character',
-    'rollCardsInHand'
-  ]
+    'rollCardsInHand',
+    'rollDeck'
+  ],
+  methods: {
+    getOdds: function (rollCardValue) {
+
+    }
+  }
 }
 </script>
 

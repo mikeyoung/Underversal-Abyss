@@ -22,9 +22,9 @@
         <tr>
           <td>{{ character.space }}</td>
           <td class="operatorColumn">+</td>
-          <td>{{ character.hitPoints }}</td>
+          <td id="characterHitPointCell">{{ character.hitPoints }}</td>
           <td class="operatorColumn">+</td>
-          <td>{{ character.gold }}</td>
+          <td id="goldCell">{{ character.gold }}</td>
           <td class="operatorColumn">=</td>
           <td class="score">{{ score }}</td>
         </tr>
@@ -36,8 +36,8 @@
       <img src="../../static/img/thief.jpg" class="characterIllustration characterArt" />
     </div>
     <div class="characterSheetCell characterStats d-none d-md-block">
-      <div class="characterStat">hp: {{ this.character.hitPoints }}</div>
-      <div class="characterStat">gp: {{ this.character.gold }}</div>
+      <div class="characterStat characterStat" id="characterStatHitPoints">hp: {{ this.character.hitPoints }}</div>
+      <div class="characterStat" id="characterStatGold">gp: {{ this.character.gold }}</div>
     </div>
     <div class="inGameNavLinks d-none d-md-block">
       <a href="javascript:void(0)" v-on:click="resetGame()">New Game</a><br>
@@ -60,6 +60,7 @@ export default {
     'resetGame'
   ]
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -109,7 +110,6 @@ td.score {
   width: 25px;
   text-align: center;
   border: 1px solid #fff;
-  transition: all .25s;
 }
 
 .tunnelProgressBar li.active {

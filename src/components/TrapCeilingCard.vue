@@ -25,7 +25,7 @@
         <div v-html="this.resolvedMessage"></div>
         <button type="button" v-on:click="drawTunnelCard()" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
         <div v-if="this.character.hitPoints < 1">
-          <p>Perhaps some day your body will be found as a warning.  You are dead.</p>
+          <p>Perhaps some day your corpse will be found as a warning.  You are dead.</p>
           <button type="button" v-on:click="resetGame()">Start New Game</button>
         </div>
       </div>
@@ -49,6 +49,7 @@ export default {
     useGoldPiece: function () {
       this.resolvedMessage = 'You wedge a piece of gold into a vital part of the mechanism, rendering it harmless.<br>(-1 Gold)'
       this.character.gold -= 1
+      this.animateGold(false)
       this.cardResolved = true
       this.character.engaged = false
     },
@@ -58,11 +59,13 @@ export default {
       if (roll === 1) {
         this.resolvedMessage += '<p>Gigantic spiked molars mash you from all sides.<br>(-2 Hit Points)</p>'
         this.character.hitPoints -= 2
+        this.animatePlayerHitPoints(false)
       }
 
       if (roll === 2) {
         this.resolvedMessage += '<p>You cut the rope in time but fall clumsily, landing on your head.<br>(-1 Hit Point)</p>'
         this.character.hitPoints -= 1
+        this.animatePlayerHitPoints(false)
       }
 
       if (roll > 2) {
@@ -79,7 +82,9 @@ export default {
     'disableInteraction',
     'drawTunnelCardEnabled',
     'drawTunnelCard',
-    'resetGame'
+    'resetGame',
+    'animatePlayerHitPoints',
+    'animateGold'
   ]
 }
 </script>

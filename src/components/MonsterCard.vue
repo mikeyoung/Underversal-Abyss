@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-sm-12 col-lg-6">
-        <div class="monsterStats" v-if="activeTunnelCard.hitPoints > 0">hp: {{ activeTunnelCard.hitPoints }}<br>dmg: {{ activeTunnelCard.damage }}<br>gp: {{ activeTunnelCard.gold }}</div>
+        <div class="monsterStats" v-if="activeTunnelCard.hitPoints > 0">hp: <span id='monsterHitPointsDisplay'>{{ activeTunnelCard.hitPoints }}</span><br>dmg: {{ activeTunnelCard.damage }}<br>gp: {{ activeTunnelCard.gold }}</div>
         <img :src="'../../static/img/monster_' + activeTunnelCard.value + '.jpg'" class="cardImage" />
       </div><!-- .col-6 -->
     <div class="col-sm-12 col-lg-6">
@@ -45,7 +45,8 @@
         :disableInteraction="disableInteraction"
         :rollCardsInHand="rollCardsInHand"
         :discardRollCardPlayer="discardRollCardPlayer"
-        :character="character" />
+        :character="character"
+        :rollDeck="rollDeck" />
     </div>
     <div class="battleLogHeader">Battle Log</div>
     <textarea class="gameLogTextarea" rows="7" v-model="gameLog" disabled="disabled"></textarea>
@@ -74,7 +75,8 @@ export default {
     'gameLog',
     'drawTunnelCardEnabled',
     'drawTunnelCard',
-    'resetGame'
+    'resetGame',
+    'rollDeck'
   ],
   components: {
     BattleButtons
