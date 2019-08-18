@@ -70,16 +70,16 @@ export default {
     .rollDeckWrapper {
       position: absolute;
       top: 0;
-      right: 0;
-      border: 1px solid #fff;
+      left: 20px;
       padding: 0 5px 5px 5px;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-bottom: 1px solid #fff;
     }
 
     .rollDeckHeader {
       font-size: 11px;
-      border-bottom: 1px solid #fff;
-      line-height: 1em;
+      line-height: 11px;
       display: inline;
-      white-space: nowrap;
     }
 </style>

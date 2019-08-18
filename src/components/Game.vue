@@ -81,6 +81,7 @@
           :startGame="startGame" />
         <div v-if="activeTunnelCard.type === 'monster' && activeTunnelCard.hitPoints > 0" class="info">
           <p>To attack a monster, play a roll card from your hand.  The monster will then draw a card from the remaining cards in the roll deck. If the value of your roll card is higher than that of the monster, you successfully attack.  If the monster's roll card value is higher, then the monster successfully attacks.</p>
+          <p>The percentage chance to hit is listed under each roll card in hand.</p>
           <p>You may choose to discard a roll card and draw a new one from the deck for the cost of 1 gold piece.</p>
           <p>The roll deck replenishes after the last card has been picked up.</p>
         </div><!-- .info -->
@@ -137,7 +138,8 @@ export default {
       disableInteraction: false,
       currentCardNumber: -1,
       gameLog: '',
-      eBeginningNumbers: [8, 11, 18]
+      eBeginningNumbers: [8, 11, 18],
+      animationTime: 768
     }
   },
   computed: {
@@ -312,17 +314,17 @@ export default {
       if (!increased) tweenColor = '#f00'
 
       Velocity(hitPointsCell, { backgroundColor: tweenColor, color: '#000' }, 0, function () {
-        Velocity(hitPointsCell, { backgroundColor: '#000', color: '#fff' }, 768)
+        Velocity(hitPointsCell, { backgroundColor: '#000', color: '#fff' }, this.animationTime)
       })
 
       Velocity(hitPointsStatCell, { color: tweenColor }, 0, function () {
-        Velocity(hitPointsStatCell, { color: '#000' }, 768)
+        Velocity(hitPointsStatCell, { color: '#000' }, this.animationTime)
       })
     },
     animateMonsterHitPoints: function () {
       var monsterHitPointsDisplay = document.getElementById('monsterHitPointsDisplay')
       Velocity(monsterHitPointsDisplay, { color: '#f00' }, 0, function () {
-        Velocity(monsterHitPointsDisplay, { color: '#000' }, 768)
+        Velocity(monsterHitPointsDisplay, { color: '#000' }, this.animationTime)
       })
     },
     animateGold: function (increased) {
@@ -332,11 +334,11 @@ export default {
       if (!increased) tweenColor = '#f00'
 
       Velocity(goldCell, { backgroundColor: tweenColor, color: '#000' }, 0, function () {
-        Velocity(goldCell, { backgroundColor: '#000', color: '#fff' }, 768)
+        Velocity(goldCell, { backgroundColor: '#000', color: '#fff' }, this.animationTime)
       })
 
       Velocity(goldStatCell, { color: tweenColor }, 0, function () {
-        Velocity(goldStatCell, { color: '#000' }, 768)
+        Velocity(goldStatCell, { color: '#000' }, this.animationTime)
       })
     }
   },

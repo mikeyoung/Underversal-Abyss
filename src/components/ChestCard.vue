@@ -76,7 +76,7 @@ export default {
       this.character.engaged = false
     },
     leaveChest: function () {
-      this.resolvedMessage = '<p>You leave the tiny chest alone and walk on.</p>'
+      this.resolvedMessage = '<p>You leave the chest alone and walk on.</p>'
       this.cardResolved = true
       this.character.engaged = false
     }
