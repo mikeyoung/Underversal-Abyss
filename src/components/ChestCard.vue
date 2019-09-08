@@ -21,7 +21,7 @@
 
       <div v-if="this.cardResolved" class="cardResolved">
         <div v-html="this.resolvedMessage"></div>
-        <button type="button" v-on:click="drawTunnelCard(); this.cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
+        <button type="button" v-on:click="drawTunnelCard(); cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
         <div v-if="this.character.hitPoints < 1">
           <p>Perhaps some day your body will be found as a warning.  You are dead.</p>
           <button type="button" v-on:click="resetGame()">Start New Game</button>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import {Howl} from 'howler'
+import GameSound from '../classes/GameSound'
 import Dice from '../classes/Dice'
 
 export default {
@@ -40,11 +42,15 @@ export default {
     return {
       title: 'Monster',
       cardResolved: false,
-      resolvedMessage: ''
+      resolvedMessage: '',
+      triggeredHowl: new Howl({
+        src: ['../../static/audio/chest_bad.ogg']
+      })
     }
   },
   methods: {
     openChest: function () {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       let roll = Dice.roll('1d4')
       this.resolvedMessage = `You rolled a ${roll}.<br>`
       switch (roll) {
@@ -53,22 +59,26 @@ export default {
           this.character.hitPoints -= parseInt(roll2)
           this.animatePlayerHitPoints(false)
           this.resolvedMessage += `<p>A wet rusty needle sticks into you as you open the empty chest.  You fall ill. (-${roll2} Hit Points)</p>`
+          GameSound.playHowl(this.triggeredHowl, this.soundOn)
           break
         case 2:
           this.character.gold += 1
           this.animateGold(true)
           this.resolvedMessage += '<p>You found a gold piece!</p>'
+          GameSound.playHowl(this.howls.rewardHowl, this.soundOn)
           break
         case 3:
           this.character.hitPoints += 1
           this.animatePlayerHitPoints(true)
           this.resolvedMessage += '<p>You found a potion of healing! (+1 Hit Point)</p>'
+          GameSound.playHowl(this.howls.rewardHowl, this.soundOn)
           break
         case 4:
           this.character.hitPoints += 1
           this.animatePlayerHitPoints(true)
           this.character.gold += 1
           this.animateGold(true)
+          GameSound.playHowl(this.howls.rewardHowl, this.soundOn)
           this.resolvedMessage += '<p>You found a potion of healing (+1 Hit Point) and a gold piece!</p>'
           break
       }
@@ -76,6 +86,7 @@ export default {
       this.character.engaged = false
     },
     leaveChest: function () {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       this.resolvedMessage = '<p>You leave the chest alone and walk on.</p>'
       this.cardResolved = true
       this.character.engaged = false
@@ -93,7 +104,9 @@ export default {
     'drawTunnelCard',
     'resetGame',
     'animatePlayerHitPoints',
-    'animateGold'
+    'animateGold',
+    'howls',
+    'soundOn'
   ]
 }
 </script>

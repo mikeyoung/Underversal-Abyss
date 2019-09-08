@@ -23,7 +23,7 @@
 
       <div v-if="this.cardResolved" class="cardResolved">
         <div v-html="this.resolvedMessage"></div>
-        <button type="button" v-on:click="drawTunnelCard(); this.cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
+        <button type="button" v-on:click="drawTunnelCard(); cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
         <div v-if="this.character.hitPoints < 1">
           <p>Perhaps some day your corpse will be found as a warning.  You are dead.</p>
           <button type="button" v-on:click="resetGame()">Start New Game</button>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import GameSound from '../classes/GameSound'
 import Dice from '../classes/Dice'
 
 export default {
@@ -47,6 +48,7 @@ export default {
   },
   methods: {
     useGoldPiece: function () {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       this.resolvedMessage = 'You wedge a piece of gold into a vital part of the mechanism, rendering it harmless.<br>(-1 Gold)'
       this.character.gold -= 1
       this.animateGold(false)
@@ -54,10 +56,12 @@ export default {
       this.character.engaged = false
     },
     disarmTrap: function () {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       let roll = Dice.roll('1d4')
       this.resolvedMessage = `You rolled a ${roll}.<br>`
       if (roll === 1) {
         this.resolvedMessage += '<p>Gigantic spiked molars mash you from all sides.<br>(-2 Hit Points)</p>'
+        GameSound.playHowl(this.howls.triggeredHowl, this.soundOn)
         this.character.hitPoints -= 2
         this.animatePlayerHitPoints(false)
       }
@@ -84,7 +88,9 @@ export default {
     'drawTunnelCard',
     'resetGame',
     'animatePlayerHitPoints',
-    'animateGold'
+    'animateGold',
+    'howls',
+    'soundOn'
   ]
 }
 </script>

@@ -22,7 +22,7 @@
 
       <div v-if="this.cardResolved" class="cardResolved">
         <div v-html="this.resolvedMessage"></div>
-        <button type="button" v-on:click="drawTunnelCard(); this.cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
+        <button type="button" v-on:click="drawTunnelCard(); cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
         <div v-if="this.character.hitPoints < 1">
           <p>The crubb has beaten you to a pulp.  You are dead.</p>
           <button type="button" v-on:click="resetGame()">Start New Game</button>
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import {Howl} from 'howler'
+import GameSound from '../classes/GameSound'
 import Dice from '../classes/Dice'
 
 export default {
@@ -42,7 +44,13 @@ export default {
       title: 'Crubb',
       resolvedMessage: '',
       cardResolved: false,
-      d4Roll: 0
+      d4Roll: 0,
+      kissHowl: new Howl({
+        src: ['../../static/audio/crubb_kiss.ogg']
+      }),
+      badHowl: new Howl({
+        src: ['../../static/audio/crubb_bad.ogg']
+      })
     }
   },
   props: [
@@ -53,7 +61,9 @@ export default {
     'drawTunnelCard',
     'resetGame',
     'animatePlayerHitPoints',
-    'animateGold'
+    'animateGold',
+    'howls',
+    'soundOn'
   ],
   methods: {
     wakeCrubb: function () {
@@ -80,6 +90,7 @@ export default {
             this.animatePlayerHitPoints(false)
             this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands ${goldRoll} gold and then punches you for ${hpRoll} damage.</p>`
           }
+          GameSound.playHowl(this.badHowl, this.soundOn)
           break
         case 2:
           if (goldRoll > this.character.gold) {
@@ -97,11 +108,13 @@ export default {
             this.animateGold(false)
             this.resolvedMessage += `<p>Crubb is unhappy to be awakened. Crubb demands ${goldRoll} gold.</p>`
           }
+          GameSound.playHowl(this.badHowl, this.soundOn)
           break
         case 3:
           this.character.gold += goldRoll
           this.animateGold(true)
           this.resolvedMessage += `<p>Crubb is feeling generous and gives ${goldRoll} gold.</p>`
+          GameSound.playHowl(this.howls.rewardHowl, this.soundOn)
           break
         case 4:
           this.character.gold += goldRoll
@@ -109,6 +122,7 @@ export default {
           this.character.hitPoints += hpRoll
           this.animatePlayerHitPoints(true)
           this.resolvedMessage += `<p>Crubb is feeling generous and amorous.  Crubb gives you ${goldRoll} gold and a healing kiss which bestows ${hpRoll} hit ${points}.</p>`
+          GameSound.playHowl(this.kissHowl, this.soundOn)
           break
       }
 

@@ -31,7 +31,9 @@
           :logEvent="logEvent"
           :resetGame="resetGame"
           :animatePlayerHitPoints="animatePlayerHitPoints"
-          :animateGold="animateGold" />
+          :animateGold="animateGold"
+          :howls="howls"
+          :soundOn="soundOn" />
         <CrubbCard v-if="activeTunnelCard.type === 'crubb' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -40,7 +42,9 @@
           :disableInteraction="disableInteraction"
           :resetGame="resetGame"
           :animatePlayerHitPoints="animatePlayerHitPoints"
-          :animateGold="animateGold" />
+          :animateGold="animateGold"
+          :howls="howls"
+          :soundOn="soundOn" />
         <MonsterCard v-if="activeTunnelCard.type === 'monster' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -64,7 +68,9 @@
           :disableInteraction="disableInteraction"
           :resetGame="resetGame"
           :animatePlayerHitPoints="animatePlayerHitPoints"
-          :animateGold="animateGold" />
+          :animateGold="animateGold"
+          :howls="howls"
+          :soundOn="soundOn" />
         <TrapCeilingCard v-if="activeTunnelCard.type === 'trap_ceiling' && !this.atBoss"
           :drawTunnelCardEnabled="drawTunnelCardEnabled"
           :drawTunnelCard="drawTunnelCard"
@@ -73,7 +79,9 @@
           :disableInteraction="disableInteraction"
           :resetGame="resetGame"
           :animatePlayerHitPoints="animatePlayerHitPoints"
-          :animateGold="animateGold" />
+          :animateGold="animateGold"
+          :howls="howls"
+          :soundOn="soundOn" />
         <BossCard v-if="this.atBoss"
           :character="character"
           :logEvent="logEvent"
@@ -108,6 +116,7 @@ import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
 import StartCard from './StartCard'
 import Velocity from 'velocity-animate'
+import {Howl} from 'howler'
 import GameSound from '../classes/GameSound'
 
 let rollDeck = new RollDeck().cards
@@ -142,7 +151,36 @@ export default {
       gameLog: '',
       eBeginningNumbers: [8, 11, 18],
       animationTime: 768,
-      soundOn: true
+      soundOn: true,
+      howls: {
+        rewardHowl: new Howl({
+          src: ['../../static/audio/reward.ogg']
+        }),
+        restHowl: new Howl({
+          src: ['../../static/audio/rest.ogg']
+        }),
+        clickHowl: new Howl({
+          src: ['../../static/audio/keyclick.ogg']
+        }),
+        heartbeatHowl: new Howl({
+          src: ['../../static/audio/heartbeat.ogg']
+        }),
+        deadHowl: new Howl({
+          src: ['../../static/audio/dead.ogg']
+        }),
+        crubbSnoreHowl: new Howl({
+          src: ['../../static/audio/crubb_snore.ogg']
+        }),
+        triggeredHowl: new Howl({
+          src: ['../../static/audio/trap_sprung.ogg']
+        }),
+        bossGoodHowl: new Howl({
+          src: ['../../static/audio/boss_good.ogg']
+        }),
+        bossBadHowl: new Howl({
+          src: ['../../static/audio/boss_bad.ogg']
+        })
+      }
     }
   },
   computed: {
@@ -168,6 +206,9 @@ export default {
     },
     atBoss: function () {
       return this.character.space === 13
+    },
+    characterHitPoints: function () {
+      return this.character.hitPoints
     }
   },
   methods: {
@@ -182,6 +223,7 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       this.gameLog = ''
       this.currentCardNumber = cardNumber
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
@@ -189,6 +231,7 @@ export default {
       this.playRollCardMonster()
     },
     discardRollCardPlayer: function (cardNumber) {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       this.rollCardsInHand[cardNumber].status = 'discard'
       Vue.set(this.rollCardsInHand, cardNumber, this.getRollCard())
       this.character.gold--
@@ -243,6 +286,7 @@ export default {
       }, 1000)
     },
     drawTunnelCard: function () {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       this.gameLog = ''
       this.character.engaged = true
       if (this.activeTunnelCard.value !== '') this.activeTunnelCard.status = 'discard'
@@ -253,14 +297,17 @@ export default {
         this.tunnel.push(randomCard)
         randomCard.status = 'play'
         this.activeTunnelCard = randomCard
+        if (this.activeTunnelCard.type === 'crubb') GameSound.playHowl(this.howls.crubbSnoreHowl, this.soundOn)
       } else {
         if (this.character.gold < 1) {
           this.character.hitPoints = 0
           this.logEvent('Unfortunately you have no gold so in a fit of rage the gatekeeper tears you limb from limb.\nYou are dead.\nGame over.')
+          GameSound.playHowl(this.howls.bossBadHowl, this.soundOn)
         } else {
           this.character.gold--
           this.animateGold(false)
           this.logEvent('You hand the gatekeeper a much prized gold piece.  It unlocks a heavy wooden door behind which is the blinding light of the morning sun.  Congratulations, you have escaped.')
+          GameSound.playHowl(this.howls.bossGoodHowl, this.soundOn)
         }
         this.character.engaged = true
       }
@@ -268,6 +315,7 @@ export default {
       if (this.activeTunnelCard.type === 'rest') {
         this.character.hitPoints += 1
         this.animatePlayerHitPoints(true)
+        GameSound.playHowl(this.howls.restHowl, this.soundOn)
         this.character.engaged = false
       }
     },
@@ -275,6 +323,7 @@ export default {
       this.gameLog += message + '\n'
     },
     resetGame: function () {
+      GameSound.playHowl(this.howls.clickHowl, this.soundOn)
       this.gameLog = ''
       this.tunnel = []
       this.rollCardsInHand = [
@@ -354,6 +403,17 @@ export default {
           el.scrollTop = el.scrollHeight
         })
       }, 10)
+    },
+    characterHitPoints: {
+      handler (val) {
+        if (val < 3 && val > 0) {
+          GameSound.playHowl(this.howls.heartbeatHowl, this.soundOn)
+        }
+
+        if (val < 1) {
+          GameSound.playHowl(this.howls.deadHowl, this.soundOn)
+        }
+      }
     }
   },
   components: {

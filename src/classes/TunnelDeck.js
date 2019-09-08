@@ -34,10 +34,10 @@ export default class TunnelDeck {
       if (i === 1) {
         type = 'monster'
         value = 'level2_2'
-        startingHitPoints = 4
+        startingHitPoints = 3
         cardName = 'paranoid egg guardian'
-        damage = 1
-        gold = 3
+        damage = 2
+        gold = 2
         attackSound = new Howl({
           src: ['../../static/audio/level2_2_attack.ogg']
         })
@@ -52,7 +52,7 @@ export default class TunnelDeck {
         startingHitPoints = 4
         cardName = 'hulking mass of bone and sinew'
         damage = 2
-        gold = 3
+        gold = 2
         attackSound = new Howl({
           src: ['../../static/audio/level3_1_attack.ogg']
         })
@@ -64,10 +64,10 @@ export default class TunnelDeck {
       if (i === 3) {
         type = 'monster'
         value = 'level3_2'
-        startingHitPoints = 5
+        startingHitPoints = 4
         cardName = 'giant tentacled brain'
-        damage = 1
-        gold = 4
+        damage = 2
+        gold = 2
         attackSound = new Howl({
           src: ['../../static/audio/level3_2_attack.ogg']
         })
@@ -104,9 +104,9 @@ export default class TunnelDeck {
       if (i === 13) {
         type = 'monster'
         value = 'level1_1'
-        startingHitPoints = 1
+        startingHitPoints = 2
         cardName = 'shambling corpse'
-        damage = 2
+        damage = 1
         gold = 1
         attackSound = new Howl({
           src: ['../../static/audio/level1_1_attack.ogg']
@@ -122,7 +122,7 @@ export default class TunnelDeck {
         startingHitPoints = 2
         cardName = 'botched experiment'
         damage = 1
-        gold = 2
+        gold = 1
         attackSound = new Howl({
           src: ['../../static/audio/level1_2_attack.ogg']
         })
