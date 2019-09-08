@@ -33,7 +33,7 @@
       <div v-if="activeTunnelCard.hitPoints < 1" class="cardResolved">
         <p>A dead {{ activeTunnelCard.cardName }} lies at your feet.</p>
         <p>It secretes {{this.activeTunnelCard.gold}} gold.</p>
-        <button type="button" v-on:click="drawTunnelCard(); this.cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
+        <button type="button" v-on:click="drawTunnelCard();" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
       </div>
     </div><!-- .col-6 -->
   </div><!-- .row -->
