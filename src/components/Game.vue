@@ -85,7 +85,8 @@
         <BossCard v-if="this.atBoss"
           :character="character"
           :logEvent="logEvent"
-          :disableInteraction="disableInteraction" />
+          :disableInteraction="disableInteraction"
+          :resetGame="resetGame" />
         <StartCard v-if="this.character.space === 0"
           :startGame="startGame" />
         <div v-if="activeTunnelCard.type === 'monster' && activeTunnelCard.hitPoints > 0" class="info">

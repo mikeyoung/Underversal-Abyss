@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-lg-6 cardDetailsArea">
       <h3 class="cardTitle" v-html="activeTunnelCard.cardName"></h3>
       <div v-if="activeTunnelCard.hitPoints > 0">
-        <p v-if="activeTunnelCard.hitPoints > 0 && character.hitPoints > 0" class="monsterDescription">A {{ activeTunnelCard.cardName }} with <b>{{ activeTunnelCard.hitPoints }}</b> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.  It seems to have ingested <span v-if="activeTunnelCard.gold > 1"><b>{{ activeTunnelCard.gold }}</b> gold pieces</span><span v-if="activeTunnelCard.gold === 1"><b>{{ activeTunnelCard.gold }}</b> gold piece</span> and can do <b>{{ activeTunnelCard.damage }}</b> hit <span v-if="activeTunnelCard.damage > 1">points</span><span v-if="activeTunnelCard.damage === 1">point</span> worth of damage with each hit.</p>
+        <p v-if="activeTunnelCard.hitPoints > 0 && character.hitPoints > 0" class="monsterDescription">A {{ activeTunnelCard.cardName }} with <b>{{ activeTunnelCard.hitPoints }}</b> hit point<span v-if="activeTunnelCard.hitPoints != 1">s</span> blocks your path.  It seems to have ingested <span v-if="activeTunnelCard.gold > 1"><b>{{ activeTunnelCard.gold }}</b> gold pieces</span><span v-if="activeTunnelCard.gold === 1"><b>{{ activeTunnelCard.gold }}</b> gold piece</span> and does <b>{{ activeTunnelCard.damage }}</b> hit <span v-if="activeTunnelCard.damage > 1">points</span><span v-if="activeTunnelCard.damage === 1">point</span> worth of damage with each hit.</p>
         <div class="monsterPlayArea text-center">
           <div class="d-none d-md-inline d-none d-lg-inline" v-if="this.character.hitPoints > 0">
             <BattleButtons

@@ -51,8 +51,8 @@ export default class TunnelDeck {
         value = 'level3_1'
         startingHitPoints = 4
         cardName = 'hulking mass of bone and sinew'
-        damage = 2
-        gold = 2
+        damage = 3
+        gold = 3
         attackSound = new Howl({
           src: ['../../static/audio/level3_1_attack.ogg']
         })
@@ -66,8 +66,8 @@ export default class TunnelDeck {
         value = 'level3_2'
         startingHitPoints = 4
         cardName = 'giant tentacled brain'
-        damage = 2
-        gold = 2
+        damage = 3
+        gold = 3
         attackSound = new Howl({
           src: ['../../static/audio/level3_2_attack.ogg']
         })
