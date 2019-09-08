@@ -8,7 +8,8 @@
         <CharacterSheet
           :character="character"
           :score="score"
-          :resetGame="resetGame" />
+          :resetGame="resetGame"
+          :soundOn="soundOn" />
       </div><!-- .col-9 -->
     </div>
     <div class="row topPad">
@@ -107,15 +108,11 @@ import TrapFloorCard from './TrapFloorCard'
 import BossCard from './BossCard'
 import StartCard from './StartCard'
 import Velocity from 'velocity-animate'
-import {Howl, Howler} from 'howler'
+import GameSound from '../classes/GameSound'
 
 let rollDeck = new RollDeck().cards
 let character = new Character()
 let tunnelDeck = new TunnelDeck()
-
-const clankSound = new Howl({
-  src: ['../../static/audio/clank.ogg']
-})
 
 export default {
   name: 'Game',
@@ -144,7 +141,8 @@ export default {
       currentCardNumber: -1,
       gameLog: '',
       eBeginningNumbers: [8, 11, 18],
-      animationTime: 768
+      animationTime: 768,
+      soundOn: true
     }
   },
   computed: {
@@ -184,7 +182,6 @@ export default {
       return randomCard
     },
     playRollCardPlayer: function (cardNumber) {
-      clankSound.play()
       this.gameLog = ''
       this.currentCardNumber = cardNumber
       this.character.activeRollCard = this.rollCardsInHand[cardNumber]
@@ -218,11 +215,13 @@ export default {
           this.logEvent(`The ${this.activeTunnelCard.cardName} hits you!\n(-${this.activeTunnelCard.damage} Hit ${points})`)
           this.character.hitPoints -= this.activeTunnelCard.damage
           this.animatePlayerHitPoints(false)
+          GameSound.playHowl(this.activeTunnelCard.attackSound, this.soundOn)
           this.disableInteraction = true
         } else {
           this.logEvent(`You strike the ${this.activeTunnelCard.cardName} for 1 hit point of damage!`)
           this.activeTunnelCard.hitPoints -= 1
           this.animateMonsterHitPoints()
+          GameSound.playHowl(this.activeTunnelCard.damagedSound, this.soundOn)
           if (this.activeTunnelCard.hitPoints === 0) {
             var pieces = 'pieces'
             if (this.activeTunnelCard.gold === 1) pieces = 'piece'
@@ -368,10 +367,7 @@ export default {
     TrapFloorCard,
     RestCard,
     BossCard,
-    StartCard,
-    Velocity,
-    Howl,
-    Howler
+    StartCard
   }
 }
 </script>

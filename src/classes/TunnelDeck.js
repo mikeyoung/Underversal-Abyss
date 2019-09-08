@@ -1,4 +1,5 @@
 import Card from './Card'
+import {Howl} from 'howler'
 
 export default class TunnelDeck {
   constructor () {
@@ -12,6 +13,8 @@ export default class TunnelDeck {
       let cardName = ''
       let damage = 0
       let gold = 0
+      let attackSound = null
+      let damagedSound = null
 
       if (i === 0) {
         type = 'monster'
@@ -20,6 +23,12 @@ export default class TunnelDeck {
         cardName = 'winged cartilage tube'
         damage = 2
         gold = 2
+        attackSound = new Howl({
+          src: ['../../static/audio/level2_1_attack.ogg']
+        })
+        damagedSound = new Howl({
+          src: ['../../static/audio/level2_1_damaged.ogg']
+        })
       }
 
       if (i === 1) {
@@ -29,6 +38,12 @@ export default class TunnelDeck {
         cardName = 'paranoid egg guardian'
         damage = 1
         gold = 3
+        attackSound = new Howl({
+          src: ['../../static/audio/level2_2_attack.ogg']
+        })
+        damagedSound = new Howl({
+          src: ['../../static/audio/level2_2_damaged.ogg']
+        })
       }
 
       if (i === 2) {
@@ -38,6 +53,12 @@ export default class TunnelDeck {
         cardName = 'hulking mass of bone and sinew'
         damage = 2
         gold = 3
+        attackSound = new Howl({
+          src: ['../../static/audio/level3_1_attack.ogg']
+        })
+        damagedSound = new Howl({
+          src: ['../../static/audio/level3_1_damaged.ogg']
+        })
       }
 
       if (i === 3) {
@@ -47,6 +68,12 @@ export default class TunnelDeck {
         cardName = 'giant tentacled brain'
         damage = 1
         gold = 4
+        attackSound = new Howl({
+          src: ['../../static/audio/level3_2_attack.ogg']
+        })
+        damagedSound = new Howl({
+          src: ['../../static/audio/level3_2_damaged.ogg']
+        })
       }
 
       if (i >= 4 && i < 6) {
@@ -81,6 +108,12 @@ export default class TunnelDeck {
         cardName = 'shambling corpse'
         damage = 2
         gold = 1
+        attackSound = new Howl({
+          src: ['../../static/audio/level1_1_attack.ogg']
+        })
+        damagedSound = new Howl({
+          src: ['../../static/audio/level1_1_damaged.ogg']
+        })
       }
 
       if (i === 14) {
@@ -90,6 +123,12 @@ export default class TunnelDeck {
         cardName = 'botched experiment'
         damage = 1
         gold = 2
+        attackSound = new Howl({
+          src: ['../../static/audio/level1_2_attack.ogg']
+        })
+        damagedSound = new Howl({
+          src: ['../../static/audio/level1_2_damaged.ogg']
+        })
       }
 
       this.cards.push(new Card({
@@ -101,7 +140,9 @@ export default class TunnelDeck {
         hitPoints: startingHitPoints,
         cardName,
         damage,
-        gold
+        gold,
+        attackSound,
+        damagedSound
       }))
     }
   }

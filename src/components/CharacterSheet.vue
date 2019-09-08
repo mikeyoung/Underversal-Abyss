@@ -40,6 +40,9 @@
       <div class="characterStat" id="characterStatGold">gp: {{ this.character.gold }}</div>
     </div>
     <div class="inGameNavLinks d-none d-md-block">
+      <a v-if="soundOn" href="javascript:void(0);" v-on:click="$parent.soundOn = false">Turn Sound Off</a>
+      <a v-if="!soundOn" href="javascript:void(0);" v-on:click="$parent.soundOn = true">Turn Sound On</a>
+      <br>
       <a href="javascript:void(0)" v-on:click="resetGame()">New Game</a><br>
       <router-link to="/about">About</router-link>
     </div>
@@ -57,7 +60,8 @@ export default {
   props: [
     'character',
     'score',
-    'resetGame'
+    'resetGame',
+    'soundOn'
   ]
 }
 
@@ -180,6 +184,6 @@ td.score {
   text-align: right;
   position: absolute;
   top: 0;
-  right: 0;
+  right: 1em;
 }
 </style>

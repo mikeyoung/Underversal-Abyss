@@ -9,5 +9,7 @@ export default class Card {
     this.cardName = instObj.cardName || ''
     this.damage = instObj.damage || 0
     this.gold = instObj.gold || 0
+    this.attackSound = instObj.attackSound || {}
+    this.damagedSound = instObj.damagedSound || {}
   }
 }
