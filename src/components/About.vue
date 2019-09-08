@@ -1,7 +1,17 @@
 <template>
   <div class="container">
     <div class="row">
-      about content placeholder
+      <div class="col-12 col-md-6 offset-md-3 text-center">
+        <br>
+        <div class="text-right nav-links">
+            <router-link to="/game">Game</router-link> / <router-link to="/">Home</router-link>
+        </div>
+        <img class="img-fluid" src="../../static/img/rules_chief.jpg" />
+        <h2>Underversal Abyss</h2>
+        <p>All art by Bonnie Banks.</p>
+        <p>Game written by Mike Young to demonstrate <a href="https://vuejs.org/" target="_blank">VueJS</a> implementation.  Uses <a href="https://howlerjs.com/" target="_blank">Howler</a> for audio and <a href="http://velocityjs.org/" target="_blank">Velocity</a> for tweening CSS.  Most audio sourced from BBC sound effects archive, with some clips of pet dog.</p>
+        <img src="../../static/img/dog.png" class="dog" />
+      </div>
     </div><!-- .row -->
   </div>
 </template>
@@ -17,20 +27,30 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: normal;
+  line-height: 1em;
+  font-family: 'UnifrakturCook', cursive;
+  font-size: 66px;
+  display: block;
+  -webkit-text-stroke: 1px #fff;
+  color: #000;
+  text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-align: center;
+  margin: .5em auto;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+
 a {
-  color: #42b983;
+  color: #09C !important;
+}
+
+.nav-links a {
+  color: #fff !important;
+}
+
+.dog {
+  width: 150px;
+  height: 150px;
+  margin: 2em auto;
 }
 </style>

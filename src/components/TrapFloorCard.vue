@@ -69,6 +69,7 @@ export default {
 
       if (roll === 2) {
         this.resolvedMessage += '<p>You manage to close the portal but slip on an especially viscous kidney and sprain your ankle.<br>(-1 Hit Point)</p>'
+        GameSound.playHowl(this.howls.injuryHowl, this.soundOn)
         this.character.hitPoints -= 1
         this.animatePlayerHitPoints(false)
       }

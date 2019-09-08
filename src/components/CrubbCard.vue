@@ -50,6 +50,9 @@ export default {
       }),
       badHowl: new Howl({
         src: ['../../static/audio/crubb_bad.ogg']
+      }),
+      middleHowl: new Howl({
+        src: ['../../static/audio/crubb_middle.ogg']
       })
     }
   },
@@ -98,8 +101,10 @@ export default {
               if (this.character.gold > 0) this.animateGold(false)
               this.character.gold = 0
               this.resolvedMessage += '<p>Crubb is unhappy to be awakened. Crubb demands all your gold.</p>'
+              GameSound.playHowl(this.middleHowl, this.soundOn)
             } else {
               this.resolvedMessage += `<p>Crubb is unhappy to be awakened. Since you have no gold he beats ${hpRoll} hit ${points} out of you.</p>`
+              GameSound.playHowl(this.badHowl, this.soundOn)
               this.character.hitPoints -= hpRoll
               this.animatePlayerHitPoints(false)
             }
@@ -107,8 +112,8 @@ export default {
             this.character.gold -= goldRoll
             this.animateGold(false)
             this.resolvedMessage += `<p>Crubb is unhappy to be awakened. Crubb demands ${goldRoll} gold.</p>`
+            GameSound.playHowl(this.middleHowl, this.soundOn)
           }
-          GameSound.playHowl(this.badHowl, this.soundOn)
           break
         case 3:
           this.character.gold += goldRoll

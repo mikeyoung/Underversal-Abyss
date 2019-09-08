@@ -180,6 +180,9 @@ export default {
         }),
         bossBadHowl: new Howl({
           src: ['../../static/audio/boss_bad.ogg']
+        }),
+        injuryHowl: new Howl({
+          src: ['../../static/audio/injury.ogg']
         })
       }
     }

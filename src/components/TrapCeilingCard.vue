@@ -68,6 +68,7 @@ export default {
 
       if (roll === 2) {
         this.resolvedMessage += '<p>You cut the rope in time but fall clumsily, landing on your head.<br>(-1 Hit Point)</p>'
+        GameSound.playHowl(this.howls.injuryHowl, this.soundOn)
         this.character.hitPoints -= 1
         this.animatePlayerHitPoints(false)
       }
