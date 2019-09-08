@@ -1,8 +1,8 @@
 <template>
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-      <img src="../../static/img/crubb.jpg" class="cardImage" />
-      <img v-if="cardResolved && this.d4Roll === 4" src="../../static/img/crubb_kiss.png" class="cardImage crubbKiss" />
+      <img src="/underversal/static/img/crubb.jpg" class="cardImage" />
+      <img v-if="cardResolved && this.d4Roll === 4" src="/underversal/static/img/crubb_kiss.png" class="cardImage crubbKiss" />
     </div>
     <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Crubb</h3>
@@ -46,13 +46,13 @@ export default {
       cardResolved: false,
       d4Roll: 0,
       kissHowl: new Howl({
-        src: ['../../static/audio/crubb_kiss.ogg']
+        src: ['/underversal/static/audio/crubb_kiss.ogg']
       }),
       badHowl: new Howl({
-        src: ['../../static/audio/crubb_bad.ogg']
+        src: ['/underversal/static/audio/crubb_bad.ogg']
       }),
       middleHowl: new Howl({
-        src: ['../../static/audio/crubb_middle.ogg']
+        src: ['/underversal/static/audio/crubb_middle.ogg']
       })
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-      <img src="../../static/img/trap_ceiling.jpg" class="cardImage" />
+      <img src="/underversal/static/img/trap_ceiling.jpg" class="cardImage" />
     </div>
     <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Ceiling Trap</h3>

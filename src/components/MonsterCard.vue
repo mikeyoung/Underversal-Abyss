@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12 col-lg-6 cardImageArea">
         <div class="monsterStats" v-if="activeTunnelCard.hitPoints > 0"><span id='monsterHitPointsDisplay'>hp: {{ activeTunnelCard.hitPoints }}</span><br>dmg: {{ activeTunnelCard.damage }}<br>gp: {{ activeTunnelCard.gold }}</div>
-        <img :src="'../../static/img/monster_' + activeTunnelCard.value + '.jpg'" class="cardImage" />
+        <img :src="'/underversal/static/img/monster_' + activeTunnelCard.value + '.jpg'" class="cardImage" />
       </div><!-- .col-6 -->
     <div class="col-sm-12 col-lg-6 cardDetailsArea">
       <h3 class="cardTitle" v-html="activeTunnelCard.cardName"></h3>

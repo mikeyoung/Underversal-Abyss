@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-      <img src="../../static/img/chest_closed.jpg" class="cardImage" />
+      <img src="/underversal/static/img/chest_closed.jpg" class="cardImage" />
     </div><!-- .col 6 -->
     <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Chest</h3>
@@ -44,7 +44,7 @@ export default {
       cardResolved: false,
       resolvedMessage: '',
       triggeredHowl: new Howl({
-        src: ['../../static/audio/chest_bad.ogg']
+        src: ['/underversal/static/audio/chest_bad.ogg']
       })
     }
   },

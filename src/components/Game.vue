@@ -2,7 +2,7 @@
   <div class="container topPad">
     <div class="row">
       <div class="col-3">
-        <router-link to="/"><img src="../../static/img/underversal_logo_game.jpg" class="mainLogo" /></router-link>
+        <router-link to="/"><img src="/underversal/static/img/underversal_logo_game.jpg" class="mainLogo" /></router-link>
       </div><!-- .col-3 -->
       <div class="col-9">
         <CharacterSheet
@@ -155,34 +155,34 @@ export default {
       soundOn: true,
       howls: {
         rewardHowl: new Howl({
-          src: ['../../static/audio/reward.ogg']
+          src: ['/underversal/static/audio/reward.ogg']
         }),
         restHowl: new Howl({
-          src: ['../../static/audio/rest.ogg']
+          src: ['/underversal/static/audio/rest.ogg']
         }),
         clickHowl: new Howl({
-          src: ['../../static/audio/keyclick.ogg']
+          src: ['/underversal/static/audio/keyclick.ogg']
         }),
         heartbeatHowl: new Howl({
-          src: ['../../static/audio/heartbeat.ogg']
+          src: ['/underversal/static/audio/heartbeat.ogg']
         }),
         deadHowl: new Howl({
-          src: ['../../static/audio/dead.ogg']
+          src: ['/underversal/static/audio/dead.ogg']
         }),
         crubbSnoreHowl: new Howl({
-          src: ['../../static/audio/crubb_snore.ogg']
+          src: ['/underversal/static/audio/crubb_snore.ogg']
         }),
         triggeredHowl: new Howl({
-          src: ['../../static/audio/trap_sprung.ogg']
+          src: ['/underversal/static/audio/trap_sprung.ogg']
         }),
         bossGoodHowl: new Howl({
-          src: ['../../static/audio/boss_good.ogg']
+          src: ['/underversal/static/audio/boss_good.ogg']
         }),
         bossBadHowl: new Howl({
-          src: ['../../static/audio/boss_bad.ogg']
+          src: ['/underversal/static/audio/boss_bad.ogg']
         }),
         injuryHowl: new Howl({
-          src: ['../../static/audio/injury.ogg']
+          src: ['/underversal/static/audio/injury.ogg']
         })
       }
     }

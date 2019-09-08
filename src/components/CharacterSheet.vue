@@ -32,8 +32,8 @@
     </div>
     <div class="characterSheetCell d-none d-md-block characterIllustrationCell">
       <div v-if="this.character.hitPoints < 5" class="damageLayer" :style="{ height: (((5 - this.character.hitPoints) * 150) / 5) + 'px' }"></div>
-      <img src="../../static/img/thief_mask.png" class="characterIllustration characterMask" />
-      <img src="../../static/img/thief.jpg" class="characterIllustration characterArt" />
+      <img src="/underversal/static/img/thief_mask.png" class="characterIllustration characterMask" />
+      <img src="/underversal/static/img/thief.jpg" class="characterIllustration characterArt" />
     </div>
     <div class="characterSheetCell characterStats d-none d-md-block">
       <div class="characterStat characterStat" id="characterStatHitPoints">hp: {{ this.character.hitPoints }}</div>

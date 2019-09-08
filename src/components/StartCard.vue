@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-      <img src="../../static/img/start.jpg" class="cardImage" />
+      <img src="/underversal/static/img/start.jpg" class="cardImage" />
     </div><!-- .col 6 -->
     <div class="col-sm-12 col-lg-6">
       <h3 class="cardTitle">Start</h3>
