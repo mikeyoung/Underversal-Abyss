@@ -9,7 +9,7 @@
         <img class="img-fluid" src="/underversal/static/img/rules_chief.jpg" />
         <h2>Underversal Abyss</h2>
         <p>All art by Bonnie Banks.</p>
-        <p>Game written by Mike Young to demonstrate <a href="https://vuejs.org/" target="_blank">VueJS</a> implementation.  Uses <a href="https://howlerjs.com/" target="_blank">Howler</a> for audio and <a href="http://velocityjs.org/" target="_blank">Velocity</a> for tweening CSS.  Most audio sourced from BBC sound effects archive, with some clips of pet dog.</p>
+        <p>Game written by Mike Young to demonstrate <a href="https://vuejs.org/" target="_blank">VueJS</a> implementation.  Uses <a href="https://howlerjs.com/" target="_blank">Howler</a> for audio and <a href="http://velocityjs.org/" target="_blank">Velocity</a> for tweening CSS.  Most audio sourced from <a href="http://bbcsfx.acropolis.org.uk/" target="_blank">BBC Sound Effects</a> archive, with some clips of pet dog.</p>
         <img src="/underversal/static/img/dog.png" class="dog" />
       </div>
     </div><!-- .row -->
