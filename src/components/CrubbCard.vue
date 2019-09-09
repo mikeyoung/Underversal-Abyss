@@ -11,7 +11,7 @@
         <p>You have encountered a sleeping crubb.  Wake it or sneak past?</p>
         <p>If you wake the crubb roll 1d4.</p>
         <ol>
-          <li>Crubb is furious to be awakened. Crubb demands 1d4 gold and then punches you for 1d4 damage.</li>
+          <li>Crubb is furious to be awakened. Crubb demands 1d4 gold and then bites you for 1d4 damage.</li>
           <li>Crubb is unhappy to be awakened. Crubb demands 1d4 gold.</li>
           <li>Crubb is feeling generous and gives 1d4 gold.</li>
           <li>Crubb is feeling generous and amorous.  Crubb gives you 1d4 gold and a healing kiss (+1d4 HP).</li>
@@ -85,13 +85,13 @@ export default {
             this.character.gold = 0
             this.character.hitPoints -= hpRoll
             this.animatePlayerHitPoints(false)
-            this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands all your gold and then punches you for ${hpRoll} damage.</p>`
+            this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands all your gold and then bites you for ${hpRoll} damage.</p>`
           } else {
             this.character.gold -= goldRoll
             this.animateGold(false)
             this.character.hitPoints -= hpRoll
             this.animatePlayerHitPoints(false)
-            this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands ${goldRoll} gold and then punches you for ${hpRoll} damage.</p>`
+            this.resolvedMessage += `<p>Crubb is furious to be awakened. Crubb demands ${goldRoll} gold and then bites you for ${hpRoll} damage.</p>`
           }
           GameSound.playHowl(this.badHowl, this.soundOn)
           break
