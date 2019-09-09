@@ -187,6 +187,9 @@ export default {
       }
     }
   },
+  mounted () {
+    this.resetGame()
+  },
   computed: {
     rollCardsInDraw: function () {
       return rollDeck.filter(card => card.status === 'draw')
