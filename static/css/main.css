@@ -12,7 +12,9 @@ html {
 }
 
 button,
-button[disabled]:hover {
+button[disabled]:hover,
+button:active,
+button[disabled]:active {
   background-color: #000;
   color: #eee;
   border: 1px solid #fff;
