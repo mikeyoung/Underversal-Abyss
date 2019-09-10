@@ -24,7 +24,7 @@
         <div v-html="this.resolvedMessage"></div>
         <button type="button" v-on:click="drawTunnelCard(); cardResolved = false;" v-if="drawTunnelCardEnabled">Draw Tunnel Card</button>
         <div v-if="this.character.hitPoints < 1">
-          <p>The crubb has beaten you to a pulp.  You are dead.</p>
+          <p>The crubb rapidly devours your body before returning to a lazy day of slumber.  You are dead.</p>
           <button type="button" v-on:click="resetGame()">Start New Game</button>
         </div>
       </div>
