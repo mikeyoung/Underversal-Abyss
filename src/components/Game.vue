@@ -305,6 +305,12 @@ export default {
         randomCard.status = 'play'
         this.activeTunnelCard = randomCard
         if (this.activeTunnelCard.type === 'crubb') GameSound.playHowl(this.howls.crubbSnoreHowl, this.soundOn)
+        if (this.activeTunnelCard.type === 'rest') {
+          this.character.hitPoints += 1
+          this.animatePlayerHitPoints(true)
+          GameSound.playHowl(this.howls.restHowl, this.soundOn)
+          this.character.engaged = false
+        }
       } else {
         if (this.character.gold < 1) {
           this.character.hitPoints = 0
@@ -317,13 +323,6 @@ export default {
           GameSound.playHowl(this.howls.bossGoodHowl, this.soundOn)
         }
         this.character.engaged = true
-      }
-
-      if (this.activeTunnelCard.type === 'rest') {
-        this.character.hitPoints += 1
-        this.animatePlayerHitPoints(true)
-        GameSound.playHowl(this.howls.restHowl, this.soundOn)
-        this.character.engaged = false
       }
     },
     logEvent: function (message) {
