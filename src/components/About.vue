@@ -8,7 +8,7 @@
         </div>
         <img class="img-fluid" src="/underversal/static/img/rules_chief.jpg" />
         <h2>Underversal Abyss</h2>
-        <p>All art by Bonnie Banks.</p>
+        <p>All art by Bonnie Banks. Logo by Mr. Meat.</p>
         <p>Game written by Mike Young to demonstrate <a href="https://vuejs.org/" target="_blank">VueJS</a> implementation.  Uses <a href="https://howlerjs.com/" target="_blank">Howler</a> for audio and <a href="http://velocityjs.org/" target="_blank">Velocity</a> for tweening CSS.  Project is published under the <a href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">MIT License</a> and can be freely downloaded from <a href="https://github.com/mikeyoung/Underversal-Abyss" target="_blank">GitHub</a>.  Most audio sourced from the <a href="http://bbcsfx.acropolis.org.uk/" target="_blank">BBC Sound Effects</a> archive, with some clips of pet dog.</p>
         <img src="/underversal/static/img/dog.png" class="dog" />
       </div>
