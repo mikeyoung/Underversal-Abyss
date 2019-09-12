@@ -46,13 +46,13 @@ export default {
       cardResolved: false,
       d4Roll: 0,
       kissHowl: new Howl({
-        src: ['/underversal/static/audio/crubb_kiss.ogg']
+        src: ['/underversal/static/audio/crubb_kiss.ogg', '/underversal/static/audio/crubb_kiss.mp3']
       }),
       badHowl: new Howl({
-        src: ['/underversal/static/audio/crubb_bad.ogg']
+        src: ['/underversal/static/audio/crubb_bad.ogg', '/underversal/static/audio/crubb_bad.mp3']
       }),
       middleHowl: new Howl({
-        src: ['/underversal/static/audio/crubb_middle.ogg']
+        src: ['/underversal/static/audio/crubb_middle.ogg', '/underversal/static/audio/crubb_middle.mp3']
       })
     }
   },

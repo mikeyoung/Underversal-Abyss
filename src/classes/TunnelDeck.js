@@ -24,10 +24,10 @@ export default class TunnelDeck {
         damage = 2
         gold = 2
         attackSound = new Howl({
-          src: ['/underversal/static/audio/level2_1_attack.ogg']
+          src: ['/underversal/static/audio/level2_1_attack.ogg', '/underversal/static/audio/level2_1_attack.mp3']
         })
         damagedSound = new Howl({
-          src: ['/underversal/static/audio/level2_1_damaged.ogg']
+          src: ['/underversal/static/audio/level2_1_damaged.ogg', '/underversal/static/audio/level2_1_damaged.mp3']
         })
       }
 
@@ -39,10 +39,10 @@ export default class TunnelDeck {
         damage = 2
         gold = 2
         attackSound = new Howl({
-          src: ['/underversal/static/audio/level2_2_attack.ogg']
+          src: ['/underversal/static/audio/level2_2_attack.ogg', '/underversal/static/audio/level2_2_attack.mp3']
         })
         damagedSound = new Howl({
-          src: ['/underversal/static/audio/level2_2_damaged.ogg']
+          src: ['/underversal/static/audio/level2_2_damaged.ogg', '/underversal/static/audio/level2_2_damaged.mp3']
         })
       }
 
@@ -54,10 +54,10 @@ export default class TunnelDeck {
         damage = 3
         gold = 3
         attackSound = new Howl({
-          src: ['/underversal/static/audio/level3_1_attack.ogg']
+          src: ['/underversal/static/audio/level3_1_attack.ogg', '/underversal/static/audio/level3_1_attack.mp3']
         })
         damagedSound = new Howl({
-          src: ['/underversal/static/audio/level3_1_damaged.ogg']
+          src: ['/underversal/static/audio/level3_1_damaged.ogg', '/underversal/static/audio/level3_1_damaged.mp3']
         })
       }
 
@@ -69,10 +69,10 @@ export default class TunnelDeck {
         damage = 3
         gold = 3
         attackSound = new Howl({
-          src: ['/underversal/static/audio/level3_2_attack.ogg']
+          src: ['/underversal/static/audio/level3_2_attack.ogg', '/underversal/static/audio/level3_2_attack.mp3']
         })
         damagedSound = new Howl({
-          src: ['/underversal/static/audio/level3_2_damaged.ogg']
+          src: ['/underversal/static/audio/level3_2_damaged.ogg', '/underversal/static/audio/level3_2_damaged.mp3']
         })
       }
 
@@ -109,10 +109,10 @@ export default class TunnelDeck {
         damage = 1
         gold = 1
         attackSound = new Howl({
-          src: ['/underversal/static/audio/level1_1_attack.ogg']
+          src: ['/underversal/static/audio/level1_1_attack.ogg', '/underversal/static/audio/level1_1_attack.mp3']
         })
         damagedSound = new Howl({
-          src: ['/underversal/static/audio/level1_1_damaged.ogg']
+          src: ['/underversal/static/audio/level1_1_damaged.ogg', '/underversal/static/audio/level1_1_damaged.mp3']
         })
       }
 
@@ -124,10 +124,10 @@ export default class TunnelDeck {
         damage = 1
         gold = 1
         attackSound = new Howl({
-          src: ['/underversal/static/audio/level1_2_attack.ogg']
+          src: ['/underversal/static/audio/level1_2_attack.ogg', '/underversal/static/audio/level1_2_attack.mp3']
         })
         damagedSound = new Howl({
-          src: ['/underversal/static/audio/level1_2_damaged.ogg']
+          src: ['/underversal/static/audio/level1_2_damaged.ogg', '/underversal/static/audio/level1_2_damaged.mp3']
         })
       }
 

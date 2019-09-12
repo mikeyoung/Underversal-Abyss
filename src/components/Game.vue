@@ -155,34 +155,34 @@ export default {
       soundOn: true,
       howls: {
         rewardHowl: new Howl({
-          src: ['/underversal/static/audio/reward.ogg']
+          src: ['/underversal/static/audio/reward.ogg', '/underversal/static/audio/reward.mp3']
         }),
         restHowl: new Howl({
-          src: ['/underversal/static/audio/rest.ogg']
+          src: ['/underversal/static/audio/rest.ogg', '/underversal/static/audio/rest.mp3']
         }),
         clickHowl: new Howl({
-          src: ['/underversal/static/audio/keyclick.ogg']
+          src: ['/underversal/static/audio/keyclick.ogg', '/underversal/static/audio/keyclick.mp3']
         }),
         heartbeatHowl: new Howl({
-          src: ['/underversal/static/audio/heartbeat.ogg']
+          src: ['/underversal/static/audio/heartbeat.ogg', '/underversal/static/audio/heartbeat.mp3']
         }),
         deadHowl: new Howl({
-          src: ['/underversal/static/audio/dead.ogg']
+          src: ['/underversal/static/audio/dead.ogg', '/underversal/static/audio/dead.mp3']
         }),
         crubbSnoreHowl: new Howl({
-          src: ['/underversal/static/audio/crubb_snore.ogg']
+          src: ['/underversal/static/audio/crubb_snore.ogg', '/underversal/static/audio/crubb_snore.mp3']
         }),
         triggeredHowl: new Howl({
-          src: ['/underversal/static/audio/trap_sprung.ogg']
+          src: ['/underversal/static/audio/trap_sprung.ogg', '/underversal/static/audio/trap_sprung.mp3']
         }),
         bossGoodHowl: new Howl({
-          src: ['/underversal/static/audio/boss_good.ogg']
+          src: ['/underversal/static/audio/boss_good.ogg', '/underversal/static/audio/boss_good.mp3']
         }),
         bossBadHowl: new Howl({
-          src: ['/underversal/static/audio/boss_bad.ogg']
+          src: ['/underversal/static/audio/boss_bad.ogg', '/underversal/static/audio/boss_bad.mp3']
         }),
         injuryHowl: new Howl({
-          src: ['/underversal/static/audio/injury.ogg']
+          src: ['/underversal/static/audio/injury.ogg', '/underversal/static/audio/injury.mp3']
         })
       }
     }
