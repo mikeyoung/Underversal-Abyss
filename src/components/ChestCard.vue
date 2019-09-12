@@ -44,7 +44,7 @@ export default {
       cardResolved: false,
       resolvedMessage: '',
       triggeredHowl: new Howl({
-        src: ['/underversal/static/audio/chest_bad.ogg','/underversal/static/audio/chest_bad.mp3']
+        src: ['/underversal/static/audio/chest_bad.ogg', '/underversal/static/audio/chest_bad.mp3']
       })
     }
   },
